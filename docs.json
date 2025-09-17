@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "willow",
-  "name": "Mint Starter Kit",
+  "name": "Qubrid Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#5D29F0",
+    "light": "#AE6DFF",
+    "dark": "#AE6DFF"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -22,27 +22,28 @@
             ]
           },
           {
-            "group": "Customization",
+            "group": "GPU Compute",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "essentials/AI/ML Templates",
+              "essentials/GPU Instances",
+              "essentials/Bare Metal",
+              "essentials/GPU Clusters"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Inferencing",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "essentials/Open Source",
+              "essentials/Hugging Face",
+              "essentials/NVIDIA NIM"
             ]
           },
           {
             "group": "AI tools",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "ai-tools/Fine Tuning",
+              "ai-tools/RAG",
+              "ai-tools/Controller Software"
             ]
           }
         ]
@@ -89,14 +90,14 @@
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/Dark_Logo.svg",
+    "dark": "/logo/Light_Logo.svg"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:digital@qubrid.com"
       }
     ],
     "primary": {
