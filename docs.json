@@ -35,9 +35,9 @@
           {
             "group": "Inferencing",
             "pages": [
-              "essentials/Open Source",
-              "essentials/Hugging Face",
-              "essentials/NVIDIA NIM"
+              "Open Source",
+              "Hugging Face",
+              "NVIDIA NIM"
             ]
           },
           {

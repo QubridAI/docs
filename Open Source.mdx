@@ -1,0 +1,167 @@
+---
+title: 'Open Source Inferencing'
+description: 'The **Open Source Inferencing** feature in Model Studio lets you run and experiment with popular open-source AI models directly on Qubrid.'
+---
+
+You can try **reasoning models, text generation, image generation, speech recognition, object detection, and more** - without setting up complex infrastructure.
+
+## Running a Model
+
+<Steps>
+<Step title="Head over to the Open Source Inferencing tab from the left menu">
+ This will show you a list of all available Models available for Open Source Inferencing
+</Step>
+<Step title="Use the Search Bar">
+ You can search for any specific model, if you have something in your mind.
+ <Note>
+ You can even **use the filters** to filter out relevant models, like Text Generation, Image Generation, Code Generation, Text to Video, Image text to Text, Speech to Text, Object Detection, Tex to 3D, Reasoning Models & more
+ </Note>
+</Step>
+<Step title="Browse from Available Models">
+ You can even browse from the models displayed, these are updated everytime a new model comes into existence
+</Step>
+<Step title="Click on the Model Card">
+ Doing this will open a new window, with that model which you selected to be put to use. You can see the selected model & the links to the relevant model page
+</Step>
+<Step title="Set the Max New Tokens">
+ The maximum numbers of tokens to generate, ignoring the number of tokens in the prompt
+</Step>
+<Step title="Set the Temperature">
+ Lowering results in less random completions. As the temperature approaches zero, the model will become deterministic and repetitive. This allows you to controll the randomness of the model
+</Step>
+<Step title="Set the Top P">
+ Only tokens within the top ```top_p```% probability are considered
+</Step>
+<Step title="Set the Repetition Penalty">
+ The parameter for repetition penalty. 1.0 means no penalty
+</Step>
+<Step title="User Prompt">
+ This is the place for you to put in the prompt. The more better & descriptive the prompt is the more better results you can expect
+</Step>
+<Step title="Click the Run button">
+ Once you have set all relevant parameters & reviewed the prompt, you can click the run button to get started
+</Step>
+<Step title="Copy / Download / Save the Response">
+ Depending on what model you used, if its text, you can copy it. If its image, you can download it & so on
+</Step>
+</Steps>
+
+<Note>
+Choose **reasoning models** for structured, multi-step problem solving, **text generation models** for chatbots, summarization, and content creation, and **code models** for programming assistants or code generation tasks. Use **image and video generation models** for creative workflows, and adjust parameters like `temperature`, `max tokens`, and `top_p` to fine-tune results for your use case. For production workloads, it is recommended to integrate via the **API** rather than relying on the playground UI, ensuring better scalability and automation.
+</Note>
+
+<Info>
+ Please note it takes some time for the model to initialize & get live. Don't reload or refresh your browser during this time. If that's done the work might get lost & can result in loss of credits incurred. Once live you can expect faster results
+</Info>
+
+## Inference Parameters
+
+When running open-source models, you can customize the output using several parameters. These control **length, creativity, diversity, and repetition** in generated responses.
+
+
+#### Max New Tokens
+- **What it is**: The maximum number of tokens (words, characters, or subwords depending on the tokenizer) the model can generate in a single response.  
+- **Effect**: Controls **response length**. Higher values allow longer outputs but may increase cost and response time.  
+- **Typical Range**: 50 - 2000 (depends on model context window).  
+- **Example**:  
+  - Short answer: 100 tokens  
+  - Detailed explanation: 500–1000 tokens  
+  - Long-form content: 2000+ tokens  
+
+
+#### Temperature
+- **What it is**: A parameter that controls the **randomness/creativity** of the model’s output.  
+- **Effect**:  
+  - Low temperature: deterministic, factual, less creative.  
+  - High temperature: more creative, diverse, but can produce inconsistent answers.  
+- **Range**: 0 - 2  
+- **Recommendations**:  
+  - 0.2 - 0.5: factual, technical tasks (QA, coding).  
+  - 0.7 - 1.0: balanced creativity (summaries, essays, chatbots).  
+  - 1.2 - 2.0: highly creative (storytelling, brainstorming).  
+
+
+#### Top P (Nucleus Sampling)
+- **What it is**: Controls **diversity** by limiting the next token choices to the smallest set whose cumulative probability is ≥ *p*.  
+- **Effect**:  
+  - Lower values: more focused, safer outputs.  
+  - Higher values: more diverse, open-ended outputs.  
+- **Range**: 0 - 1  
+- **Recommendations**:  
+  - 0.7 - 0.9: good balance for most text generation tasks.  
+  - 1.0: considers all possible tokens (maximum diversity).  
+- **Tip**: Usually tuned together with **Temperature** for best results.  
+
+#### Repetition Penalty
+- **What it is**: Reduces the likelihood of the model repeating the same phrases or tokens.  
+- **Effect**: Encourages **variety** in generated text.  
+- **Range**: 1.0 - 2.0  
+- **Recommendations**:  
+  - 1.0: no penalty (default, natural flow).  
+  - 1.1 - 1.3: reduces repeated loops (best for chat, long responses).  
+  - 1.5+: strong penalty, but may make text unnatural.  
+
+## Quick Recommendations
+
+<Accordion icon="code" title="Factual QA / Code">
+Max Tokens: 200 - 500, Temperature: 0.2 - 0.5, Top P: 0.7, Repetition Penalty: 1.1  
+</Accordion>
+<Accordion icon="file-word" title="Creative Writing">
+Max Tokens: 1000+, Temperature: 0.8 - 1.2, Top P: 0.9 - 1.0, Repetition Penalty: 1.0  
+</Accordion>
+<Accordion icon="message-bot" title="Balanced Chatbot">
+Max Tokens: 500 - 1000, Temperature: 0.7, Top P: 0.9, Repetition Penalty: 1.2 
+</Accordion>
+
+## Key Features
+- **Wide Model Catalog**: Access a growing list of open-source models including DeepSeek, Llama, CodeGen, Stable Diffusion, Whisper, YOLO, and more.  
+- **Multiple Categories**:  
+  - Reasoning Models  
+  - Text Generation  
+  - Code Generation  
+  - Image Generation  
+  - Text-to-Video  
+  - Text-to-3D  
+  - Speech-to-Text  
+  - Object Detection  
+- **Flexible Pricing**:  
+  - Reasoning models: $0.02 per request  
+  - Image generation models: $0.05 per request  
+  - Other AI models: $0.01 per request  
+  - Starter Pack: 500 requests for just $5  
+- **Interactive Playground**: Run prompts directly in the UI with configurable parameters.  
+- **API Access**: Call the same models via REST API for integration in your own applications.  
+
+## Available Models
+
+#### Reasoning Models
+- **DeepSeek-R1-Distill-Llama-8B**  
+- **DeepSeek-R1-Distill-Qwen-7B**  
+- **DeepSeek-R1-Distill-Qwen-14B**  
+- **DeepSeek-R1-Distill-Qwen-1.5B**  
+
+#### Text Generation
+- **Llama-3.1-8B-Instruct**  
+- **Mistral-7B-Instruct-v0.3**  
+- **Falcon-11B**  
+- **Gemma-2B**  
+- **Paligemma-3b-pt-896**  
+
+#### Code Generation
+- **CodeQwen1.5-7B-Chat**  
+- **Codegemma-7b-it**  
+- **CodeLlama-7b-Instruct-hf**  
+
+#### Image Generation
+- **Stable-Diffusion-3-Medium-Diffusers**  
+- **Stable-Diffusion-3.5-Large**  
+- **Stable-Diffusion-xl-base-1.0**  
+
+#### Other Modalities
+- **Whisper-small**: Speech-to-Text  
+- **Yolo-V8**: Object Detection  
+- **AnimateDiff-Lightning-Anime**: Text-to-Video  
+- **AnimateDiff-Lightning-Realistic**: Text-to-Video  
+- **Shap-E**: Text-to-3D  
+- **Phi-3-mini-128k-instruct**: Text Generation  
+- **Phi-3-vision-128k-instruct**: Image-to-Text  

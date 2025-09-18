@@ -1,0 +1,90 @@
+---
+title: 'Deploy Hugging Face Model'
+description: 'Using a direct API and an interactive UI like Rag UI, you can now deploy and interact with models without requiring any AI expertise.'
+---
+
+The **Hugging Face Models** integration in Model Studio allows you to deploy, run, and interact with models from the Hugging Face Hub using a simple UI - no setup or AI expertise required. This makes it easy to take advantage of the huge Hugging Face ecosystem and run models on GPU infrastructure provided by the platform.
+
+## How to Deploy a Hugging Face Model
+
+<Steps>
+<Step title="Head over to the Hugging Face Models tab from the left menu">
+ By default, its your first time, so it will be emmpty. You can expect details to load up once few models are up & running.
+</Step>
+<Step title="Click on the Add Model button">
+ Once done, a dialog should open up asking some basic details
+</Step>
+<Step title="Name Your Model">
+ Feel free to use any name you want. This is for you to understand which model you'd refer to
+</Step>
+<Step title="Add a Description">
+ Add an appropriate description so that you remember what each model does. This is important when you'll have many models running there
+</Step>
+<Step title="Click on the Next button">
+ This will open up the next step in deploying your own Hugging Face Model
+</Step>
+<Step title="Enter the Hugging Face Model ID">
+Please provide the exact Hugging Face Model ID as listed on Hugging Face. It's crucial that the Hugging Face Model ID matches exactly, as this ensures the correct model is downloaded and available for use. Double-check the Hugging Face Model ID to avoid errors, as using an incorrect or incomplete Hugging Face Model ID will prevent successful downloads or deployments
+</Step>
+<Step title="Enter the Hugging Face Access Token">
+Please ensure that you use a Hugging Face Access token with full access to download models. The token must have the appropriate permissions to authenticate and interact with Hugging Face's model repository. If your token does not have sufficient access, you may face issues when trying to download models or use them for inference. Make sure your token is linked to an account that has the necessary access rights to the models you intend to use
+<Note>
+Need help to **generate an Access Token**? Check the Hugging Faces Documentation from: [Hugging Face Hub](https://huggingface.co/docs/hub/en/security-tokens)
+</Note>
+</Step>
+<Step title="Click on the Next button">
+ This will open up the GPU Selection page
+</Step>
+<Step title="Click on the preferred GPU">
+ If you want your models to run faster or handle larger models, consider using a higher GPU count. High-end GPUs provide better performance for resource-intensive tasks.
+</Step>
+<Step title="Select the number of GPUs needed">
+Select either a single GPU or either 4/8 GPUs, depending on the model which you're running
+</Step>
+<Step title="Configure Auto Stop">
+Set the number of hours after which the model will automatically stop. This helps manage costs and resources efficiently
+</Step>
+<Step title="Click on the Deploy button">
+Once all things are configured, clicking the Deploy button will deploy the specific Hugging Face Model on the selected GPU for you to use
+</Step>
+</Steps>
+
+<Note>
+You will be able to see the model you just created in the dashboard now with relevant status being updated. The intial status should be ```Deployment In-Progress``` as the model is in the process of getting deployed. This process may take a few minutes. Click the Check Status button from the actions menu to view the live deployment progress and stay updated on the current status. Thank you for your patience!
+</Note>
+
+## Managing Hugging Face Models
+
+Once a Hugging Face model is deployed, you can manage it from the **Actions menu** in the dashboard.  
+
+#### Start / Stop
+- **Start**: Launches the deployed model on the assigned GPU(s).  
+- **Stop**: Pauses the model and releases compute resources.  
+<Note>
+You are **not billed for compute while the model is stopped**, but storage charges still apply.  
+</Note>
+
+#### Interactive UI
+- Opens a **playground-style interface** where you can directly send prompts to the deployed Hugging Face model.  
+- Useful for **testing outputs** before integrating into applications.  
+- Supports configuration of inference parameters (tokens, temperature, etc.) depending on the model type.  
+
+
+#### RAG UI
+- Provides an interface for **Retrieval-Augmented Generation (RAG)**.  
+- Allows you to connect your Hugging Face model with external knowledge sources.  
+- Best for enterprise search, knowledge-based chat, and contextual AI applications.  
+
+#### View Logs
+- Displays **runtime logs** for the deployed model.  
+- Includes:
+  - Deployment status and events  
+  - API request/response history (metadata only)  
+  - Errors or warnings during execution  
+- Logs are critical for debugging and monitoring model performance.  
+
+#### Delete
+- Permanently removes the deployed model and all associated resources.  
+<Note>
+This action cannot be undone. Ensure you have exported any necessary data before deleting.  
+</Note>
