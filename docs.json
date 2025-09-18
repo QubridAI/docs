@@ -18,16 +18,18 @@
             "pages": [
               "index",
               "quickstart",
-              "development"
+              "Enterprise Account",
+              "Manage API Keys",
+              "Choose your Interface"
             ]
           },
           {
             "group": "GPU Compute",
             "pages": [
-              "essentials/AI/ML Templates",
-              "essentials/GPU Instances",
-              "essentials/Bare Metal",
-              "essentials/GPU Clusters"
+              "AI Templates",
+              "GPU Instances",
+              "Bare Metal",
+              "GPU Clusters"
             ]
           },
           {
@@ -72,18 +74,18 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Platform",
+          "href": "https://platform.qubrid.com/",
+          "icon": "server"
         },
         {
           "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "href": "https://discord.com/invite/Btsqxa6ZnQ",
+          "icon": "discord"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "anchor": "Blogs",
+          "href": "https://docs.platform.qubrid.com/blog/",
           "icon": "newspaper"
         }
       ]

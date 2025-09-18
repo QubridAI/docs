@@ -1,0 +1,205 @@
+---
+title: 'Choose your Interface'
+description: 'Control how you want to access your GPU Virtual Machine'
+---
+
+## SSH into your Virtual Machine
+
+To securely access your Virtual Machine on Qubrid AI platform & get full control, you'll need to generate an SSH key pair & share your public key with us. Follow the instructions based on your operating system:
+
+### Windows (Using PowerShell or Git Bash)
+
+<Steps>
+<Step title="Open PowerShell or Git Bash">
+  You can use either PowerShell (default Windows terminal) or Git Bash (if installed via [Git for Windows](https://git-scm.com/downloads/win))
+</Step>
+<Step title="Generate SSH Key">
+  You can use either PowerShell (default Windows terminal) or Git Bash (if installed via [Git for Windows](https://git-scm.com/downloads/win))
+  ```bash
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+Expected Output  
+```bash
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/YourName/.ssh/id_rsa)
+```
+</Step>
+<Step title="Press Enter">
+  Do this to accept the default path, or set a custom path in case you want to
+</Step>
+<Step title="If asked to Enter passphrase">
+  You may be asked to enter passphrase (empty for no passphrase) & to enter the same passphrase again
+  <Note>
+  Press the Enter key twice to skip this step
+  </Note>
+</Step>
+<Step title="Locate Public Key">
+  - With **Git Bash**
+  ```bash
+  cat ~/.ssh/id_rsa.pub
+  ```
+  - With **PowerShell**
+  ```bash
+  type $env:USERPROFILE\.ssh\id_rsa.pub
+  ```
+</Step>
+<Step title="Copy & Share">
+  Copy the entire output of the ```.pub``` file & share it with the platform team.
+</Step>
+</Steps>
+
+<Info>
+Use ```PuTTYgen``` (If you use ```PuTTY```) to generate a key (```ed25519``` or ```RSA```). Save the private key (```.ppk```) for ```PuTTY```. Copy the public key text from ```PuTTYgen``` to the ```server``` / ```GitHub```. Use ```Pageant``` (PuTTY agent) to load the ```.ppk``` so ```PuTTY``` can use it.
+</Info>
+
+### Ubuntu or Linux (Debian-based, Fedora, Arch, etc.)
+
+<Steps>
+<Step title="Open Terminal">
+  Keyboard shortcut: ```Ctrl``` + ```Alt``` + ```T```
+</Step>
+<Step title="Generate SSH Key">
+  ```bash
+  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+  ```
+  Expected Output  
+```bash
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/yourname/.ssh/id_rsa)
+```
+</Step>
+<Step title="Press Enter">
+  Do this to accept the default path, or set a custom path in case you want to
+</Step>
+<Step title="If asked to Enter passphrase">
+  You may be asked to enter passphrase (empty for no passphrase) & to enter the same passphrase again
+  <Note>
+  Press the Enter key twice to skip this step
+  </Note>
+</Step>
+<Step title="View the Public Key">
+  ```bash
+  cat ~/.ssh/id_rsa.pub
+  ```
+</Step>
+<Step title="Copy & Share">
+  Copy the entire output & share it with the platform team.
+</Step>
+</Steps>
+
+### MacOS
+
+
+<Steps>
+<Step title="Open Terminal">
+  Use Spotlight (```Cmd``` + ```Space```), type ```Terminal```, and select it. Alternatively, you can also use ```cmd``` + ```N```
+</Step>
+<Step title="Generate SSH Key">
+  ```bash
+  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+  ```
+    Expected Output  
+```bash
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/yourname/.ssh/id_rsa)
+```
+</Step>
+<Step title="Press Enter">
+  Do this to accept the default path, or set a custom path in case you want to
+</Step>
+<Step title="If asked to Enter passphrase">
+  You may be asked to enter passphrase (empty for no passphrase) & to enter the same passphrase again
+  <Note>
+  Press the Enter key twice to skip this step
+  </Note>
+</Step>
+<Step title="View the Public Key">
+  ```bash
+  cat ~/.ssh/id_rsa.pub
+  ```
+</Step>
+<Step title="Copy & Share">
+  Copy the entire content of the ```.pub``` file & share it with the platform team.
+</Step>
+</Steps>
+
+<Note>
+Do not share your **private key** (```id_rsa```). Only the **public key** (```id_rsa.pub```) is safe to share. If the ```.ssh directory``` does not exist, it will be created during the process.
+</Note>
+
+<Info>
+You may repeat this process to overwrite or specify a custom file name for a **new key pair**.
+</Info>
+
+### Access using Jupyter
+
+While creating the instance, if you don't want to access the VM via SSH, you can use your Jupyter Authentication Token and paste it during the launching of Instance.
+
+<Steps>
+<Step title="Start Jupyter manually">
+  Run
+  ```bash
+  jupyter notebook
+```
+or
+```bash
+jupyter lab
+```
+
+Expected Output  
+```bash
+http://localhost:8888/?token=6c7b6d0c9f4f0f72d5ab8a38f6bff3e...
+```
+<Note>
+  The long string after ```?token=``` is your auth token.
+</Note>
+</Step>
+<Step title="If Jupyter is already running">
+  Run
+  ```bash
+  jupyter notebook list
+
+```
+Expected Output  
+```bash
+Currently running servers:  
+http://localhost:8888/?token=6c7b6d0c9f4f0f72d5ab8a38f6bff3e :: /home/user
+```
+<Note>
+  The long string after ```?token=``` is your auth token.
+</Note>
+</Step>
+<Step title="From Jupyter config (if token disabled or password set)">
+  To find where configs are:
+  ```bash
+jupyter --config-dir
+```
+Then open ```jupyter_notebook_config.py``` and look for:
+```bash
+c.NotebookApp.token
+c.NotebookApp.password
+```
+</Step>
+<Step title="Docker / remote Jupyter">
+  If Jupyter is running inside Docker, check the container logs:
+  ```bash
+docker logs <container_id>
+```
+<Note>
+  You’ll see the token in the startup logs.
+</Note>
+</Step>
+</Steps>
+
+## Open WebUI
+
+Open WebUI is an extensible, self-hosted AI interface that adapts to your workflow, all while operating entirely offline. No hassle, an UI Opens automatically & access your model from there
+
+<Card
+  title="Open WebUI"
+  icon="uikit"
+  href="https://openwebui.com/"
+  horizontal
+>
+  User-friendly AI Interface (Supports Ollama, OpenAI API & more)
+</Card>
