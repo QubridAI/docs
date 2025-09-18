@@ -12,7 +12,7 @@ We don't divide your instances or share it with others as per your usage. You ge
 ## Quick Deploy GPU Virtual Machines
 
 <Steps>
-<Step title="Select the preffered GPU">
+<Step title="Select the preferred GPU">
   Choose from the pool of GPU VMs available. We have latest NVIDIA GPUs such as B200, H200, H100, A100, L$)S, A10G, T4 & L4. The RAM, vCPU, Storage & CUDA are shown in the cards
 </Step>
 <Step title="Select an AI/ML Template">
@@ -62,3 +62,119 @@ Root Disk Storage is billed at **10 Cents** Per GB Per month & is charged even w
 <Note>
  You can also click on the **Reset** button in case you want to start all over again.
 </Note>
+
+## Choosing the Right GPU
+
+Different workloads require different levels of performance, memory, and cost efficiency. Below is guidance on when to choose each GPU type:
+
+#### NVIDIA B200 (180 GB)
+- **Best for:** Next-gen large-scale AI model training and high-throughput inference.  
+- **Why:** Highest VRAM capacity with extreme bandwidth, optimized for cutting-edge foundation models and multi-trillion parameter research.  
+
+#### NVIDIA H200 (141 GB)
+- **Best for:** Large LLMs, enterprise-scale training, and memory-intensive inference.  
+- **Why:** Higher memory than H100 with strong bandwidth, designed for advanced generative AI workloads.  
+
+#### NVIDIA H100 (80 GB)
+- **Best for:** High-performance model training, fine-tuning, and distributed workloads.  
+- **Why:** Current industry standard for large model training; excellent tensor performance.  
+
+#### NVIDIA A100 (80 GB / 40 GB)
+- **Best for:** Training and inference at scale; versatile for research and production.  
+- **Why:** Proven workhorse for AI/ML; available in 40 GB and 80 GB VRAM options depending on dataset/model size.  
+
+#### NVIDIA L40S (48 GB)
+- **Best for:** Balanced training, inference, and AI-enhanced graphics workloads.  
+- **Why:** Strong GPU compute with large memory; good middle ground for enterprises running mixed AI + visualization tasks.  
+
+#### NVIDIA A10G (24 GB)
+- **Best for:** Medium-scale training, fine-tuning, and inference for open-source models.  
+- **Why:** Cost-efficient GPU for developers and teams experimenting with models up to mid-range size.  
+
+#### NVIDIA T4 (16 GB)
+- **Best for:** Lightweight inference, prototyping, and smaller-scale AI services.  
+- **Why:** Low-cost, energy-efficient option; good for deploying chatbots, RAG pipelines, or small LLMs.  
+
+#### NVIDIA L4 (24 GB)
+- **Best for:** Cloud inference, AI-powered video, and general-purpose ML tasks.  
+- **Why:** Modern upgrade over T4 with more memory and stronger inference throughput.  
+
+
+<Note>
+**For research & cutting-edge models:** B200, H200, H100. **For enterprise training/inference balance:** A100, L40S. **For developers & startups (cost-efficient):** A10G, L4, T4
+</Note>
+
+## Root Disk (GB)
+
+The **Root Disk** is the primary storage attached to your GPU instance. It holds the operating system, dependencies, and any data you store locally.
+
+#### Key Points
+- **Default Size**: Each instance comes with a default root disk (e.g., 100 GB).  
+- **Customizable**: You can increase disk size at deployment time to accommodate datasets, models, or logs.  
+- **Persistent Billing**: Root disk storage is billed at **$0.10 per GB per month** and is charged even if the instance is stopped.  
+- **Example**: A 100 GB disk costs **$10 per month**.  
+
+#### When to Increase Root Disk
+- Training large models that require big datasets stored locally.  
+- Running workflows that generate heavy intermediate files or logs.  
+- Deploying multiple frameworks or custom libraries on the same instance.  
+
+#### When to Keep It Minimal
+- Using external object storage or mounted volumes for datasets.  
+- Running lightweight inference or stateless applications.  
+- Optimizing costs when persistent local storage is not required.  
+
+## Pausing GPU Instances
+
+You can **pause/stop GPU instances** when they are not in use to reduce costs.
+
+#### Key Points
+- **No Compute Charges**: When an instance is paused, you are **not charged for GPU compute**.  
+- **Storage Charges Continue**: While paused, you will **still be charged for the root disk and any attached storage**.  
+- **Example**:  
+  - If you pause a GPU instance with a 100 GB root disk, compute costs stop immediately.  
+  - Storage charges continue at **$10/month** until you delete the disk.  
+
+<Note>
+**Pause instances** when not running jobs to save on compute costs. **Delete unused disks** or move data to external object storage if long-term retention is not required.
+</Note>
+
+## Auto Stop
+
+The **Auto Stop** feature allows you to automatically shut down GPU instances after a specified period of inactivity or based on a timer defined by the user.
+
+#### Key Points
+- **Automatic Shutdown**: Instances will automatically stop after the configured time limit.  
+- **User Defined**: You can set the time (e.g., 1 hour, 6 hours, 24 hours) based on your workflow.  
+- **Save Costs**: Prevents GPU instances from running idle and accumulating unnecessary compute charges.  
+- **Storage Charges Remain**: When an instance is auto-stopped, compute charges stop, but root disk and attached storage charges continue.  
+
+#### Example
+- You launch a GPU instance with a 6-hour Auto Stop setting.  
+- After 6 hours, the instance automatically shuts down if still running.  
+- Compute charges end immediately, but storage continues to be billed.  
+
+<Note>
+Always enable Auto Stop for experiments, prototyping, or jobs with predictable runtimes. Use manual control (Pause/Resume) for production workloads that need to stay online.
+</Note>
+
+## Frequently Asked Questions (FAQ)
+
+<Accordion icon="question" title="Can I monitor GPU usage during the session?">
+Yes. You can monitor GPU performance using:
+- **nvidia-smi** (command-line tool) to view GPU utilization, memory usage, and active processes.  
+- **Built-in dashboards** available in the platform for real-time metrics.  
+- **Terminal commands** (e.g., `htop`, `watch nvidia-smi`) to track system resource usage.  
+
+Monitoring helps you optimize workloads, identify bottlenecks, and manage GPU allocation efficiently.
+</Accordion>
+<Accordion icon="question" title="Is internet access available inside the container?">
+Yes. Internet access is **enabled by default** inside all GPU containers. You can:
+- Install additional packages via `pip`, `apt`, or `conda`.  
+- Download datasets, models, or pre-trained weights from external sources.  
+- Use APIs or connect to third-party services.  
+
+<Info>
+In some cases (e.g., enterprise deployments, security restrictions), internet access may be **explicitly disabled**. Always verify your project’s configuration.
+</Info>
+</Accordion>

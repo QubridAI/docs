@@ -1,3 +1,119 @@
-## AI Model Studio
+---
+title: 'Bare Metal Servers'
+description: 'High-performance bare metal GPU servers for enterprise AI workloads'
+---
 
-  Accelerate Development, Fine-tuning, and Deployment of Generative AI & LLM Models.
+## How to Reserve a Bare Metal Server?
+
+<Steps>
+<Step title="Go to the Baremetal Page from the left menu">
+ You will be able to check all the available Bare Metal server configurations along with pricing & details such as CPU, Memory, Boot Stoage, Main Storage & Network
+</Step>
+<Step title="Select your preferred Baremetal Server">
+ This will open a dialog box which shows you a form that needs to be filled in to send in a request for the server
+</Step>
+<Step title="Select your Commitment Period">
+ Normally Bare Metal Servers are available for a tenure starting at 1 Year. If you want a custom tenure, you can mention that in the Notes part
+</Step>
+<Step title="Enter the details required">
+ This is the place to enter your email (same as the email which was used for logging in), name & phone number
+</Step>
+<Step title="Enter the Organization name">
+ This step will help you unlock Organizational disounts. This is optional
+</Step>
+</Steps>
+
+<Note>
+If you want the server for a custom timeframe, or anything that will help us give you the best price, **Notes** is where you put those thoughts
+</Note>
+
+## Key Benefits
+
+#### Full Hardware Access
+- No virtualization layer: direct access to CPU, GPU, and memory resources.  
+- Better performance and lower latency compared to VMs.  
+
+#### Dedicated Resources
+- 100% of the server’s GPUs, CPUs, RAM, and disks are reserved for your workloads.  
+- Eliminates “noisy neighbor” problems from shared cloud environments.  
+
+#### Enterprise-Grade Performance
+- Optimized for **training large language models (LLMs)**, high-throughput inference, and large-scale distributed training.  
+- Supports **multi-GPU and NVLink/NVSwitch interconnects** for advanced workloads.  
+
+#### Security & Compliance
+- Single-tenant isolation ensures **data privacy** and compliance for enterprise, healthcare, and finance workloads.  
+- Option for **on-premises or hybrid deployment**.  
+
+#### Flexibility & Control
+- Choose from multiple configurations (GPU types, memory, storage).  
+- Install custom drivers, frameworks, or OS images as needed.  
+
+## When to Choose Baremetal
+
+Baremetal servers are recommended when you need:
+- **Large-Scale Training**: Multi-billion parameter models requiring multiple GPUs.  
+- **High-Performance Inference**: Large-scale production serving with minimal latency.  
+- **Long-Running Jobs**: Persistent workloads that run for days/weeks without interruption.  
+- **Custom Environments**: Full control over OS, drivers, and frameworks.  
+- **Regulatory Compliance**: Environments where data must remain fully isolated.  
+
+For smaller, short-lived, or cost-sensitive workloads, consider GPU Instances instead.
+
+## Available Baremetal Servers
+
+Below are the current enterprise-grade baremetal GPU servers available for reservation.  
+Each server provides **dedicated, single-tenant access** with 8 × NVIDIA GPUs, high-core CPUs, ECC memory, NVMe storage, and 10GbE networking.
+
+#### NVIDIA H200 141GB 8-GPU SXM Server
+- **Price**: $210,240 / year  
+- **GPU Configuration**: 8 × NVIDIA H200 HGX 141GB SXM GPU  
+- **CPU**: 2 × 48 cores, 350W, 2.3GHz  
+- **Memory**: 32 × 64GB ECC Registered DDR5-5600  
+- **Boot Storage**: 2 × 960GB NVMe M.2 SSD  
+- **Main Storage**: 8 × 3.8TB NVMe 2.5" SSD  
+- **Network**: 1 × 2-port 10GbE NIC  
+
+#### NVIDIA A100 80GB 8-GPU SXM Server
+- **Price**: $89,500 / year  
+- **GPU Configuration**: 8 × NVIDIA A100 80GB HGX SXM GPU  
+- **CPU**: 2 × 32 cores, 2.0GHz  
+- **Memory**: 16 × 64GB ECC Registered DDR4-3200  
+- **Boot Storage**: 2 × 960GB NVMe M.2 SSD  
+- **Main Storage**: 2 × 1.9TB NVMe 2.5" SSD  
+- **Network**: 1 × 2-port 10GbE NIC  
+
+#### NVIDIA H100 80GB 8-GPU SXM Server
+- **Price**: $133,414.80 / year  
+- **GPU Configuration**: 8 × NVIDIA H100 80GB HGX SXM GPU  
+- **CPU**: 2 × 52 cores, 2.0GHz  
+- **Memory**: 16 × 64GB ECC Registered DDR5-5600  
+- **Boot Storage**: 2 × 480GB NVMe M.2 SSD  
+- **Main Storage**: 6 × 3.84TB NVMe 2.5" SSD  
+- **Network**: 1 × 2-port 10GbE NIC  
+
+#### NVIDIA B200 180GB 8-GPU SXM Server
+- **Price**: $297,840 / year  
+- **GPU Configuration**: 8 × NVIDIA B200 180GB HGX SXM GPU  
+- **CPU**: 2 × 48 cores, 2.3GHz  
+- **Memory**: 32 × 96GB ECC Registered DDR4-5600  
+- **Boot Storage**: 2 × 960GB NVMe M.2 SSD  
+- **Main Storage**: 4 × 7.68TB NVMe 2.5" SSD  
+- **Network**: 1 × 2-port 10GbE NIC  
+
+
+Each server comes with:
+- **High-Core CPUs** (Intel/AMD EPYC)  
+- **Large RAM options** (up to 2 TB depending on config)  
+- **NVMe SSDs / High-speed storage**  
+- **Optional networking upgrades** (100 Gbps+ InfiniBand / Ethernet for distributed workloads)  
+
+## Billing
+
+- **Hourly or Monthly Plans** available depending on your use case.  
+- **Storage billed separately** (root disk + attached volumes).  
+- **Pause/Stop not available**: Baremetal servers are always billed while provisioned.  
+
+<Note>
+Use baremetal for **long-running or mission-critical jobs**. Keep **root disk minimal** and store large datasets in external storage. Use **job schedulers** (Slurm, Kubernetes) for multi-GPU workloads. Enable **monitoring** via `nvidia-smi` or platform dashboards. Regularly **rotate SSH/API credentials** for security.  
+</Note>
