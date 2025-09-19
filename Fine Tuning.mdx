@@ -1,0 +1,184 @@
+---
+title: 'Fine Tuning'
+description: 'Fine-tune pre-deployed Text Generation & Code Generation models on the Qubrid AI platform - without writing a single line of code'
+---
+
+The **Fine-Tuning** feature in Model Studio allows you to customize existing base models using your own data. This improves model performance for **domain-specific tasks** such as Q&A, customer support, summarization, or classification - without training from scratch.
+
+## How to Fine Tune Models
+
+<Steps>
+<Step title="Head over to the Fine Tuning tab from the left menu">
+ This will open up the UI required for fine tuning your models, as its no code, so you don't have to write a single line of code
+</Step>
+<Step title="Select the Category of the Model">
+ As of now, we provide the ability of fine tuning either Text or Code Generation models
+</Step>
+<Step title="Select a Base Model">
+ Choose from the dropdown which should be the base model for fine tuning
+</Step>
+<Step title="Give a name to your Model">
+ Name this in such a way that you remember later, when you have many models being finetuned
+</Step>
+<Step title="Upload the CSV File">
+ In this step you either need to select an existing CSV from your storage, or upload a new CSV if you are doing this for the first time
+ <Note>
+ Make sure the file you are uploading has the ```.csv``` extension. Other extensions won't work & will show an error
+ </Note>
+</Step>
+<Step title="Add a description">
+ This is the place to put in details of what the model does. You can even add details as to why you want to fine tune the model
+</Step>
+<Step title="Select the GPU you want to use for Fine Tuning">
+ You can select any GPU you want. However, the better the GPU, the faster you can expect the tuning to happen
+</Step>
+<Step title="Choose the number of GPUs you need">
+ Select either a single GPU or either 4/8 GPUs, depending on the model which you're running
+ <Info>
+ You can check the pricing also being shown, verify the same before proceeding
+ </Info>
+</Step>
+<Step title="Enter the value for Epochs">
+ The number of times the model iterates over the training data
+</Step>
+<Step title="Enter the value for Training Max Step">
+ The maximum number of steps for training
+</Step>
+<Step title="Choose the Optimization Method">
+ By default its populated to 4-bit (Quantization), we will be adding more options soon
+</Step>
+<Step title="Enter the value for LoRA Rank">
+ From the dropdown, set the rank for Low-Rank Adaptation (LoRA) to optimize the efficiency of fine-tuning by decomposing the weight matrices into multiple smaller rank matrices.
+</Step>
+<Step title="Set the Target Layers">
+ By default its populated to Self Attention, we will be adding more options soon
+</Step>
+<Step title="Enter the value for Learning Rate">
+ The learning rate is a crucial hyperparameter in the training of machine learning models, including during fine-tuning efforts.
+</Step>
+<Step title="Set the Validation Percent">
+ This is where you can define what percentage of the dataset is reserved for validation, ensuring the model is validated on unseen data
+</Step>
+<Step title="Select the Data Category">
+ Here you can choose between two categories: Question Answering (QA) or Non-Question Answering (Not-QA)
+</Step>
+<Step title="Finally enter the User Prompt">
+ Make sure the prompt proivides information to guide the model in understanding the relation between input & output features or columns
+</Step>
+<Step title="Click on the Tune button">
+ Once you are ready to start the fine tuning, click this button and now all that left to do is wait
+</Step>
+</Steps>
+
+<Note>
+ You can reset the parameters any time by clicking on the ```Reset Parameter``` button, beside the ```Tune``` button
+</Note>
+
+## Why Fine-Tune a Model?
+
+- Customization and Specificity: Fine-tuning allows businesses to create **domain-specific, brand-consistent, and personalized outputs**, improving relevance, professionalism, and customer satisfaction
+- Improved Performance and Accuracy: By focusing on **task-specific data**, fine-tuned models deliver better accuracy, reduce bias, and perform better than generic pre-trained models
+- Cost Optimization: Fine-tuning open-source models offers a **cost-effective alternative** to expensive proprietary models, especially for specialized tasks
+- Control and Security: Fine-tuning on **your own data** gives you more control over outputs while keeping data secure, minimizing risks of data leaks or unintended behaviors
+- Competitive Advantage: Fine-tuned models enable **unique AI capabilities**, helping companies differentiate, innovate, and address industry-specific challenges
+
+## Dataset Guidelines
+Quality data = Quality results
+- **Relevance**: Match your dataset to the intended use case 
+- **Quantity**: Enough examples to capture task complexity (but avoid overfitting) 
+- **Accuracy**: Correct labels, consistent formatting, no missing values  
+- **Diversity**: Reflect the real-world variations your model will face  
+- **Consistency**: Use uniform structure and column labels
+- **Cleanliness**: Preprocess to remove noise, duplicates, and irrelevant data
+
+## Parameter Reference for Fine-Tuning
+
+#### Epochs
+- **Definition**: Number of full passes the model makes over the training dataset.  
+- **Why it matters**: More epochs let the model learn more, but too many can cause **overfitting** (memorizing training data instead of generalizing).  
+- **Guidelines**:  
+  - Small datasets: 5 - 10 epochs.  
+  - Medium datasets: 2 - 5 epochs.  
+  - Large datasets: 1 - 3 epochs. 
+
+<Note>
+**Best Practice**: Start with a lower number and monitor **validation loss**; increase if the model underfits.  
+</Note>
+
+#### Training Max Step
+- **Definition**: Maximum number of training iterations (steps). Each step = one batch of data processed.  
+- **Why it matters**: Acts as a hard stop even if epochs are not completed. Prevents runaway training.  
+- **Guidelines**:  
+  - Small task: 100 - 500 steps.  
+  - Larger fine-tuning jobs: 1,000 - 10,000+ steps.  
+
+<Note>
+**Best Practice**: Use **early stopping** (monitor validation loss) instead of blindly increasing steps.  
+</Note>
+
+#### Optimization Method (Quantization)
+- **Definition**: A technique to reduce model size and speed up training by lowering numerical precision (e.g., FP32 → INT8).  
+- **Why it matters**: Saves GPU memory, reduces cost, enables deployment on smaller hardware.  
+- **Trade-off**: Faster & lighter model, but slight accuracy drop possible.  
+- **Common Settings**:  
+  - 4-bit Quantization: maximum efficiency, slight loss of accuracy.  
+  - 8-bit Quantization: balance between efficiency and precision.  
+
+<Note>
+**Best Practice**: Use quantization-aware training to let the model adapt to precision changes.  
+</Note>
+
+#### LoRA Rank
+- **Definition**: LoRA (*Low-Rank Adaptation*) is a method for parameter-efficient fine-tuning. The **rank** controls the size/complexity of the adapter layers added to the base model.  
+- **Why it matters**: Higher rank model can learn more complex adjustments but uses more compute.  
+- **Guidelines**:  
+  - Simple tasks: 4 or 8.  
+  - Complex domain-specific tasks: 16 or higher.  
+
+<Note>
+**Best Practice**: Start small (rank 4 or 8), test results, then increase gradually.  
+</Note>
+
+#### Target Layers
+- **Definition**: The specific layers of the model you allow to be fine-tuned. Examples: **Self-Attention**, **Feed-Forward**, or **All Layers**.  
+- **Why it matters**: Fine-tuning only certain layers speeds up training and reduces cost, but limits flexibility.  
+- **Guidelines**:  
+  - Self-Attention layers: good balance of adaptability and efficiency.  
+  - All layer: best performance, but highest cost.  
+
+<Note>
+**Best Practice**: Start with self-attention; expand if the task requires deeper adaptation.  
+</Note>
+
+#### Learning Rate
+- **Definition**: The step size for weight updates during training. Controls how aggressively the model learns.  
+- **Why it matters**: Too high = unstable, erratic training. Too low = very slow progress.  
+- **Guidelines**:  
+  - Typical range: `1e-5` to `5e-4`.  
+  - Default: `0.0002`.  
+
+<Note>
+**Best Practice**: Use a scheduler (start high, then decay over time). Monitor validation performance closely.  
+</Note>
+
+#### Validation Percent
+- **Definition**: The percentage of your dataset set aside for validation (not used in training).  
+- **Why it matters**: Prevents overfitting by testing the model on unseen data.  
+- **Guidelines**:  
+  - Small datasets: 15–20%.  
+  - Medium/large datasets: 5–10%.  
+
+<Note>
+**Best Practice**: Always keep at least **5–10%** for validation, even for large datasets.  
+</Note>
+
+#### User Prompt
+- **Definition**: An instruction or template guiding the model during training on how to interpret input-output relationships.  
+- **Why it matters**: Especially useful for **instruction tuning**, where the model learns how to respond to structured commands.  
+- **Examples**:  
+  - For Q&A: `"Answer the following question: {input}"`.  
+  - For summarization: `"Summarize the following text in one sentence: {input}"`.  
+
+<Note>
+**Best Practice**: Keep prompts **consistent** across your dataset to avoid confusion.  
+</Note>

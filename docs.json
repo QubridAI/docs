@@ -41,11 +41,11 @@
             ]
           },
           {
-            "group": "AI tools",
+            "group": "AI Tools",
             "pages": [
-              "ai-tools/Fine Tuning",
-              "ai-tools/RAG",
-              "ai-tools/Controller Software"
+              "Fine Tuning",
+              "RAG",
+              "Controller Software"
             ]
           }
         ]
