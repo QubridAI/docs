@@ -44,8 +44,7 @@
             "group": "AI Tools",
             "pages": [
               "Fine Tuning",
-              "RAG",
-              "Controller Software"
+              "RAG"
             ]
           }
         ]
@@ -58,26 +57,12 @@
             "pages": [
               "api-reference/introduction"
             ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
+          }          
         ]
       }
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "Platform",
-          "href": "https://platform.qubrid.com/",
-          "icon": "server"
-        },
         {
           "anchor": "Community",
           "href": "https://discord.com/invite/Btsqxa6ZnQ",
@@ -104,8 +89,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Go to Platform",
+      "href": "https://platform.qubrid.com/"
     }
   },
   "contextual": {
@@ -122,9 +107,10 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/Qubrid_AI",
+      "youtube": "https://www.youtube.com/@QubridAI",
+      "linkedin": "https://www.linkedin.com/company/qubrid",
+      "reddit": "https://www.reddit.com/r/Qubrid_AI_Platform/"
     }
   }
 }
