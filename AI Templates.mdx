@@ -1,0 +1,112 @@
+---
+title: 'AI/ML Templates'
+description: 'Standard AI/ML packages for quick deployment on high performance GPU virtual machines'
+---
+
+<Info>
+  **Prerequisites**:
+  - A Valid Qubrid AI Account logged in the platform
+  - Enough Credits in your Account should be present to make sure the GPU Instances work when provisioning
+</Info>
+
+The **AI/ML Templates** catalog provides preconfigured environments that can be quickly deployed on high-performance **GPU virtual machines**.  
+
+These templates include popular frameworks, open-source large language models (LLMs), orchestration tools, and workflow engines, saving you the effort of manual setup.  
+
+
+## How It Works
+
+<Steps>
+<Step title="Head over to the AI / ML tab from the left menu">
+ This will list all the templates available for quick use
+</Step>
+<Step title="Select a template from the catalog">
+  Choose an AI/ML template from the catalog that matches your use case. Templates include OS images, frameworks, workflow tools, and preconfigured LLMs.
+</Step>
+<Step title="Select a GPU Instance">
+  Once you do this, a dropdown appears, choose the GPU instance where you want to deploy with this AI/ML template
+</Step>
+<Step title="Review the Instance">
+  Here you will be able to see the RAM, vCPU, System Storage, OS, Python Version, CUDA Version & Max GPUs allocated
+</Step>
+<Step title="Customise the Instance">
+  Here you will be able to change anything which you wound want. Select commitment period and click Launch Button
+</Step>
+</Steps>
+
+## Available Templates
+
+#### Base Operating Systems
+- **Ubuntu 22.04** - Standard Linux environment with Python 3.10.12  
+- **Ubuntu 24.04** - Updated Linux environment with Python 3.12.3  
+
+#### Frameworks & Libraries
+- **TensorFlow 2.17.1** - Preinstalled ML framework for training and inference  
+- **PyTorch 2.4.0** - GPU-accelerated deep learning framework with NumPy/SciPy support  
+
+#### Workflow & Automation Tools
+- **n8n** - Low-code/no-code automation platform with 400+ integrations and built-in AI nodes  
+- **Langflow** - Drag-and-drop interface for designing, testing, and deploying AI pipelines  
+
+#### Model Serving Interfaces
+- **ComfyUI v0.3.50 / v0.3.52** - Node-based generative AI interface for inference and workflow chaining  
+- **GPT OSS (20B) [Open WebUI]** - Open-source variant for experimenting with GPT-style models via Ollama  
+- **Qwen 3 (Latest) [Open WebUI]** - Large language model interface for managing Qwen models  
+- **Gemma 3 (27B) [Open WebUI]** - Google’s 27B parameter model optimized for efficiency and accuracy  
+- **DeepSeek R1 (671B) [Open WebUI]** - One of the largest-scale open LLMs, optimized for reasoning-heavy workloads  
+
+## Notes
+- All templates are deployed on top of **Ubuntu Linux** with the specified **Python runtime** 
+- Templates that include **Open WebUI** provide a browser-based interface for model interaction
+- Templates can be combined with other GPU services such as storage, agents, and RAG workflows
+
+## Key benefits
+
+- **Improved Performance**: Gain higher accuracy and better predictive power by customizing models to your data
+- **Reduced Training Time**: Efficient hyperparameter optimization techniques save compute resources and time
+- **Flexible Approaches**: Supports fine-tuning pre-trained models or training from scratch
+- **Automated Hyperparameter Search**: Integration with tools that support grid search, random search, and advanced optimization (e.g., Bayesian optimization, Hyperopt)
+- **Scalable & Repeatable**: Easily reproduce tuning experiments and scale across GPU instances
+
+## Available Templates
+
+<Accordion icon="wand-magic" title="n8n">
+n8n is a workflow automation platform that gives technical teams the flexibility of code with the speed of no-code. With 400+ integrations, native AI capabilities, and a fair-code license, n8n lets you build powerful automations while maintaining full control over your data and deployments.
+</Accordion>
+<Accordion icon="puzzle-piece" title="Langflow">
+Langflow is a powerful and intuitive platform designed for building, iterating, and deploying AI applications. Leveraging a visual interface, users can effortlessly create flows by dragging and connecting components, making AI app development accessible and efficient.
+</Accordion>
+<Accordion icon="laptop-code" title="VS Code">
+vscode is a GPU accelerated tensor computational framework. Functionality can be extended with common Python libraries such as NumPy and SciPy. Automatic differentiation is done with a tape-based system at the functional and neural network layer levels.
+</Accordion>
+<Accordion icon="ubuntu" title="Ubuntu 22.04">
+Ubuntu is a Debian-based Linux operating system that runs from the desktop to the cloud, to all your internet connected things. It is the world's most popular open-source OS.
+</Accordion>
+<Accordion icon="palette" title="ComfyUI v0.3.52">
+ComfyUI is a node-based interface and inference engine for generative AI. Users can combine various AI models and operations through nodes to achieve highly customizable and controllable content generation
+</Accordion>
+<Accordion icon="brain" title="TensorFlow 2.17.1">
+TensorFlow is an open source platform for machine learning. It provides comprehensive tools and libraries in a flexible architecture allowing easy deployment across a variety of platforms and devices.
+</Accordion>
+<Accordion icon="fire" title="Pytorch 2.4.0">
+PyTorch is a GPU accelerated tensor computational framework. Functionality can be extended with common Python libraries such as NumPy and SciPy. Automatic differentiation is done with a tape-based system at the functional and neural network layer levels.
+</Accordion>
+<Accordion icon="comment" title="Llama 3.1 (70B) [Open WebUI]">
+LLaMA 3.1 is Meta’s advanced open large language model series. This variant serves the 70B parameter model and comes packaged with Open WebUI, letting you interact with the model from an elegant browser-based chat interface.
+</Accordion>
+<Accordion icon="robot" title="GPT OSS (20B) [Open WebUI]">
+GPT OSS is an open-source variant for experimenting with GPT-style models. It is optimized to run with Ollama integration and can be extended to support custom LLMs. This package comes with the Open WebUI interface, giving you a ready-to-use browser-based environment to interact with the model.
+</Accordion>
+<Accordion icon="telescope" title="DeepSeek R1 (671B) [Open WebUI]">
+DeepSeek R1 671B is one of the largest-scale open LLMs, optimized for reasoning-heavy workloads and inference research. This package includes the Open WebUI interface, enabling direct chat and interaction from your browser.
+</Accordion>
+<Accordion icon="gem" title="Gemma 3 (27B) [Open WebUI]">
+Gemma 3 is a family of large language models from Google designed for efficiency and accuracy. This image provides the 27B parameter variant. It comes with the Open WebUI interface, so you can run and interact with the model directly from your browser.
+</Accordion>
+<Accordion icon="images" title="Qwen 3 (Latest) [Open WebUI]">
+Open WebUI is an elegant and extensible browser-based interface for managing and interacting with large language models via Ollama. It simplifies the deployment and usage of powerful models like Qwen, all from your browser.
+</Accordion>
+
+<Note>
+We constantly keep on adding the new & latest templates. Keep an eye out on plaform for updates.
+</Note>

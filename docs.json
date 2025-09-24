@@ -1,48 +1,50 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "willow",
+  "name": "Qubrid Documentation",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#5D29F0",
+    "light": "#AE6DFF",
+    "dark": "#AE6DFF"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
             "group": "Getting started",
             "pages": [
               "index",
               "quickstart",
-              "development"
+              "Enterprise Account",
+              "Manage API Keys",
+              "Choose your Interface"
             ]
           },
           {
-            "group": "Customization",
+            "group": "GPU Compute",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "AI Templates",
+              "GPU Instances",
+              "Bare Metal",
+              "GPU Clusters"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Inferencing",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "Open Source",
+              "Hugging Face",
+              "NVIDIA NIM"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "AI Tools",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "Fine Tuning",
+              "RAG"
             ]
           }
         ]
@@ -55,49 +57,40 @@
             "pages": [
               "api-reference/introduction"
             ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
+          }          
         ]
       }
     ],
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Community",
+          "href": "https://discord.com/invite/Btsqxa6ZnQ",
+          "icon": "discord"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "anchor": "Blogs",
+          "href": "https://docs.platform.qubrid.com/blog/",
           "icon": "newspaper"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/Dark_Logo.svg",
+    "dark": "/logo/Light_Logo.svg"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:digital@qubrid.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "Go to Platform",
+      "href": "https://platform.qubrid.com/"
     }
   },
   "contextual": {
@@ -114,9 +107,10 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/Qubrid_AI",
+      "youtube": "https://www.youtube.com/@QubridAI",
+      "linkedin": "https://www.linkedin.com/company/qubrid",
+      "reddit": "https://www.reddit.com/r/Qubrid_AI_Platform/"
     }
   }
 }

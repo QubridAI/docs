@@ -1,0 +1,94 @@
+---
+title: 'GPU Clusters'
+description: 'GPU Clusters let you scale beyond a single node'
+---
+
+Your GPUs can now communicate seamlessly across machines, eliminating the old per-node limits and unlocking true multi-node clusters. Spin up as many GPUs as you need, pay only by the second, and stop anytime - no commitments, just on-demand scalability like regular GPU VMs.
+
+## How to request for a cluster?
+
+<Steps>
+<Step title="Head over to the GPU Clusters tab from the left menu">
+ This will open up the UI required for configuring your cluster
+</Step>
+<Step title="Select your GPU Model">
+ Select from a pool of B200, H200, H100, A100, L40S, to start with the clusters
+</Step>
+<Step title="Select the type of Clusters">
+ When creating a GPU Cluster, you can choose between **Slurm Cluster** or **Kubernetes Cluster**, depending on your workload and orchestration needs.
+</Step>
+<Step title="Enter the quantity of Nodes">
+ Each node consists of 8 GPUs. For example, requesting 8 nodes will give you access to 64 GPUs.
+</Step>
+<Step title="Select the location for your Data Center">
+ We have Data Centers in North America, Europe & Asia. These are SOC Type II & HIPAA complaint.
+</Step>
+<Step title="Select the Start Date">
+ This will help us understand how soon do you want to start. 
+</Step>
+<Step title="Provide Personal & Cluster Details">
+ Enter your Organization name & the duration for which you would like the Clusters for (In Month)
+</Step>
+<Step title="Enter the remaining details">
+ Help us know the primary reason for the cluster, primary usecase & any other details you would want us to know.
+</Step>
+<Step title="Click on the Submit button">
+ Once done, our platform team will review your requirements and contact you.
+</Step>
+</Steps>
+
+## Type of Cluster
+
+When creating a GPU Cluster, you can choose between **Slurm Cluster** or **Kubernetes Cluster**, depending on your workload and orchestration needs.
+
+#### Slurm Cluster
+- **Best for**: HPC (High-Performance Computing), AI/ML training, research workloads.  
+- **Why**: Slurm is an industry-standard open-source job scheduler widely used in supercomputing.  
+- **Features**:  
+  - Efficient scheduling for batch jobs and distributed training.  
+  - Optimized for large-scale GPU utilization.  
+  - Simple job submission (`sbatch`, `srun`).  
+
+#### Kubernetes Cluster
+- **Best for**: Enterprise AI services, production deployments, containerized workloads.  
+- **Why**: Kubernetes is the standard for container orchestration and microservices.  
+- **Features**:  
+  - Run distributed AI inference services at scale.  
+  - Manage workloads with pods, deployments, and autoscaling.  
+  - Seamless integration with CI/CD pipelines and cloud-native tools.  
+
+<Note>
+Choose **Slurm Cluster**: If you are doing **training, HPC jobs, or large-scale distributed ML experiments**. Choose **Kubernetes Cluster**: If you are running **production inference, containerized services, or multi-team workloads**.  
+</Note>
+
+## Key Features
+- **Multi-Node Scaling**: Run workloads that span multiple nodes, each with 8 GPUs.  
+- **No Commitments**: Spin up a cluster whenever you need it and stop anytime.  
+- **Flexible GPU Options**: Choose from B200, H200, H100, A100, and L40S GPUs.  
+- **Pay-As-You-Go**: Billed per second, just like individual GPU instances.  
+- **Cluster Management**: Launch using a scheduler such as **Slurm** for distributed job orchestration.  
+
+
+## Example: Cluster Setup
+
+- **GPU Model**: B200 (180 GB VRAM)  
+- **Cluster Type**: Slurm  
+- **Node Quantity**: 2 (16 GPUs total)  
+- **Data Center**: North America  
+- **Start Date**: 27-09-2025  
+- **Total VRAM**: 2256 GB  
+
+## Use Cases
+- **Large-Scale LLM Training**: Train multi-billion parameter models across 100+ GPUs.  
+- **Scientific & HPC Workloads**: Molecular dynamics, physics simulations, and genomics.  
+- **Enterprise AI**: Multi-tenant, distributed inference services.  
+- **Research Collaboration**: Share clusters among teams for parallel experimentation.  
+
+## Billing
+- **Per-Second Billing**: Pay only for the runtime of your cluster.  
+- **No Idle Compute Costs**: Stop clusters when not in use.  
+- **Storage Billing**: Root disk and attached volumes are billed separately.  
+
+<Info>
+ Use **Auto Stop** to avoid idle compute charges. Store large datasets in **external object storage** to reduce root disk usage. Use **Slurm job scheduling** to efficiently distribute workloads across nodes. Start small (1–2 nodes) and scale up as needed.  
+</Info>

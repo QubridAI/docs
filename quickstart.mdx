@@ -1,5 +1,6 @@
 ---
 title: "Quickstart"
+<<<<<<< HEAD
 description: "Start building awesome documentation in minutes"
 ---
 
@@ -49,10 +50,56 @@ Get your documentation site running locally and make your first customization.
 <Accordion icon="rocket" title="Publish your docs">
   1. Commit and push your changes.
   2. Your docs will update and be live in moments!
+=======
+description: "Follow these steps to get started with Qubrid Platform:
+"
+---
+
+## Setting up your Qubrid Account
+- **Create** a new account on [platform.qubrid.com](https://platform.qubrid.com)  
+- SignUp using **Google** or **GitHub** for faster activation
+- If you want to use our account creation, enter your name, email, mobile number, organzation & finally set a password
+- Agree to the [terms and conditions](https://platform.qubrid.com/terms) & click Sign Up
+
+## Launch your first GPU Virtual Machine
+- From the platform, head over to [GPU Instances](https://platform.qubrid.com/create-ai-compute/gpu-instances) 
+- **Select** your preferred **GPU** Instance (Example: [A100](https://platform.qubrid.com/create-ai-compute/NVIDIA%20A100%20(40GB)))
+- Choose the **number of GPUs** you'd need, it might be 1,4 or 8
+- vCPU Core & RAM is populated based on the GPU Instance which is selected
+- Choose your **Root Disk storage** in Gigabytes (Starts at 100 GB & goes till 2 TB)
+- Select your **Interface** Console. By default its set to Jupyter, but if you want to access your machine via SSH, enable the SSH Option & provide your Public Key
+- Enter your Jupyter Authentication Token only, in case you don't want to access via SSH
+- Configure **Auto Stop**, to shuts down the instance after a specific amount of time
+- **Review** your selections from the floating wizard at the right part of the dashboard
+- Once you have reviewed, click on **Launch** to launch your GPU Instance or click on **Reset** to start over again
+
+<Note>
+  **Root Disk Storage** is billed at **10 Cents per GB/month** & is charged even when the instance is stopped. So, 100 GB costs $10/month.
+</Note>
+
+
+## Check Usage & Credits
+- View your available **credits** in navigation bar provided  
+- Track **usage history** and billing information  
+- Add credits (Available for **\$5**, **\$10**, **\$30**, **\$50** or some **custom** amount)  
+
+## Do whatever you want!
+- Run **inference** using a template or your own model  
+- Perform **fine-tuning** on supported models  
+- Save and reuse deployed models  
+- Use our 2 Step **RAG** or define a custom RAG Pipeline
+- Deploy **clusters** of GPUs in 1 Click
+- Reserve a **Bare Metal** Server
+
+<Accordion icon="download" title="Download our AI Controller">
+  1. After logging in, go to the platform
+  2. Go to [AI Controller](https://platform.qubrid.com/ai-controller) tab, enter your details & download our controller software
+>>>>>>> public/main
 </Accordion>
 
 ## Next steps
 
+<<<<<<< HEAD
 Now that you have your docs running, explore these key features:
 
 <CardGroup cols={2}>
@@ -78,3 +125,26 @@ Now that you have your docs running, explore these key features:
 <Note>
   **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
 </Note>
+=======
+Now that you have your GPU VM running, explore these key features:
+
+<CardGroup cols={2}>
+
+<Card title="Convert to Enterprise Account" icon="building" href="Enterprise%20Account">
+  Enterprise account comes with additional benefits for Organizations
+</Card>
+
+<Card title="Customize style" icon="key" href="Manage%20API%20Keys">
+  Manage your API Keys, or even generate new API Keys as required
+</Card>
+
+<Card title="Launch an AI / ML Template" icon="folder-open" href="AI%20Templates">
+  AI/ML packages available for quick deployment on high performance GPUs 
+</Card>
+
+<Card title="Fine Tuning" icon="wrench" href="/api-reference/introduction">
+  Fine-tune pre-deployed models directly on Platform, without any code
+</Card>
+
+</CardGroup>
+>>>>>>> public/main
