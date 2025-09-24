@@ -26,12 +26,8 @@ Run the following command at the root of your documentation, where your `docs.js
 mint dev
 ```
 
-<<<<<<< HEAD
-View your local preview at `http://localhost:3000`.
-=======
 View your local preview at `
 `.
->>>>>>> public/main
 
 ## Publishing changes
 
@@ -46,7 +42,4 @@ Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/sett
 
 ### Resources
 - [Mintlify documentation](https://mintlify.com/docs)
-<<<<<<< HEAD
-=======
 - [Mintlify community](https://mintlify.com/community)
->>>>>>> public/main
