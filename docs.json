@@ -35,7 +35,8 @@
           {
             "group": "Inferencing",
             "pages": [
-              "Serverless Endpoints",
+              "Quickstart API",
+              "Serverless Models",
               "Open Source",
               "Hugging Face",
               "NVIDIA NIM"
@@ -51,10 +52,10 @@
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "API Documentation",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "API Reference",
             "pages": [
               "api-reference/introduction"
             ]
