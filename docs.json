@@ -35,11 +35,24 @@
           {
             "group": "Inferencing",
             "pages": [
-              "Quickstart API",
-              "Serverless Models",
-              "Open Source",
-              "Hugging Face",
-              "NVIDIA NIM"
+              "inferencing/Quickstart API",
+              "inferencing/Serverless Models",
+              {
+                "group": "Model Quickstarts",
+                "pages": [
+                  "inferencing/model-quickstarts/DeepSeek R1 Quickstart",
+                  "inferencing/model-quickstarts/OpenAI GPT-OSS Quickstart",
+                  {
+                    "group": "Qwen Quickstart",
+                    "pages": [
+                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen 3 Coder Quickstart",
+                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen VL Quickstart",
+                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen Image Edit Quickstart"
+                    ]
+                  }
+                ]
+              },
+              "inferencing/Hugging Face"
             ]
           },
           {
@@ -52,14 +65,14 @@
         ]
       },
       {
-        "tab": "API Documentation",
+        "tab": "API References",
         "groups": [
           {
-            "group": "API Reference",
+            "group": "Qubrid APIs",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/Overview"
             ]
-          }          
+          }
         ]
       }
     ],
@@ -97,22 +110,23 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
       "x": "https://x.com/Qubrid_AI",
       "youtube": "https://www.youtube.com/@QubridAI",
       "linkedin": "https://www.linkedin.com/company/qubrid",
-      "reddit": "https://www.reddit.com/r/Qubrid_AI_Platform/"
+      "reddit": "https://www.reddit.com/r/Qubrid_AI_Platform/",
+      "discord": "https://discord.com/invite/Btsqxa6ZnQ"
     }
   }
 }

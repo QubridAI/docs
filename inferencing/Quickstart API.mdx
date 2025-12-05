@@ -1,0 +1,136 @@
+> Accelerate your development with our API within a minute.
+
+Qubrid AI simplifies the process of integrating high-performance open-source models, allowing you to run inference with just a few lines of code.
+
+## 1. Register for an account
+
+Begin by [creating an account](https://platform.qubrid.com/api-keys) to obtain your unique API key.
+
+Once your account is active, configure your environment by exporting your key as a variable named `QUBRID_API_KEY`:
+
+```shell Shell theme={null}
+export QUBRID_API_KEY=xxxxx
+```
+
+## 2. Run your first Model Inference
+
+Select the model you wish to run. For this demonstration, we will utilize **OPENAI GPT OSS 20B** with streaming enabled to show real-time token generation.
+
+<CodeGroup>
+  ```python Python theme={null}
+  import requests
+  import json
+
+  url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+  headers = {
+    "Authorization": "Bearer Qubrid_API_KEY",
+    "Content-Type": "application/json"
+  }
+
+  data = {
+    "model": "openai-gpt-oss-120b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain quantum computing to a 5 year old."
+      }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 65536,
+    "stream": true,
+    "top_p": 0.8
+  }
+
+  response = requests.post(url, headers=headers, json=data)
+  result = response.json()
+  ```
+
+  ```js JavaScript theme={null}
+  const body = {
+    "model": "openai-gpt-oss-120b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain quantum computing to a 5 year old."
+      }
+    ],
+    "temperature": 0.8,
+    "max_tokens": 65536,
+    "stream": true,
+    "top_p": 0.8
+  };
+
+  const res = await fetch("https://platform.qubrid.com/api/v1/qubridai/chat/completions", {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer Qubrid_API_KEY",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });
+
+  const result = await res.json();
+  ```
+
+  ```go Go theme={null}
+  package main
+
+  import (
+    "bytes"
+    "encoding/json"
+    "net/http"
+  )
+
+  func main() {
+    url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+    data := {
+    "model": "openai-gpt-oss-120b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain quantum computing in simple terms"
+      }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 1
+  }
+    jsonData, _ := json.Marshal(data)
+
+    req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+    req.Header.Set("Authorization", "Bearer Qubrid_API_KEY")
+    req.Header.Set("Content-Type", "application/json")
+
+    client := &http.Client{}
+    res, _ := client.Do(req)
+  }
+  ```
+
+  ```curl cURL theme={null}
+  curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+    -H "Authorization: Bearer Qubrid_API_KEY" \
+    -H "Content-Type: application/json" \
+    --data '{
+    "model": "openai-gpt-oss-120b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain quantum computing to a 5 year old."
+      }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 65536,
+    "stream": true,
+    "top_p": 0.8
+  }'
+  ```
+
+</CodeGroup>
+
+Congratulations! You have successfully run your first inference request to the Qubrid AI cloud.
+
+## Next steps
+
+* Check out the [Qubrid AI playground](https://platform.qubrid.com/playground) to try out different models.

@@ -1,0 +1,232 @@
+> Get started with Qwen3 Coder, a powerful 30B parameter model engineered for Excellence in Code Generation and Technical Reasoning.
+
+The **Qwen3-Coder-30B-A35-Instruct** is a state-of-the-art coding model designed to assist developers, data scientists, and engineers with complex programming tasks. With 30 billion parameters and specialized instruction tuning, it delivers enterprise-grade performance in code synthesis, debugging, and technical documentation.
+
+This model excels at understanding intent, following complex architectural constraints, and generating idiomatic code across dozens of programming languages. It strikes an optimal balance between reasoning capability and inference speed, making it suitable for both real-time coding assistants and deep offline analysis.
+
+## Using Qwen3 Coder Inference API
+
+This model is accessible to users on Build Tier 1 or higher. For coding tasks, we recommend using streaming to receive code snippets as they are generated, which improves the perceived latency for interactive applications.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+headers = {
+    "Authorization": "Bearer Qubrid_API_KEY",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are an expert software engineer. Write clean, efficient, and well-documented code."
+        },
+        {
+            "role": "user",
+            "content": "Write a Python function to calculate the Fibonacci sequence using dynamic programming."
+        }
+    ],
+    "temperature": 0.2,
+    "max_tokens": 4096,
+    "stream": True,
+    "top_p": 0.95
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+# Handle streaming response
+for line in response.iter_lines():
+if line:
+print(line.decode('utf-8'))
+````
+
+```js JavaScript theme={null}
+const body = {
+  "model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert software engineer. Write clean, efficient, and well-documented code."
+    },
+    {
+      "role": "user",
+      "content": "Write a Python function to calculate the Fibonacci sequence using dynamic programming."
+    }
+  ],
+  "temperature": 0.2,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 0.95
+};
+
+const res = await fetch("https://platform.qubrid.com/api/v1/qubridai/chat/completions", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer Qubrid_API_KEY",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(body)
+});
+
+// Handle streaming response
+const reader = res.body.getReader();
+// ... processing logic
+````
+
+```go Go theme={null}
+package main
+
+import (
+  "bytes"
+  "encoding/json"
+  "net/http"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+  data := map[string]interface{}{
+    "model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+    "messages": []map[string]string{
+      {
+        "role": "system",
+        "content": "You are an expert software engineer. Write clean, efficient, and well-documented code.",
+      },
+      {
+        "role": "user",
+        "content": "Write a Python function to calculate the Fibonacci sequence using dynamic programming.",
+      },
+    },
+    "temperature": 0.2,
+    "max_tokens": 4096,
+    "stream": false,
+    "top_p": 0.95,
+  }
+  jsonData, _ := json.Marshal(data)
+
+  req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+  req.Header.Set("Authorization", "Bearer Qubrid_API_KEY")
+  req.Header.Set("Content-Type", "application/json")
+
+  client := &http.Client{}
+  res, _ := client.Do(req)
+  defer res.Body.Close()
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer Qubrid_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert software engineer. Write clean, efficient, and well-documented code."
+    },
+    {
+      "role": "user",
+      "content": "Write a Python function to calculate the Fibonacci sequence using dynamic programming."
+    }
+  ],
+  "temperature": 0.2,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 0.95
+}'
+```
+
+</CodeGroup>
+
+This will produce a response similar to the one below:
+
+````json theme={null}
+{
+  "id": "chatcmpl-8908cd8b586c496bbef3bba04edbbe99",
+  "object": "chat.completion",
+  "created": 1764851200,
+  "model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Here is a Python function that calculates the Fibonacci sequence using dynamic programming (memoization) for efficiency:\n\n```python\ndef fibonacci_dp(n, memo={}):\n    \"\"\"\n    Calculate the nth Fibonacci number using dynamic programming.\n    \n    Args:\n        n (int): The position in the Fibonacci sequence.\n        memo (dict): Dictionary to store computed values.\n        \n    Returns:\n        int: The nth Fibonacci number.\n    \"\"\"\n    if n in memo:\n        return memo[n]\n    if n <= 1:\n        return n\n    \n    memo[n] = fibonacci_dp(n - 1, memo) + fibonacci_dp(n - 2, memo)\n    return memo[n]\n\n# Example usage:\nprint(fibonacci_dp(10))  # Output: 55\n```\n\n### Explanation:\n1. **Memoization**: We use a dictionary `memo` to store previously calculated Fibonacci numbers. This avoids redundant calculations.\n2. **Base Case**: If `n` is 0 or 1, we return `n` directly.\n3. **Recursive Step**: We recursively call the function for `n-1` and `n-2`, storing the result in `memo` before returning it.\n\nThis approach reduces the time complexity from exponential O(2^n) to linear O(n).",
+        "refusal": null
+      },
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 45,
+    "total_tokens": 285,
+    "completion_tokens": 240
+  }
+}
+````
+
+## Available Models
+
+The Qwen3 Coder series offers specialized models for different development needs:
+
+**Qwen3-Coder-30B-A35-Instruct**
+
+- **Model String**: `Qwen3-Coder-30B-A35-Instruct`
+- **Hardware Requirements**: Fits comfortably on high-end enterprise GPUs (e.g., A100, H100)
+- **Architecture**: Transformer-based with specialized code pre-training
+- **Context Length**: 32k tokens (extensible)
+- **Best for**: Complex system design, refactoring large codebases, and multi-file generation
+
+## Qwen3 Coder Best Practices
+
+To get the most out of Qwen3 Coder, consider these configuration and prompting strategies:
+
+**Recommended Parameters**
+
+- **Temperature**: Use lower values (`0.1` - `0.3`) for precise code generation where correctness is paramount. Use higher values (`0.6` - `0.8`) for brainstorming or creative coding tasks.
+- **Top-p**: A value of `0.95` is generally recommended to filter out low-probability tokens while maintaining diversity.
+- **System Prompt**: Always include a system prompt that defines the persona (e.g., "Expert Python Developer") and the desired output format (e.g., "Return only the code block").
+
+**Prompting Best Practices**
+
+- **Be Specific**: Clearly state the input format, expected output, and any constraints (e.g., "Use the `requests` library", "Handle edge cases for empty lists").
+- **Provide Context**: If modifying existing code, provide the relevant snippets or function signatures.
+- **Iterative Refinement**: For complex tasks, break them down into smaller steps. Ask the model to plan the architecture first, then implement specific components.
+
+## Qwen3 Coder Use Cases
+
+- **Code Generation**: Generate boilerplate, unit tests, and complete function implementations from natural language descriptions.
+- **Legacy Code Refactoring**: Modernize outdated codebases, improve performance, and translate code between languages (e.g., Java to Python).
+- **Debugging & Analysis**: Paste error logs or buggy code to receive explanations and fixes.
+- **Documentation**: Automatically generate docstrings, API documentation, and README files based on code structure.
+- **SQL Generation**: Convert natural language queries into complex SQL statements for data analysis.
+- **Infrastructure as Code**: Generate Terraform, Kubernetes manifests, or Dockerfiles based on infrastructure requirements.
+
+## Managing Context and Costs
+
+#### **Token Management**
+
+- **Context Window**: While the model supports a significant context window, it is efficient to provide only the necessary files or snippets to reduce latency and cost.
+- **Output Limits**: Use `max_tokens` to prevent the model from generating excessively long responses, especially in automated pipelines.
+
+#### **Cost Optimization**
+
+- **Batch Processing**: For non-urgent tasks like documentation generation, consider batching requests.
+- **Prompt Engineering**: concise prompts reduce input token costs. Avoid sending entire files if only a specific function needs modification.
+
+## Technical Architecture
+
+#### **Model Architecture**
+
+- **Foundation**: Built on the robust Qwen architecture, enhanced with extensive training on code repositories and technical data.
+- **Instruction Tuning**: Fine-tuned on millions of high-quality instruction-response pairs related to programming, ensuring high adherence to user instructions.
+- **Multi-Language Support**: Proficient in Python, JavaScript, C++, Go, Java, Rust, TypeScript, SQL, and many others.

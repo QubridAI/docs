@@ -1,0 +1,182 @@
+> Get the most out of reasoning models like DeepSeek-R1.
+
+Reasoning models such as DeepSeek-R1 are designed to think step-by-step before producing a final answer. This deliberate reasoning approach enables them to perform exceptionally well on complex tasks, including coding, advanced mathematics, planning, puzzles, and agent-driven workflows.
+
+When given a prompt, DeepSeek-R1 generates both its internal chain-of-thought - represented as thinking tokens enclosed within `<think>` tags and the final answer based on that reasoning.
+
+Because these models rely on additional computation and generate more tokens to achieve higher-quality reasoning, their outputs tend to be longer, and they may run slower or incur higher costs compared to non-reasoning models.
+
+<Frame>
+  <img src="/images/deepseek-r1-abhiiiman.png" />
+</Frame>
+
+## How to use DeepSeek-R1 Inference API
+
+Since these models produce longer responses we'll use streaming tokens instead of waiting for the whole response to complete.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+headers = {
+  "Authorization": "Bearer Qubrid_API_KEY",
+  "Content-Type": "application/json"
+}
+
+data = {
+  "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 65536,
+  "stream": true,
+  "top_p": 0.8
+}
+
+response = requests.post(url, headers=headers, json=data)
+result = response.json()
+````
+
+```js JavaScript theme={null}
+const body = {
+  "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.8,
+  "max_tokens": 65536,
+  "stream": true,
+  "top_p": 0.8
+};
+
+const res = await fetch("https://platform.qubrid.com/api/v1/qubridai/chat/completions", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer Qubrid_API_KEY",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(body)
+});
+
+const result = await res.json();
+````
+
+```go Go theme={null}
+package main
+
+import (
+  "bytes"
+  "encoding/json"
+  "net/http"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+  data := {
+  "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing in simple terms"
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": false,
+  "top_p": 1
+}
+  jsonData, _ := json.Marshal(data)
+
+  req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+  req.Header.Set("Authorization", "Bearer Qubrid_API_KEY")
+  req.Header.Set("Content-Type", "application/json")
+
+  client := &http.Client{}
+  res, _ := client.Do(req)
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer Qubrid_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 65536,
+  "stream": true,
+  "top_p": 0.8
+}'
+```
+
+</CodeGroup>
+
+This will produce an output that contains both the Chain-of-thought tokens and the answer:
+
+```plain  theme={null}
+<think>\nOkay, so I need to explain quantum computing to a five-year-old.Hmm, that's a bit tricky
+because quantum computing is a pretty complex topic. ... </think>
+Quantum computers are like super-smart toy boxes that can play with all the toys inside at the same time. This means they can solve problems much faster by checking everything all together, almost like magic!
+```
+
+## Working with DeepSeek-R1
+
+Reasoning models like DeepSeek-R1 should be used differently than standard non-reasoning models to get optimal results.
+
+Here are some usage guides:
+
+* **Temperature**: Use 0.5–0.7 (recommended 0.6) to balance creativity and coherence, avoiding repetitive or nonsensical outputs.
+* **System Prompts**: Omit system prompts entirely. Provide all instructions directly in the user query.
+
+Think of DeepSeek-R1 as a senior problem-solver – provide high-level objectives (e.g., "Analyze this data and identify trends") and let it determine the methodology.
+
+* Strengths: Excels at open-ended reasoning, multi-step logic, and inferring unstated requirements.
+* Over-prompting (e.g., micromanaging steps) can limit its ability to leverage advanced reasoning.
+  Under-prompting (e.g., vague goals like "Help with math") may reduce specificity – balance clarity with flexibility.
+
+## DeepSeek-R1 Use-cases
+
+* **Benchmarking other LLMs**: Evaluates LLM responses with contextual understanding, particularly useful in fields requiring critical validation like law, finance and healthcare.
+* **Code Review**: Performs comprehensive code analysis and suggests improvements across large codebases
+* **Strategic Planning**: Creates detailed plans and selects appropriate AI models based on specific task requirements
+* **Document Analysis**: Processes unstructured documents and identifies patterns and connections across multiple sources
+* **Information Extraction**: Efficiently extracts relevant data from large volumes of unstructured information, ideal for RAG systems
+* **Ambiguity Resolution**: Interprets unclear instructions effectively and seeks clarification when needed rather than making assumptions
+
+## Managing Context and Costs
+
+When working with reasoning models, it's crucial to maintain adequate space in the context window to accommodate the model's reasoning process. The number of reasoning tokens generated can vary based on the complexity of the task - simpler problems may only require a few hundred tokens, while more complex challenges could generate tens of thousands of reasoning tokens.
+
+Cost/Latency management is an important consideration when using these models. To maintain control over resource usage, you can implement limits on the total token generation using the `max_tokens` parameter.
+
+While limiting tokens can reduce costs/latency, it may also impact the model's ability to fully reason through complex problems. Therefore, it's recommended to adjust these parameters based on your specific use case and requirements, finding the optimal balance between thorough reasoning and resource utilization.
+
+## General Limitations
+
+Currently, the capabilities of DeepSeek-R1 fall short of DeepSeek-V3 in general purpose tasks such as:
+
+* Function calling
+* Multi-turn conversation
+* Complex role-playing
+* JSON output.
+
+This is due to the fact that long CoT reinforcement learning training was not optimized for these general purpose tasks and thus for these tasks you should use other models.
+
+
+---

@@ -1,0 +1,259 @@
+> Get started with Qwen VL, a series of powerful vision-language models engineered for  
+> Comprehensive Visual Understanding and Multimodal Interaction.
+
+The **Qwen VL** series (including **Qwen3-VL-8B-Instruct** and **Qwen2.5-VL-7B-Instruct**) represents the forefront of multimodal AI. These models are designed to perceive and understand the world through both text and images, enabling a wide range of applications from visual question answering to document analysis.
+
+These models excel at extracting information from images, describing visual content with high fidelity, and reasoning across multiple modalities. They are optimized for efficiency while maintaining high accuracy, making them suitable for diverse deployment scenarios.
+
+## Using Qwen VL Inference API
+
+These models are accessible to users on Build Tier 1 or higher. The API supports multimodal inputs, allowing you to send both text and image URLs in a single request.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+
+url = "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat"
+headers = {
+    "Authorization": "Bearer Qubrid_API_KEY",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "model": "Qwen/Qwen3-VL-8B-Instruct",
+    "max_tokens": 300,
+    "temperature": 0.7,
+    "stream": False,
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "Describe all images in one sentence."
+                },
+                {
+                "type": "image_url",
+                "image_url": {
+                    "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+                }
+                }
+            ]
+        }
+    ]
+}
+
+response = requests.post(url, headers=headers, json=data)
+print(response.json())
+````
+
+```js JavaScript theme={null}
+const body = {
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "max_tokens": 300,
+  "temperature": 0.7,
+  "stream": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Describe all images in one sentence."
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const res = await fetch("https://platform.qubrid.com/api/v1/qubridai/multimodal/chat", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer Qubrid_API_KEY",
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(body)
+});
+
+const result = await res.json();
+console.log(result);
+````
+
+```go Go theme={null}
+package main
+
+import (
+  "bytes"
+  "encoding/json"
+  "fmt"
+  "net/http"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat"
+
+  data := map[string]interface{}{
+    "model": "Qwen/Qwen3-VL-8B-Instruct",
+    "max_tokens": 300,
+    "temperature": 0.7,
+    "stream": false,
+    "messages": []map[string]interface{}{
+      {
+        "role": "user",
+        "content": []map[string]interface{}{
+          {
+            "type": "text",
+            "text": "Describe all images in one sentence.",
+          },
+          {
+            "type": "image_url",
+            "image_url": map[string]string{
+              "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg",
+            },
+          },
+        },
+      },
+    },
+  }
+  jsonData, _ := json.Marshal(data)
+
+  req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+  req.Header.Set("Authorization", "Bearer Qubrid_API_KEY")
+  req.Header.Set("Content-Type", "application/json")
+
+  client := &http.Client{}
+  res, _ := client.Do(req)
+  defer res.Body.Close()
+
+  // Read and print response...
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat" \
+  -H "Authorization: Bearer Qubrid_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "max_tokens": 300,
+  "temperature": 0.7,
+  "stream": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Describe all images in one sentence."
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}'
+```
+
+</CodeGroup>
+
+This will produce a response similar to the one below:
+
+```json theme={null}
+{
+  "id": "chatcmpl-8908cd8b586c496bbef3bba04edbbe99",
+  "object": "chat.completion",
+  "created": 1764851200,
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The image shows the Statue of Liberty standing tall on Liberty Island in New York Harbor, with a clear blue sky in the background.",
+        "refusal": null
+      },
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 128,
+    "total_tokens": 158,
+    "completion_tokens": 30
+  }
+}
+```
+
+## Available Models
+
+The Qwen VL series offers specialized models for different performance and resource needs:
+
+**Qwen3-VL-8B-Instruct**
+
+- **Model String**: `Qwen/Qwen3-VL-8B-Instruct`
+- **Capabilities**: Enhanced visual reasoning, OCR, and detailed captioning.
+- **Best for**: High-accuracy tasks requiring detailed visual analysis and complex instruction following.
+
+**Qwen2.5-VL-7B-Instruct**
+
+- **Model String**: `Qwen/Qwen2.5-VL-7B-Instruct`
+- **Capabilities**: Strong general-purpose visual understanding and efficient inference.
+- **Best for**: Real-time applications, general visual QA, and cost-effective deployment.
+
+## Qwen VL Best Practices
+
+To get the most out of Qwen VL models, consider these configuration and prompting strategies:
+
+**Recommended Parameters**
+
+- **Temperature**: Use lower values (`0.1` - `0.4`) for factual descriptions and OCR tasks. Use higher values (`0.6` - `0.8`) for creative captioning or storytelling.
+- **Max Tokens**: Ensure `max_tokens` is sufficient for the expected length of the description or answer.
+- **Image Quality**: Provide clear, high-resolution images (URLs) for the best results. The model's ability to see details depends on the input quality.
+
+**Prompting Best Practices**
+
+- **Be Direct**: Ask specific questions about the image (e.g., "What text is written on the sign?", "Describe the color of the car").
+- **Multi-Turn**: You can have a conversation about the image by maintaining the message history.
+- **Context**: If the image relates to a specific domain (e.g., medical, technical), mention that in the text prompt to prime the model.
+
+## Qwen VL Use Cases
+
+- **Visual Question Answering (VQA)**: Answer questions based on the visual content of an image.
+- **Image Captioning**: Generate descriptive captions for accessibility or indexing.
+- **OCR (Optical Character Recognition)**: Extract text from images of documents, signs, or screens.
+- **Document Analysis**: Understand and summarize charts, graphs, and diagrams.
+- **Content Moderation**: Analyze images for specific content or safety concerns.
+- **E-commerce**: Automatically generate product descriptions from product photos.
+
+## Managing Context and Costs
+
+#### **Token Management**
+
+- **Image Tokens**: Images are encoded into tokens. The number of tokens depends on the image resolution and the model's encoding scheme. Be mindful of this when calculating costs and context limits.
+- **Text & Image Balance**: Balance the length of your text prompt with the visual information.
+
+#### **Cost Optimization**
+
+- **Resolution Control**: While higher resolution helps with details, it may increase token usage. Optimize image size for the specific task (e.g., lower resolution for general scene description, higher for OCR).
+- **Batching**: For processing large datasets of images, consider batching requests if your application architecture supports it (though the API handles requests individually).
+
+## Technical Architecture
+
+#### **Model Architecture**
+
+- **Vision Encoder**: Utilizes a powerful vision transformer to process visual inputs.
+- **LLM Backbone**: Built upon the robust Qwen language model architecture, enabling strong reasoning and language generation capabilities.
+- **Alignment**: Fine-tuned on a massive dataset of image-text pairs to ensure high alignment between visual perception and textual output.
