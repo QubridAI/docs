@@ -41,6 +41,8 @@
                 "group": "Model Quickstarts",
                 "pages": [
                   "inferencing/model-quickstarts/DeepSeek R1 Quickstart",
+                  "inferencing/model-quickstarts/Z Image Turbo Quickstart",
+                  "inferencing/model-quickstarts/Stable Diffusion Quickstart",
                   "inferencing/model-quickstarts/OpenAI GPT-OSS Quickstart",
                   {
                     "group": "Qwen Quickstart",
