@@ -46,7 +46,7 @@
                       "inferencing/models-quickstart/chat/GPT OSS 120B",
                       "inferencing/models-quickstart/chat/GPT OSS 20B",
                       "inferencing/models-quickstart/chat/DeepSeek R1 Distill Llama 70B",
-                      "inferencing/models-quickstart/chat/Mistral 7B",
+                      "inferencing/models-quickstart/chat/Mistral (7B) Instruct v0.3",
                       "inferencing/models-quickstart/chat/Nemotron Orchestrator 8B",
                       "inferencing/models-quickstart/chat/Fara 7B"
                     ]
