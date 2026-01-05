@@ -40,16 +40,48 @@
               {
                 "group": "Model Quickstarts",
                 "pages": [
-                  "inferencing/model-quickstarts/DeepSeek R1 Quickstart",
-                  "inferencing/model-quickstarts/Z Image Turbo Quickstart",
-                  "inferencing/model-quickstarts/Stable Diffusion Quickstart",
-                  "inferencing/model-quickstarts/OpenAI GPT-OSS Quickstart",
                   {
-                    "group": "Qwen Quickstart",
+                    "group": "Text Models",
                     "pages": [
-                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen 3 Coder Quickstart",
-                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen VL Quickstart",
-                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen Image Edit Quickstart"
+                      "inferencing/models quickstart/text/gpt-oss-120b",
+                      "inferencing/models quickstart/text/gpt-oss-20b",
+                      "inferencing/models quickstart/text/deepseek-r1-distill-llama-70b",
+                      "inferencing/models quickstart/text/mistral-7b",
+                      "inferencing/models quickstart/text/nemotron-orchestrator-8b",
+                      "inferencing/models quickstart/text/fara-7b"
+                    ]
+                  },
+                  {
+                    "group": "Code Models",
+                    "pages": [
+                      "inferencing/models quickstart/code/qwen3-coder-30b-a3b"
+                    ]
+                  },
+                  {
+                    "group": "Image Models",
+                    "pages": [
+                      "inferencing/models quickstart/image/z-image-turbo",
+                      "inferencing/models quickstart/image/qwen-image-edit",
+                      "inferencing/models quickstart/image/stable-diffusion"
+                    ]
+                  },
+                  {
+                    "group": "Audio Models",
+                    "pages": [
+                      "inferencing/models quickstart/audio/whisper-large-v3"
+                    ]
+                  },
+                  {
+                    "group": "Vision Models",
+                    "pages": [
+                      "inferencing/models quickstart/vision/qwen3-vl-8b-instruct",
+                      "inferencing/models quickstart/vision/qwen3-vl-30b-a3b-instruct"
+                    ]
+                  },
+                  {
+                    "group": "OCR Models",
+                    "pages": [
+                      "inferencing/models quickstart/ocr/hunyuan-ocr-1b"
                     ]
                   }
                 ]

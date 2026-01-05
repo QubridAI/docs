@@ -1,0 +1,241 @@
+---
+title: "Stable Diffusion 3.5 Large (Stability AI)"
+description: "> Stable Diffusion 3.5 Large is an 8.1B parameter text-to-image diffusion model optimized for high-quality, prompt-accurate image generation at professional resolutions."
+---
+
+## Model Quickstart
+
+This section helps you quickly get started with the `Stable Diffusion 3.5 Large` model on the Qubrid AI inferencing platform.
+
+To use this model, you need:
+
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `Stable Diffusion 3.5 Large` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+```py Python theme={null}
+import requests
+import json
+
+url = "https://platform.qubrid.com/api/v1/qubridai/image/generation"
+headers = {
+"Authorization": "Bearer <QUBRID_API_KEY>",
+"Content-Type": "application/json"
+}
+
+data = {
+"model": "stabilityai/stable-diffusion-3.5-large",
+"positive_prompt": "cinematic shot of a lone astronaut standing on a desolate alien planet, glowing orange sunset sky, dust storms swirling, dramatic lighting, ultra-wide lens composition, movie still aesthetic, realistic space suit details, volumetric atmosphere, 8k sci-fi film scene",
+"width": 1024,
+"height": 1024,
+"steps": 30,
+"cfg": 7.5,
+"seed": 42
+}
+
+response = requests.post(url, headers=headers, json=data)
+
+if response.status_code == 200:
+    with open("generated_image.png", "wb") as f:
+        f.write(response.content)
+    print("Image saved to generated_image.png")
+else:
+    print(f"Error {response.status_code}: {response.text}")
+````
+
+```js JavaScript theme={null}
+import fs from "fs";
+const body = {
+  model: "stabilityai/stable-diffusion-3.5-large",
+  positive_prompt:
+    "cinematic shot of a lone astronaut standing on a desolate alien planet, glowing orange sunset sky, dust storms swirling, dramatic lighting, ultra-wide lens composition, movie still aesthetic, realistic space suit details, volumetric atmosphere, 8k sci-fi film scene",
+  width: 1024,
+  height: 1024,
+  steps: 30,
+  cfg: 7.5,
+  seed: 42,
+};
+const res = await fetch(
+  "https://platform.qubrid.com/api/v1/qubridai/image/generation",
+  {
+    method: "POST",
+    headers: {
+      Authorization:
+        "Bearer <QUBRID_API_KEY>",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }
+);
+if (!res.ok) {
+  const errText = await res.text();
+  throw new Error(`API Error ${res.status}: ${errText}`);
+}
+const buffer = Buffer.from(await res.arrayBuffer());
+fs.writeFileSync("generated_image.png", buffer);
+console.log("Image saved to generated_image.png");
+````
+
+```go Go theme={null}
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"os"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/image/generation"
+  data := map[string]interface{}{
+  "model": "stabilityai/stable-diffusion-3.5-large",
+  "positive_prompt": "cinematic shot of a lone astronaut standing on a desolate alien planet, glowing orange sunset sky, dust storms swirling, dramatic lighting, ultra-wide lens composition, movie still aesthetic, realistic space suit details, volumetric atmosphere, 8k sci-fi film scene",
+  "width": 1024,
+  "height": 1024,
+  "steps": 30,
+  "cfg": 7.5,
+  "seed": 42,
+}
+  jsonData, _ := json.Marshal(data)
+  jsonData, err := json.Marshal(data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		log.Fatal(err)
+	}
+	req.Header.Set(
+		"Authorization",
+		"Bearer <QUBRID_API_KEY>",
+	)
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer res.Body.Close()
+	if res.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(res.Body)
+		log.Fatalf("API error %d: %s", res.StatusCode, body)
+	}
+	file, err := os.Create("generated_image.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+	_, err = io.Copy(file, res.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Image saved to generated_image.png")
+}
+
+
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/image/generation" \
+  -H "Authorization: Bearer <QUBRID_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "model": "stabilityai/stable-diffusion-3.5-large",
+  "positive_prompt": "cinematic shot of a lone astronaut standing on a desolate alien planet, glowing orange sunset sky, dust storms swirling, dramatic lighting, ultra-wide lens composition, movie still aesthetic, realistic space suit details, volumetric atmosphere, 8k sci-fi film scene",
+  "width": 1024,
+  "height": 1024,
+  "steps": 30,
+  "cfg": 7.5,
+  "seed": 42
+}'
+```
+
+</CodeGroup>
+
+### API Generated Response
+
+<Frame>
+  <img src="/images/sd-generated-1.png" />
+</Frame>
+
+### Example Generated Image
+
+> Prompt: ethereal elf queen with silver hair and glowing emerald eyes, standing in enchanted forest, magical aura around her, cinematic fantasy lighting, high-detail armor and jewelry, digital art, concept art style, artstation trending
+
+<Frame>
+  <img src="/images/sd-generated-2.png" />
+</Frame>
+
+## Model Overview
+
+**Stable Diffusion 3.5 Large** is a text-to-image generation model designed for high-quality image synthesis with strong prompt adherence. With 8.1 billion parameters, it is the most powerful base model in the Stable Diffusion family and is intended for professional image generation at 1-megapixel resolution. The model focuses on producing visually rich images across a wide range of styles while maintaining accurate interpretation of complex text prompts.
+
+The model is built as a Multimodal Diffusion Transformer (MMDiT) and improves image quality, typography handling, complex prompt understanding, and overall resource efficiency compared to earlier Stable Diffusion versions.
+
+---
+
+## Model at a Glance
+
+| Feature            | Details                                                                |
+| ------------------ | ---------------------------------------------------------------------- |
+| Model Name         | Stable Diffusion 3.5 Large                                             |
+| Provider           | Stability AI                                                           |
+| Model Size         | 8.1B params                                                            |
+| Architecture       | Latent Diffusion Model (LDM) with a UNet backbone and dual CLIP text encoders (OpenCLIP ViT-G and CLIP ViT-L)                                                                               |
+| Default Resolution | 1024 × 1024                                                            |
+| Context Length     | N/A                                                                    |
+| Training Data      | Large-scale image–text datasets (including LAION, aesthetic filtering) |
+| Output Type        | Images generated from text prompts                                     |
+
+
+## When to use?
+
+You should consider using **Stable Diffusion 3.5 Large** if:
+
+- You need high-quality text-to-image generation at 1-megapixel resolution
+- Your application requires strong prompt adherence and complex prompt understanding
+- You want support for multiple visual styles such as photography, illustration, 3D, painting, or line art
+- You need reliable text rendering and typography within generated images
+
+This model is intended for creative, design, and research-focused image generation workflows rather than factual or real-world verification tasks.
+
+---
+
+## Inference Parameters
+| Parameter Name     | Type   | Default | Description                              |
+|--------------------|--------|---------|------------------------------------------|
+| Width              | number | 1024    | Image width in pixels.                   |
+| Height             | number | 1024    | Image height in pixels.                  |
+| Inference Steps    | number | 30      | Number of denoising steps.               |
+| Guidance Scale     | number | 7.5     | How closely to follow the prompt.        |
+| Seed               | number | 50      | Random seed for reproducibility.         |
+| Negative Prompt    | string | —       | Specifies what to exclude from the image.|
+
+
+### Key Features
+
+- **High-Quality Image Generation:** 8.1B parameter model designed for professional-grade image generation at 1MP resolution.
+- **Strong Prompt Adherence:** Improved understanding of complex prompts, typography, and detailed instructions.
+- **Versatile Visual Styles:** Supports a wide range of styles including photography, illustration, 3D, painting, and line art.
+- **Diverse Image Outputs:** Generates images representing varied appearances and features without extensive prompt engineering.
+- **Efficient Diffusion Architecture:** Built on an MMDiT-based latent diffusion framework for better quality and resource efficiency.
+
+---
+
+## Summary
+
+Stable Diffusion 3.5 Large is the most powerful base model in the Stable Diffusion family, built for high-quality text-to-image generation.  
+- It focuses on strong prompt adherence, improved typography, and detailed visual understanding.  
+- The model supports diverse visual styles and produces consistent results at 1-megapixel resolution.  
+- It is suitable for professional creative workflows such as design, illustration, and artistic generation.  
+- The model is not intended for factual accuracy or real-world verification tasks.

@@ -1,0 +1,271 @@
+---
+title: 'DeepSeek R1 Distill LLaMA 70B (DeepSeek)'
+description: '> A distilled large language model based on LLaMA 70B, optimized for efficient reasoning-focused inference.'
+---
+
+<Frame>
+  <img src="/images/deepseek-r1-abhiiiman.png" />
+</Frame>
+
+## Model Quickstart
+
+This section helps you quickly get started with the `DeepSeek R1 Distill LLaMA 70B` model on the Qubrid AI inferencing platform.
+
+To use this model, you need:
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `DeepSeek R1 Distill LLaMA 70B` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+from pprint import pprint
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+headers = {
+  "Authorization": "Bearer <QUBRID_API_KEY>",
+  "Content-Type": "application/json"
+}
+data = {
+  "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": False,
+  "top_p": 0.8
+}
+response = requests.post(
+    url,
+    headers=headers,
+    json=data, 
+)
+content_type = response.headers.get("Content-Type", "")
+if "application/json" in content_type:
+    pprint(response.json())
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+            if payload == "[DONE]":
+                break
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
+````
+
+```js JavaScript theme={null}
+(async () => {
+  const body = {
+    model: "deepseek-ai/deepseek-r1-distill-llama-70b",
+    messages: [
+      {
+        role: "user",
+        content: "Explain quantum computing to a 5 year old.",
+      },
+    ],
+    temperature: 0.8,
+    max_tokens: 4096,
+    stream: false,
+    top_p: 0.8,
+  };
+  const res = await fetch(
+    "https://platform.qubrid.com/api/v1/qubridai/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer <QUBRID_API_KEY>",
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const result = await res.json();
+    console.log(result);
+  } else {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let buffer = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.replace("data:", "").trim();
+        if (payload === "[DONE]") return;
+        try {
+          const chunk = JSON.parse(payload);
+          console.log(chunk);
+        } catch {
+          console.log("Raw chunk:", payload);
+        }
+      }
+    }
+  }
+})();
+````
+
+```go Go theme={null}
+package main
+
+import (
+	"bytes"
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+  data := map[string]interface{}{
+    "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+    "messages":  []map[string]string{
+      {
+        "role": "user",
+        "content": "Explain quantum computing in simple terms",
+    },
+},
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 1,
+}
+  jsonData, err := json.Marshal(data)
+    if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	contentType := res.Header.Get("Content-Type")
+	if strings.Contains(contentType, "application/json") {
+		var result map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		return
+	}
+	scanner := bufio.NewScanner(res.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "[DONE]" {
+			break
+		}
+		var chunk map[string]interface{}
+		if err := json.Unmarshal([]byte(payload), &chunk); err != nil {
+			fmt.Println("Raw chunk:", payload)
+			continue
+		}
+		fmt.Printf("%+v\n", chunk)
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer Qubrid_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 0.8
+}'
+```
+
+</CodeGroup>
+
+## Model Overview
+
+**DeepSeek R1 Distill LLaMA 70B** is a distilled large language model optimized for efficient, high-level reasoning and conversational intelligence. It is trained by distilling high-quality reasoning outputs from DeepSeek-R1 into a 70B LLaMA-based architecture, delivering near frontier-level analytical performance while running on significantly smaller hardware compared to full-scale models.
+
+## Model at a Glance
+
+| Feature              | Details                                                                 |
+|----------------------|-------------------------------------------------------------------------|
+| Model ID             | deepseek-r1-distill-llama-70b                                           |
+| Architecture         | LLaMA-3.1-70B (Distilled)                                               |
+| Model Size           | 70B parameters                                                          |
+| Parameters           | 6                                                                       |
+| Training Data        | Distilled from DeepSeek R1 high-quality reasoning outputs with LLaMA 70B |
+| Context Length       | 64K tokens                                                              |
+
+## When to use?
+
+Use **DeepSeek R1 Distill LLaMA 70B** if you need:
+- Strong reasoning and chain-of-thought capabilities for complex tasks
+- Long-context support up to 64K tokens
+- Efficient deployment compared to full, non-distilled frontier models
+- Open-source licensing suitable for on-premise or custom deployments
+- Reliable performance across math, logic, coding, and research workflows
+---
+
+### Inference Parameters
+| Parameter Name     | Type    | Default | Description                                                                 |
+|--------------------|---------|---------|-----------------------------------------------------------------------------|
+| Streaming          | boolean | true    | Enable streaming responses for real-time output.                            |
+| Temperature        | number  | 0.3     | Controls creativity and randomness; higher values produce more diverse output. |
+| Max Tokens         | number  | 10000   | Defines the maximum number of tokens the model is allowed to generate.      |
+| Top P              | number  | 1       | Nucleus sampling that limits token selection to a subset of top probability mass. |
+| Reasoning Effort   | select  | medium  | Adjusts the depth of reasoning and problem-solving effort; higher values increase response quality at the cost of latency. |
+| Reasoning Summary  | select  | auto    | Controls verbosity of reasoning explanations: auto, concise, or detailed   |
+---
+
+### Key Features
+1. **High-Quality Reasoning:** Optimized for strong reasoning and chain-of-thought capabilities, suitable for complex tasks.  
+2. **Long-Context Support:** Can handle up to 64K tokens, enabling processing of very large inputs.  
+3. **Efficient Deployment:** Distilled model runs efficiently compared to full 70B models, reducing hardware requirements.  
+4. **Configurable Inference:** Supports adjustable parameters like temperature, streaming, reasoning effort, and verbosity for flexible and precise outputs.  
+
+## Summary
+
+DeepSeek R1 Distill LLaMA 70B brings high-quality reasoning capabilities into a more accessible 70B-parameter distilled model. It supports long-context reasoning, configurable inference settings, and open deployment under an MIT license. The model is well suited for advanced reasoning, technical assistance, and research use cases where efficiency and accessibility are priorities.
+

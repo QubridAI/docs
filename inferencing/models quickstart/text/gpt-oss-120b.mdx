@@ -1,0 +1,326 @@
+---
+title: 'GPT-OSS 120B (OpenAI)'
+description: ">A high-capacity reasoning model optimized for complex analysis, advanced agent workflows, and large-scale inference."
+---
+
+<Frame>
+  <img src="/images/gpt-oss-abhiiiman.png" />
+</Frame>
+
+## Model Quickstart
+
+This section helps you quickly get started with the `GPT-OSS 120B` model on the Qubrid AI inferencing platform.
+
+To use this model, you need:
+
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `GPT-OSS 120B` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+from pprint import pprint
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+headers = {
+"Authorization": "Bearer <QUBRID_API_KEY>",
+"Content-Type": "application/json"
+}
+
+data = {
+"model": "openai/gpt-oss-120b",
+"messages": [
+  {
+    "role": "user",
+    "content": "Explain quantum computing to a 5 year old."
+  }
+],
+"temperature": 0.7,
+"max_tokens": 4096,
+"stream": False,
+"top_p": 0.8
+}
+
+response = requests.post(
+    url,
+    headers=headers,
+    json=data, 
+)
+content_type = response.headers.get("Content-Type", "")
+if "application/json" in content_type:
+    pprint(response.json())
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+            if payload == "[DONE]":
+                break
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
+````
+
+```js JavaScript theme={null}
+(async () => {
+  const body = {
+    model: "openai/gpt-oss-120b",
+    messages: [
+      {
+        role: "user",
+        content: "Explain quantum computing to a 5 year old.",
+      },
+    ],
+    temperature: 0.8,
+    max_tokens: 4096,
+    stream: false,
+    top_p: 0.8,
+  };
+
+  const res = await fetch(
+    "https://platform.qubrid.com/api/v1/qubridai/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer <QUBRID_API_KEY>",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const result = await res.json();
+    console.log(result);
+  } else {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let buffer = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.replace("data:", "").trim();
+        if (payload === "[DONE]") return;
+        try {
+          const chunk = JSON.parse(payload);
+          console.log(chunk);
+        } catch {
+          console.log("Raw chunk:", payload);
+        }
+      }
+    }
+  }
+})();
+````
+
+```go Go theme={null}
+package main
+
+import (
+	"bytes"
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+  data := map[string]interface{}{
+  "model": "openai/gpt-oss-120b",
+  "messages": []map[string]string{
+    {
+      "role": "user",
+      "content": "Explain quantum computing in simple terms",
+    },
+},
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 1,
+}
+  jsonData, err := json.Marshal(data)
+    if err != nil {
+		panic(err)
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	contentType := res.Header.Get("Content-Type")
+	if strings.Contains(contentType, "application/json") {
+		var result map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		return
+	}
+	scanner := bufio.NewScanner(res.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "[DONE]" {
+			break
+		}
+		var chunk map[string]interface{}
+		if err := json.Unmarshal([]byte(payload), &chunk); err != nil {
+			fmt.Println("Raw chunk:", payload)
+			continue
+		}
+		fmt.Printf("%+v\n", chunk)
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer Qubrid_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "openai/gpt-oss-120b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 0.8
+}'
+```
+
+</CodeGroup>
+
+This will produce the response below:
+
+```plain theme={null}
+{
+    "id": "chatcmpl-4968cd8b586c496bbef3bba04edbbe75",
+    "object": "chat.completion",
+    "created": 1764850905,
+    "model": "openai/gpt-oss-120b",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "## Quantum Computing – A Primer\n\n### 1. What Is a Quantum Computer?\nA **quantum computer** is a device that performs computation using the laws of quantum mechanics instead of the classical physics that underlies today's laptops and smartphones.  \nWhile a classical computer manipulates bits that are either **0** or **1**, a quantum computer manipulates **quantum bits** (or **qubits**) that can exist in a superposition of both states simultaneously. This property, together with **entanglement** and **interference**, lets a quantum processor explore many computational paths in parallel, potentially solving certain problems far faster than any classical machine.\n\n---\n\n### 2. Core Quantum Concepts\n\n| Classical Idea | Quantum",
+                "refusal": null,
+                "annotations": null,
+                "audio": null,
+                "function_call": null,
+                "tool_calls": [],
+                "reasoning_content": "We need to respond with an explanation of quantum computing. The system messages: we are ChatGPT, we have to follow policies. There's no disallowed content. Provide a clear, thorough explanation, possibly with analogies, basics of qubits, superposition, entanglement, quantum gates, algorithms, challenges, current state, future. Should be accessible but also technical. Use headings. Possibly ask follow-up. Provide references. Ensure no copyrighted text. Provide original content. Let's produce a comprehensive answer."
+            },
+            "logprobs": null,
+            "finish_reason": "length",
+            "stop_reason": null,
+            "token_ids": null
+        }
+    ],
+    "service_tier": null,
+    "system_fingerprint": null,
+    "usage": {
+        "prompt_tokens": 75,
+        "total_tokens": 331,
+        "completion_tokens": 256,
+        "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "kv_transfer_params": null
+}
+```
+
+To access just the chain-of-thought reasoning you can look at the `reasoning` property:
+
+```plain theme={null}
+We need to respond with an explanation of quantum computing. The system messages: we are ChatGPT, we have to follow policies. There's no disallowed content. Provide a clear, thorough explanation, possibly with analogies, basics of qubits, superposition, entanglement, quantum gates, algorithms, challenges, current state, future. Should be accessible but also technical. Use headings. Possibly ask follow-up. Provide references. Ensure no copyrighted text. Provide original content. Let's produce a comprehensive answer.
+```
+
+## Model Overview
+
+**gpt-oss-120b** is the most powerful open-weight model in the gpt-oss family. It is designed for large-scale reasoning, agentic workflows, and long-context tasks while remaining deployable on a single high-end GPU. The model supports configurable reasoning levels, full chain-of-thought access, tool use, and fine-tuning, making it suitable for advanced inference and customization scenarios.
+
+## Model at a Glance
+
+| Feature                     | Details                                                                 |
+|-----------------------------|-------------------------------------------------------------------------|
+| Model ID                    | openai-gpt-oss-120b                                                     |
+| Model Type                  | Open-weight large language model                                        |
+| Architecture                | Large-Scale Mixture-of-Experts (MoE) with adaptive routing, SwiGLU activations, hierarchical sparse attention, and token-choice MoE for reasoning efficiency                                                                                              |
+| Context Length              | 256k Tokens                                                             |
+| Model Size                  | 121.7B Params                                                           |
+| Parameters                  | 6                                                                       |
+| Training Data               | Extensive multi-domain knowledge corpus with safety-aligned fine-tuning, enterprise & community feedback loops, and agentic task simulation datasets                                                                                                |
+
+## When to use?
+
+Use **gpt-oss-120b** if you need:
+- Long-context reasoning with very large input and output windows
+- Adjustable reasoning depth based on latency and task complexity
+- Full access to the model’s chain-of-thought for debugging and analysis
+- Agentic capabilities such as function calling, web browsing, and Python execution
+- A permissively licensed open-weight model suitable for commercial deployment
+- The ability to fine-tune the model for domain-specific use cases
+
+### Inference Parameters
+
+| Parameter Name     | Type    | Default  | Description                                                                 |
+|--------------------|---------|----------|-----------------------------------------------------------------------------|
+| Streaming          | boolean | true     | Enable streaming responses for real-time output.                            |
+| Temperature        | number  | 0.7      | Controls randomness. Higher values mean more creative but less predictable output. |
+| Max Tokens         | number  | 4096     | Maximum number of tokens to generate in the response.                       |
+| Top P              | number  | 1        | Nucleus sampling: considers tokens with top_p probability mass.            |
+| Reasoning Effort   | select  | medium   | Controls how much reasoning effort the model should apply.                 |
+| Reasoning Summary  | select  | concise  | Controls the level of explanation in the reasoning summary.                |
+
+## Key Features
+
+- **Configurable Reasoning Effort**: Supports low, medium, and high reasoning levels via system prompts  
+- **Full Chain-of-Thought Access**: Provides visibility into the model’s reasoning process for debugging and trust  
+- **Agentic Capabilities**: Built-in support for function calling, web browsing, Python code execution, and structured outputs   
+- **Fine-Tunable**: Can be customized through parameter fine-tuning  
+
+## Summary
+
+gpt-oss-120b is a high-capacity open-weight language model built for advanced reasoning, long-context tasks, and agentic workflows. With configurable reasoning levels, full chain-of-thought access, tool use, and fine-tuning support, it is well suited for complex inference pipelines. Its Apache 2.0 license and efficient MXFP4 quantization make it accessible for both research and production deployments on modern GPUs.
