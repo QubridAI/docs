@@ -1,0 +1,308 @@
+---
+title: 'GPT OSS 20B (OpenAI)'
+description: '> A low-latency reasoning model with adjustable reasoning depth, built for local deployment and agentic workflows'
+---
+
+## About the Provider 
+**OpenAI** is the organization behind GPT OSS 20B. They are a major AI research lab and platform provider known for creating influential generative AI models (like the GPT series). With GPT-OSS, OpenAI is extending its technology into the open-source ecosystem, empowering developers and enterprises to run powerful language models without proprietary restrictions.
+
+## Model Quickstart
+
+This section helps you quickly get started with the `openai/gpt-oss-20b` model on the Qubrid AI inferencing platform.
+
+To use this model, you need:
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `openai/gpt-oss-20b` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+from pprint import pprint
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+headers = {
+  "Authorization": "Bearer <QUBRID_API_KEY>",
+  "Content-Type": "application/json"
+}
+
+data = {
+  "model": "openai/gpt-oss-20b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": False,
+  "top_p": 0.8
+}
+response = requests.post(
+    url,
+    headers=headers,
+    json=data, 
+)
+content_type = response.headers.get("Content-Type", "")
+if "application/json" in content_type:
+    pprint(response.json())
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+
+            if payload == "[DONE]":
+                break
+
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
+````
+
+```js JavaScript theme={null}
+(async () => {
+  const body = {
+    model: "openai/gpt-oss-20b",
+    messages: [
+      {
+        role: "user",
+        content: "Explain quantum computing to a 5 year old.",
+      },
+    ],
+    temperature: 0.8,
+    max_tokens: 4096,
+    stream: false,
+    top_p: 0.8,
+  };
+
+  const res = await fetch(
+    "https://platform.qubrid.com/api/v1/qubridai/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer <QUBRID_API_KEY>",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const result = await res.json();
+    console.log(result);
+  } else {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let buffer = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.replace("data:", "").trim();
+        if (payload === "[DONE]") return;
+        try {
+          const chunk = JSON.parse(payload);
+          console.log(chunk);
+        } catch {
+          console.log("Raw chunk:", payload);
+        }
+      }
+    }
+  }
+})();
+````
+
+```go Go theme={null}
+package main
+
+import (
+	"bytes"
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+  data := map[string]interface{} {
+  "model": "openai/gpt-oss-20b",
+  "messages": []map[string]string{
+    {
+      "role": "user",
+      "content": "Explain quantum computing in simple terms",
+    },
+},
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 1,
+}
+ jsonData, err := json.Marshal(data)
+    if err != nil {
+		panic(err)
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	contentType := res.Header.Get("Content-Type")
+	if strings.Contains(contentType, "application/json") {
+		var result map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		return
+	}
+	scanner := bufio.NewScanner(res.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "[DONE]" {
+			break
+		}
+		var chunk map[string]interface{}
+		if err := json.Unmarshal([]byte(payload), &chunk); err != nil {
+			fmt.Println("Raw chunk:", payload)
+			continue
+		}
+		fmt.Printf("%+v\n", chunk)
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer Qubrid_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "openai/gpt-oss-20b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 0.8
+}'
+```
+</CodeGroup>
+
+## Model Overview
+
+**GPT OSS 20B** is a large language model optimized for low-latency inference, local deployments, and specialized use cases.
+It provides strong reasoning capabilities with adjustable reasoning depth, making it suitable for applications that require transparency, control, and efficient execution without large GPU infrastructure.
+
+### Model at a Glance
+
+| Feature | Details |
+|---------|---------|
+| Model ID | `openai/gpt-oss-20b` |
+| Provider | OpenAI |
+| Architecture | Compact Mixture-of-Experts (MoE) with SwiGLU activations, Token-choice MoE, Alternating attention mechanism |
+| Model Size | 20.9B Params |
+| Parameters | 4 |
+| Context Length | 131.1k Tokens |
+| Training Data | Comprehensive safety evaluation and testing protocols, Global community feedback integration |
+
+### When to use?
+
+You should consider using **GPT OSS 20B** if:
+
+- You need fast, low-latency inference
+- You want control over reasoning depth
+- Your application benefits from transparent reasoning
+- You are building tool-based or agentic workflows
+- You want to fine-tune on consumer-grade hardware
+This model is not intended as a lightweight chat model, but as a reasoning-focused inference model.
+
+### Reasoning Control
+GPT OSS 20B allows you to control how deeply the model reasons before responding.
+
+| Level | What it means |
+|-------|--------------|
+| Low | Fast responses for simple conversations |
+| Medium | Balanced speed and reasoning depth |
+| High | Deep, multi-step analysis for complex tasks |
+
+You can set the reasoning level directly in the system prompt:
+
+```plain theme={null}
+Reasoning: high
+```
+
+### Inference Parameters
+| Parameter Name | Type    | Default | Description                                                           |
+|----------------|---------|---------|-----------------------------------------------------------------------|
+| Streaming      | boolean | true    | Enable streaming responses for real-time output.                     |
+| Temperature    | number  | 0.7     | Controls randomness. Higher values mean more creative but less predictable output. |
+| Max Tokens     | number  | 4096    | Maximum number of tokens to generate in the response.                |
+| Top P          | number  | 1       | Nucleus sampling: considers tokens with top_p probability mass.       |
+
+### Key Features
+1. **Low-latency reasoning** – Optimized for fast inference while providing strong reasoning capabilities with adjustable reasoning depth.  
+2. **Adjustable reasoning depth** – Allows control over how deeply the model analyzes a problem (low, medium, high) for speed or detailed multi-step reasoning.  
+3. **Transparency and debugging** – Provides full chain-of-thought access, making outputs easier to understand and debug.  
+4. **Agentic and tool capabilities** – Supports function calling, web browsing, structured outputs, and tool-based workflows for advanced applications.
+
+
+### Chain-of-Thought Access
+The model provides full chain-of-thought visibility, enabling :
+- Easier debugging
+- Better understanding of how responses are generated
+- Increased trust in outputs
+
+### Tool and Agent Capabilities
+**GPT OSS 20B** supports agentic workflows and tool usage including:
+- Function calling with defined schemas
+- Web browsing using built-in browsing tools
+- Agentic operations such as browser-based tasks
+- Structured outputs
+
+
+## Summary
+**GPT OSS 20B** is a low-latency reasoning model designed for efficient inference and local deployments.
+- It provides adjustable reasoning depth to balance speed and analysis.
+- The model exposes internal reasoning for transparency and debugging.
+- It supports agentic workflows, tool usage, and structured outputs.
+- GPT-OSS 20B can be fine-tuned and run on consumer-grade hardware.

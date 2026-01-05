@@ -1,0 +1,206 @@
+---
+title: "Whisper Large v3 (OpenAI)"
+description: " > Whisper Large v3 is a powerful automatic speech recognition (ASR) and speech-to-text translation model."
+---
+
+## About the Provider 
+**OpenAI** is the organization behind Whisper Large v3. OpenAI is a major AI research lab and platform provider that builds a wide range of generative models, including text, image, code, and audio models.
+
+## Model Quickstart
+
+This section helps you quickly get started with the `openai/whisper-large-v3` model on the Qubrid AI inferencing platform.
+To use this model, you need:
+
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `openai/whisper-large-v3` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+
+url = "https://platform.qubrid.com/api/v1/qubridai/audio/transcribe"
+
+headers = {
+    "Authorization": "Bearer <QUBRID_API_KEY>"
+}
+files = {
+    "file": open("audio.wav", "rb")
+}
+data = {
+    "model": "openai/whisper-large-v3",
+    "language": "en" 
+}
+response = requests.post(
+    url,
+    headers=headers,
+    files=files,
+    data=data
+)
+print(response.json())
+````
+
+```js JavaScript theme={null}
+import fs from "fs";
+import path from "path";
+const buffer = fs.readFileSync("audio.wav");
+const form = new FormData();
+form.append("file", new Blob([buffer], { type: "audio/wav" }), "audio.wav");
+form.append("model", "openai/whisper-large-v3");
+form.append("language", "en");
+const res = await fetch(
+  "https://platform.qubrid.com/api/v1/qubridai/audio/transcribe",
+  {
+    method: "POST",
+    headers: {
+      Authorization: "Bearer Qubrid_API_KEY",
+    },
+    body: form,
+  }
+);
+const result = await res.json();
+console.log(JSON.stringify(result, null, 2));
+````
+
+```go Go theme={null}
+package main
+
+import (
+	"bytes"
+	"fmt"
+	"io"
+	"mime/multipart"
+	"net/http"
+	"os"
+)
+
+func main() {
+	url := "https://platform.qubrid.com/api/v1/qubridai/audio/transcribe"
+
+	body := &bytes.Buffer{}
+	writer := multipart.NewWriter(body)
+
+	_ = writer.WriteField("model", "openai/whisper-large-v3")
+	_ = writer.WriteField("language", "en")
+
+	file, err := os.Open("audio.wav")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	part, err := writer.CreateFormFile("file", "audio.wav")
+	if err != nil {
+		panic(err)
+	}
+	_, err = io.Copy(part, file)
+	if err != nil {
+		panic(err)
+	}
+	writer.Close()
+	req, err := http.NewRequest("POST", url, body)
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Authorization", "Bearer Qubrid_API_KEY")
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	respBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(respBody))
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/audio/transcribe" \
+  -H "Authorization: Bearer <QUBRID_API_KEY>" \
+  -F "model=openai/whisper-large-v3" \
+  -F "language=en" \
+  -F "file=@<YOUR-AUDIO-COMPLETE-PATH>"
+```
+
+</CodeGroup>
+
+## Model Overview
+
+Whisper Large V3 is a general-purpose speech recognition and speech translation model developed by OpenAI. It is designed for high-accuracy automatic speech recognition (ASR) across a wide range of languages, audio qualities, and recording conditions.
+
+The model is trained on more than 5 million hours of labeled and pseudo-labeled audio, enabling strong zero-shot performance across datasets and domains. Whisper Large V3 improves upon previous versions with better multilingual accuracy and enhanced audio representation.
+
+### Model at a Glance
+
+| Feature | Details |
+|--------|---------|
+| Model ID | openai/whisper-large-v3 |
+| Provider | OpenAI |
+| Model Type | Speech-to-Text (ASR) & Speech Translation |
+| Architecture | Encoder-Decoder Transformer |
+| Context Length | 30sec/chunk |
+| Model Size | 1.55B params |
+| Parameters | 8 |
+
+### Supported languages
+| Code | Language     | Code | Language     |
+|------|--------------|------|--------------|
+| en   | English      | es   | Spanish      |
+| fr   | French       | de   | German       |
+| zh   | Chinese      | ja   | Japanese     |
+| ko   | Korean       | ru   | Russian      |
+| ar   | Arabic       | hi   | Hindi        |
+| pt   | Portuguese   | it   | Italian      |
+
+### When to use?
+You should consider using Whisper Large V3 if:
+- Transcription accuracy is more important than speed
+- Your application requires support for many languages
+- You work with noisy, low-quality, or challenging audio
+- You need reliable speech recognition for long-form audio
+- Your workflow includes speech translation or language identification
+
+### Inference Parameters
+| Parameter Name     | Type    | Default                     | Description                                                                 |
+|--------------------|---------|-----------------------------|-----------------------------------------------------------------------------|
+| Task               | select  | transcribe                  | Choose whether to transcribe to the original language or translate to English. |
+| Language            | select  | en                          | Select the spoken language (auto-detect if unsure).                          |
+| Temperature         | number  | 0                           | Controls randomness of output — 0.0 means deterministic.                    |
+| Initial Prompt      | string  | Business meeting conversation | Guides the model to better understand the audio context.                     |
+| Word Timestamps     | boolean | true                        | Return per-word timestamps for the transcription.                           |
+| VadFilter           | boolean | true                        | Enable for long pauses or background noise; disable for tightly trimmed clips to save compute. |
+| Return Segments     | boolean | true                        | Return transcription with time-segment metadata.                             |
+| Output Format       | select  | json                        | Choose the transcription output format.                                     |
+
+### Key Model Features
+
+- Uses 128 Mel frequency bins in the spectrogram input (previous versions used 80)
+- Trained on 1M hours of weakly labeled audio and 4M hours of pseudo-labeled audio
+- Shows 10–20% error reduction compared to Whisper Large V2 across many languages
+- Designed to handle noisy audio, varied recording conditions, and diverse accents
+
+### Supported Capabilities
+
+- Multilingual speech recognition
+- Speech translation
+- Language identification
+- Short-form and long-form transcription
+
+### Best Practices
+
+- Use this model when accuracy is the top priority
+- Process long audio using 30-second segments for optimal performance
+- Prefer sequential long-form transcription for maximum accuracy
+- Use chunked long-form transcription when faster processing is required
+- Rely on this model for challenging audio conditions
+
+### Summary
+Whisper Large V3 is a high-accuracy speech recognition and translation model. It supports transcription across more than 99 languages. The model improves accuracy over previous versions with better audio representation. It is optimized for both short-form and long-form audio processing and is best suited for applications where transcription quality is critical.
