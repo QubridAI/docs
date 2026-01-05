@@ -1,0 +1,359 @@
+---
+title: 'Qwen3 VL 8B Instruct (Qwen)'
+description: '> A vision-language instruction-tuned model for multimodal understanding, OCR, and visual reasoning'
+---
+<Frame>
+  <img src="/images/qwen-vl-abhiiiman.png" />
+</Frame>
+
+## About the Provider
+Qwen is an AI model family developed by Alibaba Group, a major Chinese technology and cloud computing company. Through its Qwen initiative, Alibaba builds and open-sources advanced language, images and coding models under permissive licenses to support innovation, developer tooling, and scalable AI integration across applications.
+
+## Model Quickstart
+
+This section helps you quickly get started with the `Qwen/Qwen3-VL-8B-Instruct` model on the Qubrid AI inferencing platform.
+
+To use this model, you need:
+
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `Qwen/Qwen3-VL-8B-Instruct` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+from pprint import pprint
+
+url = "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat"
+headers = {
+  "Authorization": "Bearer <QUBRID_API_KEY>",
+  "Content-Type": "application/json"
+}
+
+data = {
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "max_tokens": 4096,
+  "temperature": 0.7,
+  "stream": False,
+  "messages": [
+      {
+          "role": "user",
+          "content": [
+              {
+                  "type": "text",
+                  "text": "Describe all images in one sentence."
+              },
+              {
+              "type": "image_url",
+              "image_url": {
+                  "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+              }
+              }
+          ]
+      }
+  ]
+}
+response = requests.post(
+    url,
+    headers=headers,
+    json=data,
+    stream=True  
+)
+content_type = response.headers.get("Content-Type", "")
+if "application/json" in content_type:
+    pprint(response.json())
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+            if payload == "[DONE]":
+                break
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
+
+````
+
+```js JavaScript theme={null}
+(async () => {
+  const body = {
+    model: "Qwen/Qwen3-VL-8B-Instruct",
+    max_tokens: 4096,
+    temperature: 0.7,
+    stream: false,
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: "Describe all images in one sentence.",
+          },
+          {
+            type: "image_url",
+            image_url: {
+              url: "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg",
+            },
+          },
+        ],
+      },
+    ],
+  };
+
+  const res = await fetch(
+    "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat",
+    {
+      method: "POST",
+      headers: {
+        Authorization:
+        "Bearer Qubrid_API_KEY",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const result = await res.json();
+    console.log(result);
+  }
+  else {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let buffer = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.replace("data:", "").trim();
+        if (payload === "[DONE]") return;
+        try {
+          const chunk = JSON.parse(payload);
+          console.log(chunk);
+        } catch {
+          console.log("Raw chunk:", payload);
+        }
+      }
+    }
+  }
+})();
+
+````
+
+```go Go theme={null}
+package main
+
+import (
+	"bufio"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+)
+
+func main() {
+	url := "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat"
+	data := map[string]interface{}{
+		"model":       "Qwen/Qwen3-VL-8B-Instruct",
+		"max_tokens":  4096,
+		"temperature": 0.7,
+		"stream": true, 
+		"messages": []interface{}{
+			map[string]interface{}{
+				"role": "user",
+				"content": []interface{}{
+					map[string]interface{}{
+						"type": "text",
+						"text": "Describe all images in one sentence.",
+					},
+					map[string]interface{}{
+						"type": "image_url",
+						"image_url": map[string]interface{}{
+							"url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg",
+						},
+					},
+				},
+			},
+		},
+	}
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	contentType := res.Header.Get("Content-Type")
+	if strings.Contains(contentType, "application/json") {
+		var result map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		return
+	}
+	scanner := bufio.NewScanner(res.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "[DONE]" {
+			break
+		}
+		var chunk map[string]interface{}
+		if err := json.Unmarshal([]byte(payload), &chunk); err != nil {
+			fmt.Println("Raw chunk:", payload)
+			continue
+		}
+		fmt.Printf("%+v\n", chunk)
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+}  
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat" \
+  -H "Authorization: Bearer <QUBRID_API_KEY>" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "max_tokens": 4096,
+  "temperature": 0.7,
+  "stream": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Describe all images in one sentence."
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}'
+```
+
+</CodeGroup>
+
+This will produce a response similar to the one below:
+
+```json theme={null}
+{
+  "id": "chatcmpl-8908cd8b586c496bbef3bba04edbbe99",
+  "object": "chat.completion",
+  "created": 1764851200,
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The image shows the Statue of Liberty standing tall on Liberty Island in New York Harbor, with a clear blue sky in the background.",
+        "refusal": null
+      },
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 128,
+    "total_tokens": 158,
+    "completion_tokens": 30
+  }
+}
+```
+
+## Model Overview
+
+**Qwen3 VL 8B Instruct** is a vision-language instruction-tuned model designed to understand and reason over both text and images. It supports OCR, streaming responses, and rich multimodal conversations, making it suitable for vision-language inference workflows that require text–image understanding rather than content generation. The model focuses on strong visual perception, spatial reasoning, long-context understanding, and multimodal reasoning while remaining accessible for deployment across different environments.
+
+---
+
+## Model at a Glance
+
+| Feature              | Details                                                                 |
+|----------------------|-------------------------------------------------------------------------|
+| Model ID             | Qwen/Qwen3-VL-8B-Instruct                                                   |
+| Provider             | Alibaba Cloud (QwenLM)                                                   |
+| Model Type           | Vision-Language Instruction-Tuned Model                                 |
+| Architecture         | Transformer decoder-only (Qwen3-VL with ViT visual encoder)                                                                                          |
+| Model Size           | 9B                                                                       |
+| Parameters           | 6                                                                       |
+| Context Length       | 32K tokens                                                               |
+| Training Data        | Multilingual multimodal dataset (text + images)                          |
+                                                                   
+---
+
+## When to use?
+
+Use **Qwen3 VL 8B. Instruct** if your inference workload requires:
+- Understanding and reasoning over images and text together
+- OCR across multiple languages with structured document understanding
+- Visual question answering and image captioning
+- Multimodal chat with streaming support
+- Spatial reasoning and visual perception without image generation needs
+
+---
+
+### Inference Parameters
+| Parameter Name   | Type    | Default | Description                                   |
+|------------------|---------|---------|-----------------------------------------------|
+| Streaming        | boolean | true    | Enable streaming responses for real-time output. |
+| Temperature      | number  | 0.7     | Controls randomness in the output.            |
+| Max Tokens       | number  | 2048    | Maximum number of tokens to generate.         |
+| Top P            | number  | 0.9     | Controls nucleus sampling.                    |
+| Top K            | number  | 50      | Limits sampling to the top-k tokens.          |
+| Presence Penalty | number  | 0       | Discourages repeated tokens in the output.    |
+
+
+## Key Features
+
+- **Strong Vision-Language Capabilities**: Handles text and image understanding in a unified manner  
+- **Multilingual OCR**: Supports OCR in up to 32 languages with improved robustness  
+- **Long-Context & Video Understanding**: Designed for extended context reasoning within the Qwen3-VL family  
+- **Streaming Support**: Enables fast, incremental response generation  
+- **Advanced Spatial & Visual Reasoning**: Understands object positions, layouts, and visual relationships  
+
+---
+
+## Summary
+
+**Qwen3 VL 8B Instruct** is a vision-language inference model focused on understanding, reasoning, and interaction across text and images. It supports OCR, streaming responses, and multimodal conversations with strong visual perception and spatial reasoning. The model is suited for document analysis, visual QA, and multimodal chat scenarios. It does not perform image generation and is optimized for understanding tasks. Its Apache 2.0 license and instruction-tuned design make it suitable for accessible deployment on inference platforms.
+

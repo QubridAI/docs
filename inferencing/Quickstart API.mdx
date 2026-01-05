@@ -14,98 +14,199 @@ export QUBRID_API_KEY=xxxxx
 
 ## 2. Run your first Model Inference
 
-Select the model you wish to run. For this demonstration, we will utilize **OPENAI GPT OSS 20B** with streaming enabled to show real-time token generation.
+Select the model you wish to run. For this demonstration, we will utilize **OPENAI GPT OSS 120B** with streaming enabled to show real-time token generation.
 
 <CodeGroup>
   ```python Python theme={null}
-  import requests
-  import json
+import requests
+import json
+from pprint import pprint
 
-  url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
-  headers = {
-    "Authorization": "Bearer Qubrid_API_KEY",
-    "Content-Type": "application/json"
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+headers = {
+"Authorization": "Bearer <QUBRID_API_KEY>",
+"Content-Type": "application/json"
+}
+
+data = {
+"model": "openai/gpt-oss-120b",
+"messages": [
+  {
+    "role": "user",
+    "content": "Explain quantum computing to a 5 year old."
   }
+],
+"temperature": 0.7,
+"max_tokens": 4096,
+"stream": False,
+"top_p": 0.8
+}
 
-  data = {
-    "model": "openai-gpt-oss-120b",
-    "messages": [
-      {
-        "role": "user",
-        "content": "Explain quantum computing to a 5 year old."
-      }
-    ],
-    "temperature": 0.7,
-    "max_tokens": 65536,
-    "stream": true,
-    "top_p": 0.8
-  }
+response = requests.post(
+    url,
+    headers=headers,
+    json=data, 
+)
+content_type = response.headers.get("Content-Type", "")
 
-  response = requests.post(url, headers=headers, json=data)
-  result = response.json()
+if "application/json" in content_type:
+    pprint(response.json())
+
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+
+            if payload == "[DONE]":
+                break
+
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
   ```
 
   ```js JavaScript theme={null}
+(async () => {
   const body = {
-    "model": "openai-gpt-oss-120b",
-    "messages": [
+    model: "openai/gpt-oss-120b",
+    messages: [
       {
-        "role": "user",
-        "content": "Explain quantum computing to a 5 year old."
-      }
+        role: "user",
+        content: "Explain quantum computing to a 5 year old.",
+      },
     ],
-    "temperature": 0.8,
-    "max_tokens": 65536,
-    "stream": true,
-    "top_p": 0.8
+    temperature: 0.8,
+    max_tokens: 4096,
+    stream: false,
+    top_p: 0.8,
   };
 
-  const res = await fetch("https://platform.qubrid.com/api/v1/qubridai/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer Qubrid_API_KEY",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
+  const res = await fetch(
+    "https://platform.qubrid.com/api/v1/qubridai/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer <QUBRID_API_KEY>",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
 
-  const result = await res.json();
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const result = await res.json();
+    console.log(result);
+  } else {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let buffer = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.replace("data:", "").trim();
+        if (payload === "[DONE]") return;
+        try {
+          const chunk = JSON.parse(payload);
+          console.log(chunk);
+        } catch {
+          console.log("Raw chunk:", payload);
+        }
+      }
+    }
+  }
+})();
+
   ```
 
   ```go Go theme={null}
   package main
 
-  import (
-    "bytes"
-    "encoding/json"
-    "net/http"
-  )
+import (
+	"bytes"
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+)
 
-  func main() {
-    url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
 
-    data := {
-    "model": "openai-gpt-oss-120b",
-    "messages": [
-      {
-        "role": "user",
-        "content": "Explain quantum computing in simple terms"
-      }
-    ],
-    "temperature": 0.7,
-    "max_tokens": 4096,
-    "stream": false,
-    "top_p": 1
-  }
-    jsonData, _ := json.Marshal(data)
+  data := map[string]interface{}{
+  "model": "openai/gpt-oss-120b",
+  "messages": []map[string]string{
+    {
+      "role": "user",
+      "content": "Explain quantum computing in simple terms",
+    },
+},
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 1,
+}
+  jsonData, err := json.Marshal(data)
+    if err != nil {
+		panic(err)
+	}
 
-    req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    req.Header.Set("Authorization", "Bearer Qubrid_API_KEY")
-    req.Header.Set("Content-Type", "application/json")
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
 
-    client := &http.Client{}
-    res, _ := client.Do(req)
-  }
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	contentType := res.Header.Get("Content-Type")
+	if strings.Contains(contentType, "application/json") {
+		var result map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		return
+	}
+	scanner := bufio.NewScanner(res.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "[DONE]" {
+			break
+		}
+		var chunk map[string]interface{}
+		if err := json.Unmarshal([]byte(payload), &chunk); err != nil {
+			fmt.Println("Raw chunk:", payload)
+			continue
+		}
+		fmt.Printf("%+v\n", chunk)
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+}
   ```
 
   ```curl cURL theme={null}
@@ -113,7 +214,7 @@ Select the model you wish to run. For this demonstration, we will utilize **OPEN
     -H "Authorization: Bearer Qubrid_API_KEY" \
     -H "Content-Type: application/json" \
     --data '{
-    "model": "openai-gpt-oss-120b",
+    "model": "openai/gpt-oss-120b",
     "messages": [
       {
         "role": "user",
@@ -121,8 +222,8 @@ Select the model you wish to run. For this demonstration, we will utilize **OPEN
       }
     ],
     "temperature": 0.7,
-    "max_tokens": 65536,
-    "stream": true,
+    "max_tokens": 4096,
+    "stream": false,
     "top_p": 0.8
   }'
   ```

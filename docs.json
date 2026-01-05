@@ -40,16 +40,48 @@
               {
                 "group": "Model Quickstarts",
                 "pages": [
-                  "inferencing/model-quickstarts/DeepSeek R1 Quickstart",
-                  "inferencing/model-quickstarts/Z Image Turbo Quickstart",
-                  "inferencing/model-quickstarts/Stable Diffusion Quickstart",
-                  "inferencing/model-quickstarts/OpenAI GPT-OSS Quickstart",
                   {
-                    "group": "Qwen Quickstart",
+                    "group": "Chat Models",
                     "pages": [
-                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen 3 Coder Quickstart",
-                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen VL Quickstart",
-                      "inferencing/model-quickstarts/qwen-quickstarts/Qwen Image Edit Quickstart"
+                      "inferencing/models-quickstart/chat/GPT OSS 120B",
+                      "inferencing/models-quickstart/chat/GPT OSS 20B",
+                      "inferencing/models-quickstart/chat/DeepSeek R1 Distill Llama 70B",
+                      "inferencing/models-quickstart/chat/Mistral 7B",
+                      "inferencing/models-quickstart/chat/Nemotron Orchestrator 8B",
+                      "inferencing/models-quickstart/chat/Fara 7B"
+                    ]
+                  },
+                  {
+                    "group": "Code Models",
+                    "pages": [
+                      "inferencing/models-quickstart/code/Qwen3 Coder 30B A3B Instruct"
+                    ]
+                  },
+                  {
+                    "group": "Image Models",
+                    "pages": [
+                      "inferencing/models-quickstart/image/Z Image Turbo",
+                      "inferencing/models-quickstart/image/Qwen Image Edit",
+                      "inferencing/models-quickstart/image/Stable Diffusion 3.5 Large"
+                    ]
+                  },
+                  {
+                    "group": "Audio Models",
+                    "pages": [
+                      "inferencing/models-quickstart/audio/Whisper Large v3"
+                    ]
+                  },
+                  {
+                    "group": "Vision Models",
+                    "pages": [
+                      "inferencing/models-quickstart/vision/Qwen3 VL 8B Instruct",
+                      "inferencing/models-quickstart/vision/Qwen3 VL 30B A3B Instruct"
+                    ]
+                  },
+                  {
+                    "group": "OCR Models",
+                    "pages": [
+                      "inferencing/models-quickstart/ocr/Hunyuan OCR (1B)"
                     ]
                   }
                 ]
@@ -130,5 +162,14 @@
       "reddit": "https://www.reddit.com/r/Qubrid_AI_Platform/",
       "discord": "https://discord.com/invite/Btsqxa6ZnQ"
     }
+  },
+  "head": [
+    {
+      "type": "script",
+      "children": "window.__lc = window.__lc || {}; window.__lc.license = 9573300; (function(n,t,c){function i(n){return e._h ? e._h.apply(null,n) : e._q.push(n);} var e={_q:[],_h:null,_v:'2.0',on:function(){i(['on',c.call(arguments)]);},once:function(){i(['once',c.call(arguments)]);},off:function(){i(['off',c.call(arguments)]);},get:function(){if(!e._h) throw new Error('[LiveChatWidget] Getters before load.'); return i(['get',c.call(arguments)]);},call:function(){i(['call',c.call(arguments)]);},init:function(){var n=t.createElement('script'); n.async=true; n.type='text/javascript'; n.src='https://cdn.livechatinc.com/tracking.js'; t.head.appendChild(n);}}; !n.__lc.asyncInit && e.init(); n.LiveChatWidget = n.LiveChatWidget || e;})(window,document,[].slice);"
+    }
+  ],
+  "headers": {
+    "Content-Security-Policy": "default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; script-src * 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.livechatinc.com; connect-src * https://api.livechatinc.com https://cdn.livechatinc.com; img-src * data: blob:; style-src * 'unsafe-inline';"
   }
 }

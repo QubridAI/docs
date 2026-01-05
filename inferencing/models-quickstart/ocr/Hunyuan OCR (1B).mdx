@@ -1,0 +1,336 @@
+---
+title: "Hunyuan OCR (1B) (Tencent)"
+description: "> Hunyuan OCR (1B) is an end-to-end OCR vision-language model designed for multilingual text extraction and document parsing using a single-inference workflow."
+---
+
+## About the Provider
+Tencent is a major Chinese technology company and cloud services provider that develops AI models and research technologies through its Hunyuan AI initiative. The company focuses on creating advanced open-source and commercial AI systems—including vision-language, OCR, and foundation models—to support developers, enterprises, and real-world applications across industries.
+
+## Model Quickstart
+
+This section helps you quickly get started with the `tencent/HunyuanOCR` model on the Qubrid AI inferencing platform.
+
+To use this model, you need:
+
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `tencent/HunyuanOCR` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+from pprint import pprint
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+headers = {
+    "Authorization": "Bearer Qubrid_API_KEY",
+    "Content-Type": "application/json"
+}
+data = {
+    "model": "tencent/HunyuanOCR",
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+                    }
+                }
+            ]
+        }
+    ],
+    "max_tokens": 4096,
+    "temperature": 0,
+    "language": "auto",
+    "ocr_mode": "general",
+    "stream": False  
+}
+response = requests.post(
+    url,
+    headers=headers,
+    json=data,
+    stream=True  
+)
+content_type = response.headers.get("Content-Type", "")
+if "application/json" in content_type:
+    pprint(response.json())
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+            if payload == "[DONE]":
+                break
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
+````
+
+```js JavaScript theme={null}
+(async () => {
+  const body = {
+    model: "tencent/HunyuanOCR",
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "image_url",
+            image_url: {
+              url: "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg",
+            },
+          },
+        ],
+      },
+    ],
+    max_tokens: 4096,
+    temperature: 0,
+    language: "auto",
+    ocr_mode: "general",
+    stream: false,
+  };
+  const res = await fetch(
+    "https://platform.qubrid.com/api/v1/qubridai/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer Qubrid_API_KEY",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const result = await res.json();
+    console.log(result);
+  }
+  else {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let buffer = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.replace("data:", "").trim();
+        if (payload === "[DONE]") return;
+        try {
+          const chunk = JSON.parse(payload);
+          console.log(chunk);
+        } catch {
+          console.log("Raw chunk:", payload);
+        }
+      }
+    }
+  }
+})();
+````
+
+```go Go theme={null}
+package main
+import (
+	"bufio"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+)
+func main() {
+	url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+	data := map[string]interface{}{
+		"model": "tencent/HunyuanOCR",
+		"messages": []interface{}{
+			map[string]interface{}{
+				"role": "user",
+				"content": []interface{}{
+					map[string]interface{}{
+						"type": "image_url",
+						"image_url": map[string]interface{}{
+							"url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg",
+						},
+					},
+				},
+			},
+		},
+		"max_tokens": 4096,
+		"temperature": 0,
+		"language": "auto",
+		"ocr_mode": "general",
+		"stream": false,
+	}
+
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Authorization", "Bearer QUBRID_API_KEY")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+
+	contentType := res.Header.Get("Content-Type")
+	if strings.Contains(contentType, "application/json") {
+		var result map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		return
+	}
+	scanner := bufio.NewScanner(res.Body)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "[DONE]" {
+			break
+		}
+		var chunk map[string]interface{}
+		if err := json.Unmarshal([]byte(payload), &chunk); err != nil {
+			fmt.Println("Raw chunk:", payload)
+			continue
+		}
+		fmt.Printf("%+v\n", chunk)
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer <QUBRID_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "model": "tencent/HunyuanOCR",
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+          }
+        }
+      ]
+    }
+  ],
+  "max_tokens": 4096,
+  "temperature": 0,
+  "language": "auto",
+  "ocr_mode": "general"
+}'
+```
+</CodeGroup>
+
+## Model Overview
+
+**Hunyuan OCR (1B)** is an end-to-end OCR-focused vision-language model built on Hunyuan’s native multimodal architecture.
+
+- It is designed to perform text extraction and document understanding tasks using a single instruction and a single inference step.
+- With a lightweight 1B parameter size, the model supports multilingual document parsing and multiple OCR-related tasks while remaining efficient for deployment on inferencing platforms.
+- The model is focused purely on OCR workflows and is not intended for general visual question answering.
+
+### Model at a Glance
+
+| Feature        | Details                           |
+| -------------- | --------------------------------- |
+| Model ID       | `tencent/HunyuanOCR`             |
+| Provider       | Tencent                           |
+| Parameters     | 1B                                |
+| Context Length | 16k tokens                        |
+| Model Type     | OCR-focused Vision-Language Model |
+
+### When to use?
+
+You should consider using **Hunyuan OCR (1B)** if:
+
+- You need an OCR-specific model rather than a general-purpose vision model
+- Your application involves document parsing, text spotting, or subtitle extraction
+- You work with multilingual or mixed-language content
+- You prefer an end-to-end OCR model instead of cascading OCR systems
+- You require a lightweight model optimized for efficient inference
+
+`Do not use this model for general visual question answering tasks.`
+
+### Key Features
+
+- **Efficient Lightweight Architecture :**
+  Built on Hunyuan’s native multimodal architecture, achieving strong OCR performance with only 1B parameters and reduced deployment cost.
+
+- **Comprehensive OCR Coverage :**
+  Supports text detection, text recognition, complex document parsing, open-field information extraction, video subtitle extraction, photo translation, and document QA within a single model.
+
+- **End-to-End Inference Workflow :**
+  Designed around a single-instruction, single-inference approach, avoiding multi-stage OCR pipelines and cascade errors.
+
+- **Multilingual Document Support :**
+  Provides robust support for over 100 languages, including mixed-language documents and varied document types.
+
+### Inference Parameters
+| Parameter Name       | Type    | Default | Description                                                                 |
+|----------------------|---------|---------|-----------------------------------------------------------------------------|
+| Streaming            | boolean | true    | Enable streaming responses for real-time output.                            |
+| Language             | select  | en      | Optional language hint to improve OCR accuracy for specific languages.      |
+| OCR Mode             | select  | general | Select optimized OCR mode based on the image type.                          |
+| Max Output Tokens    | number  | 4096    | Maximum number of tokens for the generated text.                            |
+| Temperature          | number  | 0       | Controls randomness. Keep at 0 for accurate text extraction.                |
+
+
+### Performance Characteristics
+
+#### Strengths
+
+- Lightweight 1B parameter model with strong OCR accuracy
+- Native handling of high-resolution images and extreme aspect ratios
+- Unified end-to-end architecture without bounding-box error propagation
+- Effective recognition of rotated and vertical text
+- Strong multilingual and mixed-script support
+
+#### Considerations
+
+- Designed specifically for OCR, not general visual reasoning
+- May hallucinate on extremely blurred or low-resolution text
+- Throughput depends on visual token density
+
+### Summary
+
+**Hunyuan OCR (1B)** is a lightweight, OCR-focused vision-language model developed by Tencent Hunyuan.
+- It performs end-to-end OCR tasks using a single instruction and single inference step.
+- The model supports multilingual and mixed-language document parsing across images and videos.
+- It is optimized for efficient deployment with a 1B parameter size and fp16 quantization.
+- The model is best suited for OCR pipelines rather than general-purpose vision tasks.
