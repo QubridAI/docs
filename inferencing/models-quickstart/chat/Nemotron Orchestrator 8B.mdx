@@ -1,18 +1,21 @@
 ---
 title: 'Nemotron Orchestrator 8B (NVIDIA)'
-description: '>An orchestration-focused model designed to coordinate tools and multiple models for complex, multi-turn agent workflows.'
+description: '> An orchestration-focused model designed to coordinate tools and multiple models for complex, multi-turn agent workflows.'
 ---
+
+## About the Provider
+NVIDIA is a global leader in AI computing and accelerated hardware, known for its GPUs and enterprise AI platforms. Through its NeMo and research initiatives, NVIDIA develops models like Nemotron Orchestrator to enable advanced reasoning, tool orchestration, and scalable AI workflows for developers and enterprises.
 
 ## Model Quickstart
 
-This section helps you quickly get started with the `Nemotron Orchestrator 8B` model on the Qubrid AI inferencing platform.
+This section helps you quickly get started with the `nvidia/Orchestrator-8B` model on the Qubrid AI inferencing platform.
 
 To use this model, you need:
 - A valid **Qubrid API key**
 - Access to the Qubrid inference API
 - Basic knowledge of making API requests in your preferred language
 
-Once authenticated with your API key, you can send inference requests to the `Nemotron Orchestrator 8B` model and receive responses based on your input prompts.
+Once authenticated with your API key, you can send inference requests to the `nvidia/Orchestrator-8B` model and receive responses based on your input prompts.
 
 Below are example placeholders showing how the model can be accessed using different programming environments.  
 You can choose the one that best fits your workflow.
@@ -225,14 +228,15 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
 
 ## Model Overview
 
-`Nemotron Orchestrator 8B` is a state-of-the-art 8B parameter orchestration model designed to solve complex, multi-turn agentic tasks.
+**Nemotron Orchestrator 8B** is a state-of-the-art 8B parameter orchestration model designed to solve complex, multi-turn agentic tasks.
 It works by coordinating a diverse set of expert models and tools rather than acting as a single monolithic model.
 
 On the Humanity’s Last Exam (HLE) benchmark, Orchestrator-8B achieves a score of 37.1%, outperforming GPT-5 (35.1%) while being approximately 2.5× more efficient.
+
 ### Model at a Glance
 | Feature | Details |
 |---------|---------|
-| Model ID | `Nemotron-Orchestrator-8B` |
+| Model ID | `nvidia/Orchestrator-8B` |
 | Provider | NVIDIA |
 | Architecture | Optimized Transformer (TensorRT-LLM enhanced) |
 | Context Length | 16384 Tokens |
@@ -251,8 +255,6 @@ You should consider using **Nemotron Orchestrator 8B** if::
 - You are conducting research or development focused on orchestration and reasoning
 - You plan to fine-tune the model for specific tasks
 - You need a model that can generalize to unseen tools and pricing setups
-
-   `This model is intended for research and development use only.`
 
 ### Inference Parameters
 | Parameter Name | Type    | Default | Description                                                                 |
@@ -282,7 +284,7 @@ The model has not been tested at larger sizes (greater than 8B parameters), and 
 The model has not been evaluated across broader domains such as code generation or web interaction, so its generalization beyond the studied reasoning tasks remains unverified.
 
 ## Summary
-`Nemotron Orchestrator 8B` is a state-of-the-art 8B parameter orchestration model designed for complex, multi-turn agentic tasks.
+**Nemotron Orchestrator 8B** is a state-of-the-art 8B parameter orchestration model designed for complex, multi-turn agentic tasks.
 - It coordinates multiple expert models and tools to solve problems efficiently.
 - On the Humanity’s Last Exam benchmark, it outperforms GPT-5 while being approximately 2.5× more efficient.
 - The model delivers higher accuracy at lower computational cost than monolithic frontier models.

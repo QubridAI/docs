@@ -1,18 +1,21 @@
 ---
-title: 'GPT-OSS 20B (OpenAI)'
-description: '>A low-latency reasoning model with adjustable reasoning depth, built for local deployment and agentic workflows'
+title: 'GPT OSS 20B (OpenAI)'
+description: '> A low-latency reasoning model with adjustable reasoning depth, built for local deployment and agentic workflows'
 ---
+
+## About the Provider 
+**OpenAI** is the organization behind GPT OSS 20B. They are a major AI research lab and platform provider known for creating influential generative AI models (like the GPT series). With GPT-OSS, OpenAI is extending its technology into the open-source ecosystem, empowering developers and enterprises to run powerful language models without proprietary restrictions.
 
 ## Model Quickstart
 
-This section helps you quickly get started with the `gpt-oss-20b` model on the Qubrid AI inferencing platform.
+This section helps you quickly get started with the `openai/gpt-oss-20b` model on the Qubrid AI inferencing platform.
 
 To use this model, you need:
 - A valid **Qubrid API key**
 - Access to the Qubrid inference API
 - Basic knowledge of making API requests in your preferred language
 
-Once authenticated with your API key, you can send inference requests to the `gpt-oss-20b` model and receive responses based on your input prompts.
+Once authenticated with your API key, you can send inference requests to the `openai/gpt-oss-20b` model and receive responses based on your input prompts.
 
 Below are example placeholders showing how the model can be accessed using different programming environments.  
 You can choose the one that best fits your workflow.
@@ -227,14 +230,14 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
 
 ## Model Overview
 
-`gpt-oss-20b` is a large language model optimized for low-latency inference, local deployments, and specialized use cases.
+**GPT OSS 20B** is a large language model optimized for low-latency inference, local deployments, and specialized use cases.
 It provides strong reasoning capabilities with adjustable reasoning depth, making it suitable for applications that require transparency, control, and efficient execution without large GPU infrastructure.
 
 ### Model at a Glance
 
 | Feature | Details |
 |---------|---------|
-| Model ID | `gpt-oss-20b` |
+| Model ID | `openai/gpt-oss-20b` |
 | Provider | OpenAI |
 | Architecture | Compact Mixture-of-Experts (MoE) with SwiGLU activations, Token-choice MoE, Alternating attention mechanism |
 | Model Size | 20.9B Params |
@@ -244,7 +247,7 @@ It provides strong reasoning capabilities with adjustable reasoning depth, makin
 
 ### When to use?
 
-You should consider using `GPT-OSS 20B` if:
+You should consider using **GPT OSS 20B** if:
 
 - You need fast, low-latency inference
 - You want control over reasoning depth
@@ -254,7 +257,7 @@ You should consider using `GPT-OSS 20B` if:
 This model is not intended as a lightweight chat model, but as a reasoning-focused inference model.
 
 ### Reasoning Control
-GPT-OSS 20B allows you to control how deeply the model reasons before responding.
+GPT OSS 20B allows you to control how deeply the model reasons before responding.
 
 | Level | What it means |
 |-------|--------------|
@@ -290,7 +293,7 @@ The model provides full chain-of-thought visibility, enabling :
 - Increased trust in outputs
 
 ### Tool and Agent Capabilities
-`gpt-oss-20b` supports agentic workflows and tool usage including:
+**GPT OSS 20B** supports agentic workflows and tool usage including:
 - Function calling with defined schemas
 - Web browsing using built-in browsing tools
 - Agentic operations such as browser-based tasks
@@ -298,7 +301,7 @@ The model provides full chain-of-thought visibility, enabling :
 
 
 ## Summary
-**GPT-OSS 20B** is a low-latency reasoning model designed for efficient inference and local deployments.
+**GPT OSS 20B** is a low-latency reasoning model designed for efficient inference and local deployments.
 - It provides adjustable reasoning depth to balance speed and analysis.
 - The model exposes internal reasoning for transparency and debugging.
 - It supports agentic workflows, tool usage, and structured outputs.

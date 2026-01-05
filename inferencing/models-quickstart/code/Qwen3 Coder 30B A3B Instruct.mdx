@@ -1,5 +1,5 @@
 ---
-title: "Qwen3 Coder 30B A3B (Qwen)"
+title: "Qwen3 Coder 30B A3B Instruct(Qwen)"
 description: "> A high-performance coding and reasoning model designed for long-context code generation and technical workflows."
 ---
 
@@ -7,9 +7,12 @@ description: "> A high-performance coding and reasoning model designed for long-
   <img src="/images/qwen-coder-abhiiiman.png" />
 </Frame>
 
+## About the Provider
+Qwen is an AI model family developed by Alibaba Group, a major Chinese technology and cloud computing company. Through its Qwen initiative, Alibaba builds and open-sources advanced language , images and coding models under permissive licenses to support innovation, developer tooling, and scalable AI integration across applications
+
 ## Model Quickstart
 
-This section helps you quickly get started with the `Qwen3 Coder 30B A3B` model on the Qubrid AI inferencing platform.
+This section helps you quickly get started with the `Qwen/Qwen3-Coder-30B-A3B-Instruct` model on the Qubrid AI inferencing platform.
 
 To use this model, you need:
 
@@ -17,7 +20,7 @@ To use this model, you need:
 - Access to the Qubrid inference API
 - Basic knowledge of making API requests in your preferred language
 
-Once authenticated with your API key, you can send inference requests to the `Qwen3 Coder 30B A3B ` model and receive responses based on your input prompts.
+Once authenticated with your API key, you can send inference requests to the `Qwen/Qwen3-Coder-30B-A3B-Instruct` model and receive responses based on your input prompts.
 
 Below are example placeholders showing how the model can be accessed using different programming environments.  
 You can choose the one that best fits your workflow.
@@ -249,29 +252,20 @@ This will produce a response similar to the one below:
 
 ````json theme={null}
 {
-  "id": "chatcmpl-8908cd8b586c496bbef3bba04edbbe99",
-  "object": "chat.completion",
-  "created": 1764851200,
-  "model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": "Here is a Python function that calculates the Fibonacci sequence using dynamic programming (memoization) for efficiency:\n\n```python\ndef fibonacci_dp(n, memo={}):\n    \"\"\"\n    Calculate the nth Fibonacci number using dynamic programming.\n    \n    Args:\n        n (int): The position in the Fibonacci sequence.\n        memo (dict): Dictionary to store computed values.\n        \n    Returns:\n        int: The nth Fibonacci number.\n    \"\"\"\n    if n in memo:\n        return memo[n]\n    if n <= 1:\n        return n\n    \n    memo[n] = fibonacci_dp(n - 1, memo) + fibonacci_dp(n - 2, memo)\n    return memo[n]\n\n# Example usage:\nprint(fibonacci_dp(10))  # Output: 55\n```\n\n### Explanation:\n1. **Memoization**: We use a dictionary `memo` to store previously calculated Fibonacci numbers. This avoids redundant calculations.\n2. **Base Case**: If `n` is 0 or 1, we return `n` directly.\n3. **Recursive Step**: We recursively call the function for `n-1` and `n-2`, storing the result in `memo` before returning it.\n\nThis approach reduces the time complexity from exponential O(2^n) to linear O(n).",
-        "refusal": null
-      },
-      "logprobs": null,
-      "finish_reason": "stop",
-      "stop_reason": null,
-      "token_ids": null
+    "content": "```python\ndef fibonacci_dp(n):\n    \"\"\"\n    Calculate the nth Fibonacci number using dynamic programming.\n    \n    The Fibonacci sequence is defined as:\n  F(0) = 0, F(1) = 1, and F(n) = F(n-1) + F(n-2) for n > 1\n    \n    This implementation uses dynamic programming with O(n) time complexity\n    and O(1) space complexity by storing only the last two values.\n  \n  Args:\n   n (int): The position in the Fibonacci sequence (non-negative integer)\n  \n   Returns:\n        int: The nth Fibonacci number\n        \n    Raises:\n        ValueError: If n is negative\n    \n    Examples:\n    >>> fibonacci_dp(0)\n        0\n        >>> fibonacci_dp(1)\n        1\n        >>> fibonacci_dp(5)\n    5\n   >>> fibonacci_dp(10)\n        55\n    \"\"\"\n    # Input validation\n    if n < 0:\n    raise ValueError(\"n must be a non-negative integer\")\n    \n    # Base cases\n    if n == 0:\n        return 0\n    elif n == 1:\n     return 1\n    \n    # Dynamic programming approach\n    # Only store the last two Fibonacci numbers\n    prev_prev = 0  # F(i-2)\n    prev = 1       # F(i-1)\n    \n    # Calculate from F(2) to F(n)\n    for i in range(2, n + 1):\n        current = prev_prev + prev\n        prev_prev = prev\n        prev = current\n  \n return prev\n\n\ndef fibonacci_sequence_dp(n):\n    \"\"\"\n    Generate the first n+1 Fibonacci numbers using dynamic programming.\n    \n    Args:\n        n (int): The upper index of the sequence (non-negative integer)\n  \n    Returns:\n        list: A list containing the first n+1 Fibonacci numbers\n        \n    Examples:\n   >>> fibonacci_sequence_dp(5)\n        [0, 1, 1, 2, 3, 5]\n        >>> fibonacci_sequence_dp(0)\n        [0]\n    \"\"\"\n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    if n == 0:\n        return [0]\n    \n    # Initialize the sequence\n    fib_sequence = [0] * (n + 1)\n    fib_sequence[0] = 0\n    \n    if n >= 1:\n        fib_sequence[1] = 1\n    \n    # Fill the sequence using dynamic programming\n    for i in range(2, n + 1):\n        fib_sequence[i] = fib_sequence[i-1] + fib_sequence[i-2]\n    \n    return fib_sequence\n\n\n# Alternative implementation with memoization\ndef fibonacci_memo(n, memo=None):\n    \"\"\"\n    Calculate the nth Fibonacci number using memoization (top-down DP).\n    \n    Args:\n        n (int): The position in the Fibonacci sequence\n  memo (dict): Memoization dictionary (optional)\n        \n    Returns:\n int: The nth Fibonacci number\n    \"\"\"\n    if memo is None:\n        memo = {}\n    \n    if n < 0:\n        raise ValueError(\"n must be a non-negative integer\")\n    \n    if n in memo:\n        return memo[n]\n    \n    if n == 0:\n        return 0\n    elif n == 1:\n  return 1\n    \n    memo[n] = fibonacci_memo(n-1, memo) + fibonacci_memo(n-2, memo)\n    return memo[n]\n\n\n# Example usage and testing\nif __name__ == \"__main__\":\n    # Test the basic function\n    print(\"Fibonacci numbers:\")\n    for i in range(11):\n  print(f\"F({i}) = {fibonacci_dp(i)}\")\n    \n    print(\"\\nFirst 10 Fibonacci numbers as a sequence:\")\n    print(fibonacci_sequence_dp(9))\n    \n    # Performance comparison example\n    import time\n    \n    n = 35\n    \n    # Dynamic programming approach\n    start_time = time.time()\n    result_dp = fibonacci_dp(n)\n    dp_time = time.time() - start_time\n    \n    # Memoization approach\n    start_time = time.time()\n    result_memo = fibonacci_memo(n)\n    memo_time = time.time() - start_time\n    \n    print(f\"\\nPerformance comparison for F({n}):\")\n    print(f\"Dynamic Programming: {result_dp} (Time: {dp_time:.6f}s)\")\n    print(f\"Memoization: {result_memo} (Time: {memo_time:.6f}s)\")\n```\n\nThis implementation provides:\n\n1. **Main Function (`fibonacci_dp`)**: \n   - Uses bottom-up dynamic programming\n   - Time complexity: O(n), Space complexity: O(1)\n   - Efficient for calculating single Fibonacci numbers\n\n2. **Sequence Generator (`fibonacci_sequence_dp`)**:\n  - Returns the entire sequence up to index n\n   - Useful when you need multiple Fibonacci numbers\n\n3. **Alternative Implementation (`fibonacci_memo`)**:\n   - Top-down approach with memoization\n   - Good for understanding different DP approaches\n\nKey features:\n- **Input validation** with clear error messages\n- **Comprehensive documentation** with docstrings and examples\n- **Edge case handling** (n=0, n=1)\n- **Efficient space usage** in the main implementation\n- **Well-tested examples** and performance comparison\n\nThe dynamic programming approach avoids the exponential time complexity of naive recursion by storing previously computed values and building up the solution iteratively.",
+    "metrics": {
+        "input_tokens": 44,
+        "output_tokens": 534,
+        "total_time": 9.0186,
+        "tps": 59.2118
+    },
+    "model": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+    "usage": {
+        "completion_tokens": 1065,
+        "prompt_tokens": 44,
+        "prompt_tokens_details": null,
+        "total_tokens": 1109
     }
-  ],
-  "usage": {
-    "prompt_tokens": 45,
-    "total_tokens": 285,
-    "completion_tokens": 240
-  }
 }
 ````
 
@@ -285,7 +279,7 @@ The model is built using a Mixture-of-Experts (MoE) architecture, activating onl
 
 | Feature                  | Details                                          |
 | ------------------------ | ------------------------------------------------ |
-| Model ID                 | qwen3-coder-30b-a3b-instruct                     |
+| Model ID                 | Qwen/Qwen3-Coder-30B-A3B-Instruct                    |
 | Provider                 | Qwen                                             |
 | Model Type               | Causal Language Model                            |
 | Architecture             | Mixture-of-Experts (MoE) Transformer, 48 layers, GQA attention, 128 experts (8 active per forward pass)                                                             |
@@ -293,7 +287,7 @@ The model is built using a Mixture-of-Experts (MoE) architecture, activating onl
 | Parameters               | 4B                                             |
 
 ### When to use?
-You should consider using Qwen3 Coder 30B A3B if:
+You should consider using **Qwen3 Coder 30B A3B** if:
 
 - Your application focuses on code generation or technical reasoning
 - You need long context support for large codebases or complex prompts
@@ -352,4 +346,4 @@ Please reason step by step, and put your final answer within \boxed{}.
 - This behavior is handled automatically in the provided Jinja2 chat template
 
 ### Summary
-Qwen3 Coder 30B A3B is a 30B parameter Mixture-of-Experts language model. It is optimized for code generation and technical reasoning tasks. The model supports both thinking and non-thinking modes in a single deployment. It provides long context support up to 131K tokens with YaRN. Designed for efficient, multilingual, and agent-based inferencing workflows.
+**Qwen3 Coder 30B A3B** is a Mixture-of-Experts language model. It is optimized for code generation and technical reasoning tasks. The model supports both thinking and non-thinking modes in a single deployment. It provides long context support up to 131K tokens with YaRN. Designed for efficient, multilingual, and agent-based inferencing workflows.

@@ -1,15 +1,18 @@
 ---
-title: 'GPT-OSS 120B (OpenAI)'
-description: ">A high-capacity reasoning model optimized for complex analysis, advanced agent workflows, and large-scale inference."
+title: 'GPT OSS 120B (OpenAI)'
+description: "> A high-capacity reasoning model optimized for complex analysis, advanced agent workflows, and large-scale inference."
 ---
 
 <Frame>
   <img src="/images/gpt-oss-abhiiiman.png" />
 </Frame>
 
+## About the Provider 
+**OpenAI** is the organization behind GPT OSS 120B. They are a major AI research lab and platform provider known for creating influential generative AI models (like the GPT series). With GPT-OSS, OpenAI is extending its technology into the open-source ecosystem, empowering developers and enterprises to run powerful language models without proprietary restrictions.
+
 ## Model Quickstart
 
-This section helps you quickly get started with the `GPT-OSS 120B` model on the Qubrid AI inferencing platform.
+This section helps you quickly get started with the `openai/gpt-oss-120b` model on the Qubrid AI inferencing platform.
 
 To use this model, you need:
 
@@ -17,7 +20,7 @@ To use this model, you need:
 - Access to the Qubrid inference API
 - Basic knowledge of making API requests in your preferred language
 
-Once authenticated with your API key, you can send inference requests to the `GPT-OSS 120B` model and receive responses based on your input prompts.
+Once authenticated with your API key, you can send inference requests to the `openai/gpt-oss-120b` model and receive responses based on your input prompts.
 
 Below are example placeholders showing how the model can be accessed using different programming environments.  
 You can choose the one that best fits your workflow.
@@ -54,16 +57,21 @@ response = requests.post(
     json=data, 
 )
 content_type = response.headers.get("Content-Type", "")
+
 if "application/json" in content_type:
     pprint(response.json())
+
 else:
     for line in response.iter_lines(decode_unicode=True):
         if not line:
             continue
+
         if line.startswith("data:"):
             payload = line.replace("data:", "").strip()
+
             if payload == "[DONE]":
                 break
+
             try:
                 chunk = json.loads(payload)
                 pprint(chunk)
@@ -227,65 +235,47 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
   "top_p": 0.8
 }'
 ```
-
 </CodeGroup>
 
 This will produce the response below:
 
 ```plain theme={null}
 {
-    "id": "chatcmpl-4968cd8b586c496bbef3bba04edbbe75",
-    "object": "chat.completion",
-    "created": 1764850905,
-    "model": "openai/gpt-oss-120b",
-    "choices": [
-        {
-            "index": 0,
-            "message": {
-                "role": "assistant",
-                "content": "## Quantum Computing – A Primer\n\n### 1. What Is a Quantum Computer?\nA **quantum computer** is a device that performs computation using the laws of quantum mechanics instead of the classical physics that underlies today's laptops and smartphones.  \nWhile a classical computer manipulates bits that are either **0** or **1**, a quantum computer manipulates **quantum bits** (or **qubits**) that can exist in a superposition of both states simultaneously. This property, together with **entanglement** and **interference**, lets a quantum processor explore many computational paths in parallel, potentially solving certain problems far faster than any classical machine.\n\n---\n\n### 2. Core Quantum Concepts\n\n| Classical Idea | Quantum",
-                "refusal": null,
-                "annotations": null,
-                "audio": null,
-                "function_call": null,
-                "tool_calls": [],
-                "reasoning_content": "We need to respond with an explanation of quantum computing. The system messages: we are ChatGPT, we have to follow policies. There's no disallowed content. Provide a clear, thorough explanation, possibly with analogies, basics of qubits, superposition, entanglement, quantum gates, algorithms, challenges, current state, future. Should be accessible but also technical. Use headings. Possibly ask follow-up. Provide references. Ensure no copyrighted text. Provide original content. Let's produce a comprehensive answer."
-            },
-            "logprobs": null,
-            "finish_reason": "length",
-            "stop_reason": null,
-            "token_ids": null
-        }
-    ],
-    "service_tier": null,
-    "system_fingerprint": null,
-    "usage": {
-        "prompt_tokens": 75,
-        "total_tokens": 331,
-        "completion_tokens": 256,
-        "prompt_tokens_details": null
+    "content": "**Imagine a magical playground!**\n\n1. **Normal computers are like a line of tiny LEGO blocks.**  \n   Each block can be either a **red** brick (we call that a 0) **or** a **blue** brick (that’s a 1). By stacking lots of red and blue bricks in different ways, the computer can solve problems.\n\n2. **A quantum computer uses *magic* LEGO blocks.**  \n   These magic blocks can be **both red *and* blue at the same time!** It’s like a block that’s half‑red, half‑blue, and can change to whichever color you need later. This special trick is called **super‑position**.\n\n3. **Even cooler: the magic blocks can be best friends.**  \n   When two blocks become best friends, whatever one does, the other knows instantly, even if they’re far apart. If one block decides to be red, the other will be blue right away. This friendship is called **entanglement**.\n\n4. **Why is this fun?**  \n   Because with many magic blocks that can be red‑and‑blue together and be best friends, the playground can try **many different ways to build a tower all at once**. That means it can solve some puzzles much faster than the regular LEGO line.\n\n5. **In short:**  \n   - Regular computer = lots of ordinary blocks (0 or 1).  \n   - Quantum computer = lots of magical blocks (0 *and* 1 together) that can talk instantly.  \n   - The magic lets it try many solutions at the same time, making some jobs super quick.\n\nSo a quantum computer is like a super‑magical playground where the blocks can be two colors at once and are best friends that always know each other’s secrets! 🌈🧩✨",
+    "metrics": {
+        "input_tokens": 79,
+        "output_tokens": 264,
+        "total_time": 3.3656,
+        "tps": 78.4446
     },
-    "prompt_logprobs": null,
-    "prompt_token_ids": null,
-    "kv_transfer_params": null
+    "model": "openai/gpt-oss-120b",
+    "usage": {
+        "completion_tokens": 444,
+        "prompt_tokens": 79,
+        "prompt_tokens_details": null,
+        "total_tokens": 523
+    }
 }
 ```
-
+{/*
 To access just the chain-of-thought reasoning you can look at the `reasoning` property:
 
 ```plain theme={null}
 We need to respond with an explanation of quantum computing. The system messages: we are ChatGPT, we have to follow policies. There's no disallowed content. Provide a clear, thorough explanation, possibly with analogies, basics of qubits, superposition, entanglement, quantum gates, algorithms, challenges, current state, future. Should be accessible but also technical. Use headings. Possibly ask follow-up. Provide references. Ensure no copyrighted text. Provide original content. Let's produce a comprehensive answer.
 ```
 
+*/}
+
+
 ## Model Overview
 
-**gpt-oss-120b** is the most powerful open-weight model in the gpt-oss family. It is designed for large-scale reasoning, agentic workflows, and long-context tasks while remaining deployable on a single high-end GPU. The model supports configurable reasoning levels, full chain-of-thought access, tool use, and fine-tuning, making it suitable for advanced inference and customization scenarios.
+**GPT OSS 120B** is the most powerful open-weight model in the gpt-oss family. It is designed for large-scale reasoning, agentic workflows, and long-context tasks while remaining deployable on a single high-end GPU. The model supports configurable reasoning levels, full chain-of-thought access, tool use, and fine-tuning, making it suitable for advanced inference and customization scenarios.
 
 ## Model at a Glance
 
 | Feature                     | Details                                                                 |
 |-----------------------------|-------------------------------------------------------------------------|
-| Model ID                    | openai-gpt-oss-120b                                                     |
+| Model ID                    | `openai/gpt-oss-120b`                                                     |
 | Model Type                  | Open-weight large language model                                        |
 | Architecture                | Large-Scale Mixture-of-Experts (MoE) with adaptive routing, SwiGLU activations, hierarchical sparse attention, and token-choice MoE for reasoning efficiency                                                                                              |
 | Context Length              | 256k Tokens                                                             |
@@ -295,12 +285,11 @@ We need to respond with an explanation of quantum computing. The system messages
 
 ## When to use?
 
-Use **gpt-oss-120b** if you need:
+Use **GPT OSS 120B** if you need:
 - Long-context reasoning with very large input and output windows
 - Adjustable reasoning depth based on latency and task complexity
 - Full access to the model’s chain-of-thought for debugging and analysis
 - Agentic capabilities such as function calling, web browsing, and Python execution
-- A permissively licensed open-weight model suitable for commercial deployment
 - The ability to fine-tune the model for domain-specific use cases
 
 ### Inference Parameters
@@ -323,4 +312,4 @@ Use **gpt-oss-120b** if you need:
 
 ## Summary
 
-gpt-oss-120b is a high-capacity open-weight language model built for advanced reasoning, long-context tasks, and agentic workflows. With configurable reasoning levels, full chain-of-thought access, tool use, and fine-tuning support, it is well suited for complex inference pipelines. Its Apache 2.0 license and efficient MXFP4 quantization make it accessible for both research and production deployments on modern GPUs.
+**GPT OSS 120B** is a high-capacity open-weight language model built for advanced reasoning, long-context tasks, and agentic workflows. With configurable reasoning levels, full chain-of-thought access, tool use, and fine-tuning support, it is well suited for complex inference pipelines. Its Apache 2.0 license and efficient MXFP4 quantization make it accessible for both research and production deployments on modern GPUs.

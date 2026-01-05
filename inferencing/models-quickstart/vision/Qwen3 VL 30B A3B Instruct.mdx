@@ -1,11 +1,14 @@
 ---
-title: "Qwen3-VL-30B-A3B-Instruct (Qwen)"
-description: "> Qwen3-VL-30B-A3B-Instruct is a vision-language model designed for long-context multimodal reasoning, OCR, video understanding, and tool-based agent workflows."
+title: "Qwen3 VL 30B A3B Instruct (Qwen)"
+description: "> Qwen3 VL 30B A3B Instruct is a vision-language model designed for long-context multimodal reasoning, OCR, video understanding, and tool-based agent workflows."
 ---
+
+## About the Provider
+Qwen is an AI model family developed by Alibaba Group, a major Chinese technology and cloud computing company. Through its Qwen initiative, Alibaba builds and open-sources advanced language, images and coding models under permissive licenses to support innovation, developer tooling, and scalable AI integration across applications.
 
 ## Model Quickstart
 
-This section helps you quickly get started with the `Qwen3-VL-30B-A3B-Instruct` model on the Qubrid AI inferencing platform.
+This section helps you quickly get started with the `Qwen/Qwen3-VL-30B-A3B-Instruct` model on the Qubrid AI inferencing platform.
 
 To use this model, you need:
 
@@ -13,7 +16,7 @@ To use this model, you need:
 - Access to the Qubrid inference API
 - Basic knowledge of making API requests in your preferred language
 
-Once authenticated with your API key, you can send inference requests to the `Qwen3-VL-30B-A3B-Instruct` model and receive responses based on your input prompts.
+Once authenticated with your API key, you can send inference requests to the `Qwen/Qwen3-VL-30B-A3B-Instruct` model and receive responses based on your input prompts.
 
 Below are example placeholders showing how the model can be accessed using different programming environments.  
 You can choose the one that best fits your workflow.
@@ -265,13 +268,13 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat" \
 </CodeGroup>
 
 ## Model Overview
-Qwen3-VL-30B-A3B-Instruct is a large-scale vision-language model designed to process and reason over both text and visual inputs. It combines strong text understanding with advanced visual perception, spatial reasoning, OCR, and video comprehension. The model supports long-context workloads and agent-style interactions, enabling it to operate GUIs, invoke tools, and complete multimodal tasks. It is provided in a Mixture-of-Experts (MoE) architecture and optimized for inference across edge-to-cloud environments. This Instruct variant is intended for instruction-following and multimodal interaction.
+**Qwen3 VL 30B A3B Instruct** is a large-scale vision-language model designed to process and reason over both text and visual inputs. It combines strong text understanding with advanced visual perception, spatial reasoning, OCR, and video comprehension. The model supports long-context workloads and agent-style interactions, enabling it to operate GUIs, invoke tools, and complete multimodal tasks. It is provided in a Mixture-of-Experts (MoE) architecture and optimized for inference across edge-to-cloud environments. This Instruct variant is intended for instruction-following and multimodal interaction.
 
 ### Model at a Glance
 
 | Feature            | Details                     |
 | ------------------ | --------------------------- |
-| Model ID           | `qwen-qwen3-vl-instruct`    |
+| Model ID           | `Qwen/Qwen3-VL-30B-A3B-Instruct`    |
 | Provider           | Qwen                        |
 | Architecture       | Transformer decoder-only (Qwen3-VL with ViT visual encoder)   |
 | Model Size         | 9B                          |
@@ -281,7 +284,7 @@ Qwen3-VL-30B-A3B-Instruct is a large-scale vision-language model designed to pro
 
 ### When to use?
 
-You should consider using Qwen3-VL-30B-A3B-Instruct if:
+You should consider using **Qwen3 VL 30B A3B Instruct** if:
 
 - Your application requires both text and image understanding
 - You need long-context processing for documents or videos
@@ -320,6 +323,6 @@ Combines visual and textual reasoning for causal analysis, logical problem-solvi
 Supports OCR across 32 languages and improves recognition under low light, blur, tilt, rare characters, and long-document structures.
 
 ### Summary
-Qwen3-VL-30B-A3B-Instruct is a Mixture-of-Experts vision-language model designed for multimodal inference. 
+**Qwen3 VL 30B A3B Instruct** is a Mixture-of-Experts vision-language model designed for multimodal inference. 
 - It processes text, images, and long-context inputs in a unified manner. The model supports visual reasoning, OCR, video understanding, and tool usage.
 - It enables agent-style interactions such as GUI operation and task completion. Serverless inference is supported, while fine-tuning is not. 

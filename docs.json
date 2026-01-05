@@ -41,47 +41,47 @@
                 "group": "Model Quickstarts",
                 "pages": [
                   {
-                    "group": "Text Models",
+                    "group": "Chat Models",
                     "pages": [
-                      "inferencing/models quickstart/text/gpt-oss-120b",
-                      "inferencing/models quickstart/text/gpt-oss-20b",
-                      "inferencing/models quickstart/text/deepseek-r1-distill-llama-70b",
-                      "inferencing/models quickstart/text/mistral-7b",
-                      "inferencing/models quickstart/text/nemotron-orchestrator-8b",
-                      "inferencing/models quickstart/text/fara-7b"
+                      "inferencing/models-quickstart/chat/GPT OSS 120B",
+                      "inferencing/models-quickstart/chat/GPT OSS 20B",
+                      "inferencing/models-quickstart/chat/DeepSeek R1 Distill Llama 70B",
+                      "inferencing/models-quickstart/chat/Mistral 7B",
+                      "inferencing/models-quickstart/chat/Nemotron Orchestrator 8B",
+                      "inferencing/models-quickstart/chat/Fara 7B"
                     ]
                   },
                   {
                     "group": "Code Models",
                     "pages": [
-                      "inferencing/models quickstart/code/qwen3-coder-30b-a3b"
+                      "inferencing/models-quickstart/code/Qwen3 Coder 30B A3B Instruct"
                     ]
                   },
                   {
                     "group": "Image Models",
                     "pages": [
-                      "inferencing/models quickstart/image/z-image-turbo",
-                      "inferencing/models quickstart/image/qwen-image-edit",
-                      "inferencing/models quickstart/image/stable-diffusion"
+                      "inferencing/models-quickstart/image/Z Image Turbo",
+                      "inferencing/models-quickstart/image/Qwen Image Edit",
+                      "inferencing/models-quickstart/image/Stable Diffusion 3.5 Large"
                     ]
                   },
                   {
                     "group": "Audio Models",
                     "pages": [
-                      "inferencing/models quickstart/audio/whisper-large-v3"
+                      "inferencing/models-quickstart/audio/Whisper Large v3"
                     ]
                   },
                   {
                     "group": "Vision Models",
                     "pages": [
-                      "inferencing/models quickstart/vision/qwen3-vl-8b-instruct",
-                      "inferencing/models quickstart/vision/qwen3-vl-30b-a3b-instruct"
+                      "inferencing/models-quickstart/vision/Qwen3 VL 8B Instruct",
+                      "inferencing/models-quickstart/vision/Qwen3 VL 30B A3B Instruct"
                     ]
                   },
                   {
                     "group": "OCR Models",
                     "pages": [
-                      "inferencing/models quickstart/ocr/hunyuan-ocr-1b"
+                      "inferencing/models-quickstart/ocr/Hunyuan OCR (1B)"
                     ]
                   }
                 ]
