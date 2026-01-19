@@ -384,7 +384,6 @@ const payload = {
     },
     body: JSON.stringify(payload),
   });
-
   const contentType = response.headers.get("content-type") || "";
   if (contentType.includes("application/json")) {
     const data = await response.json();
@@ -414,7 +413,6 @@ const payload = {
         const delta = parsed?.choices?.[0]?.delta?.content;
         if (delta) finalText += delta;
       } catch {
-        // ignore malformed chunks
       }
     }
   }
@@ -435,8 +433,6 @@ import (
 	"net/http"
 	"os"
 )
-
-// imageToDataURL converts an image file to a base64 data URL
 func imageToDataURL(path string) (string, error) {
 	file, err := os.ReadFile(path)
 	if err != nil {
@@ -514,7 +510,6 @@ func main() {
 		pretty, _ := json.MarshalIndent(result, "", "  ")
 		fmt.Println(string(pretty))
 	} else {
-		// Handle streaming-like responses
 		fmt.Println(string(body))
 	}
 }
