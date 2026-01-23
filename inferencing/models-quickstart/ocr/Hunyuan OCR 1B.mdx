@@ -30,7 +30,7 @@ from pprint import pprint
 url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
 
 headers = {
-    "Authorization": "Bearer Qubrid_API_KEY",
+    "Authorization": "Bearer <Qubrid_API_KEY>",
     "Content-Type": "application/json"
 }
 data = {
@@ -76,7 +76,7 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+```
 
 ```js JavaScript theme={null}
 (async () => {
@@ -107,7 +107,7 @@ else:
       method: "POST",
       headers: {
         Authorization:
-          "Bearer Qubrid_API_KEY",
+          "Bearer <QUBRID_API_KEY>",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
@@ -142,7 +142,7 @@ else:
     }
   }
 })();
-````
+```
 
 ```go Go theme={null}
 package main
@@ -187,7 +187,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	req.Header.Set("Authorization", "Bearer QUBRID_API_KEY")
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -256,6 +256,300 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
 }'
 ```
 </CodeGroup>
+
+## To add multiple images using the OCR model
+Hunyuan ocr multiple image support :
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+import base64
+from pprint import pprint
+
+def image_to_data_url(path):
+    with open(path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:image/png;base64,{b64}"
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+headers = {
+    "Authorization": "Bearer <QUBRID_API_KEY>",
+    "Content-Type": "application/json"
+}
+data = {
+    "model": "tencent/HunyuanOCR",
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": image_to_data_url("/path/to/image")
+                    }
+                },
+                    {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": image_to_data_url("/path/to/image")
+                    }
+                }
+            ]
+        }
+    ],
+
+    "max_tokens": 4096,
+    "temperature": 0,
+    "language": "auto",
+    "ocr_mode": "general",
+    "stream": False  
+}
+response = requests.post(
+    url,
+    headers=headers,
+    json=data,
+    stream=False  
+)
+content_type = response.headers.get("Content-Type", "")
+if "application/json" in content_type:
+    pprint(response.json())
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+            if payload == "[DONE]":
+                break
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
+
+```
+
+```js JavaScript theme={null}
+const fs = require("fs");
+
+function imageToDataURL(path) {
+  const buffer = fs.readFileSync(path);
+  const base64 = buffer.toString("base64");
+  return `data:image/png;base64,${base64}`;
+}
+
+const url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions";
+
+const payload = {
+  model: "tencent/HunyuanOCR",
+  messages: [
+    {
+      role: "user",
+      content: [
+        {
+          type: "image_url",
+          image_url: {
+            url: imageToDataURL(
+              "/path/to/image",
+            ),
+          },
+        },
+        {
+          type: "image_url",
+          image_url: {
+            url: imageToDataURL(
+              "/path/to/image",
+            ),
+          },
+        },
+      ],
+    },
+  ],
+  max_tokens: 4096,
+  temperature: 0,
+  language: "auto",
+  ocr_mode: "general",
+  stream: false,
+};
+
+(async () => {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization:
+      "Bearer <QUBRID_API_KEY>",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const data = await response.json();
+    console.log(data);
+    return;
+  }
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+
+  let finalText = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+
+    const chunk = decoder.decode(value);
+    const lines = chunk.split("\n");
+
+    for (const line of lines) {
+      if (!line.startsWith("data:")) continue;
+
+      const payload = line.replace("data:", "").trim();
+      if (payload === "[DONE]") break;
+
+      try {
+        const parsed = JSON.parse(payload);
+        const delta = parsed?.choices?.[0]?.delta?.content;
+        if (delta) finalText += delta;
+      } catch {
+      }
+    }
+  }
+  console.log("\nFinal OCR Output:\n");
+  console.log(finalText);
+})();
+```
+
+```go Go theme={null}
+package main
+
+import (
+	"bytes"
+	"encoding/base64"
+	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+)
+func imageToDataURL(path string) (string, error) {
+	file, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	encoded := base64.StdEncoding.EncodeToString(file)
+	return "data:image/png;base64," + encoded, nil
+}
+
+func main() {
+	url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+	img1, err := imageToDataURL("/path/to/image")
+	if err != nil {
+		panic(err)
+	}
+
+	img2, err := imageToDataURL("/path/to/image")
+	if err != nil {
+		panic(err)
+	}
+	data := map[string]interface{}{
+		"model": "tencent/HunyuanOCR",
+		"messages": []map[string]interface{}{
+			{
+				"role": "user",
+				"content": []map[string]interface{}{
+					{
+						"type": "image_url",
+						"image_url": map[string]string{
+							"url": img1,
+						},
+					},
+					{
+						"type": "image_url",
+						"image_url": map[string]string{
+							"url": img2,
+						},
+					},
+				},
+			},
+		},
+		"max_tokens": 4096,
+		"temperature": 0,
+		"language": "auto",
+		"ocr_mode": "general",
+		"stream": false,
+	}
+	jsonData, err := json.Marshal(data)
+	if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
+	req.Header.Set("Content-Type", "application/json")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	contentType := resp.Header.Get("Content-Type")
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	if contentType == "application/json" || bytes.Contains([]byte(contentType), []byte("application/json")) {
+		var result map[string]interface{}
+		if err := json.Unmarshal(body, &result); err != nil {
+			panic(err)
+		}
+		pretty, _ := json.MarshalIndent(result, "", "  ")
+		fmt.Println(string(pretty))
+	} else {
+		fmt.Println(string(body))
+	}
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer <QUBRID_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+  "model": "tencent/HunyuanOCR",
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+          }
+        },
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg"
+          }
+        }
+      ]
+    }
+  ],
+  "max_tokens": 4096,
+  "temperature": 0,
+  "language": "auto",
+  "ocr_mode": "general",
+  "stream": "false"
+}'
+```
+</CodeGroup>
+
+- For **PDF inputs**: convert each page of the PDF into images (one image per page) and pass those images sequentially as Base64-encoded inputs using the same multi-image request format shown above.
 
 ## Model Overview
 
