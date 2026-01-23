@@ -1,5 +1,5 @@
 ---
-title: "Stable Diffusion 3.5 Large (Stability AI)"
+title: "Stable Diffusion 3.5 Large"
 description: "> Stable Diffusion 3.5 Large is an 8.1B parameter text-to-image diffusion model optimized for high-quality, prompt-accurate image generation at professional resolutions."
 ---
 
@@ -28,18 +28,18 @@ import json
 
 url = "https://platform.qubrid.com/api/v1/qubridai/image/generation"
 headers = {
-"Authorization": "Bearer <QUBRID_API_KEY>",
-"Content-Type": "application/json"
+    "Authorization": "Bearer <QUBRID_API_KEY>",
+    "Content-Type": "application/json",
 }
 
 data = {
-"model": "stabilityai/stable-diffusion-3.5-large",
-"positive_prompt": "cinematic shot of a lone astronaut standing on a desolate alien planet, glowing orange sunset sky, dust storms swirling, dramatic lighting, ultra-wide lens composition, movie still aesthetic, realistic space suit details, volumetric atmosphere, 8k sci-fi film scene",
-"width": 1024,
-"height": 1024,
-"steps": 30,
-"cfg": 7.5,
-"seed": 42
+    "model": "stabilityai/stable-diffusion-3.5-large",
+    "positive_prompt": "cinematic shot of a lone astronaut standing on a desolate alien planet, glowing orange sunset sky, dust storms swirling, dramatic lighting, ultra-wide lens composition, movie still aesthetic, realistic space suit details, volumetric atmosphere, 8k sci-fi film scene",
+    "width": 1024,
+    "height": 1024,
+    "steps": 30,
+    "cfg": 7.5,
+    "seed": 42,
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -50,7 +50,7 @@ if response.status_code == 200:
     print("Image saved to generated_image.png")
 else:
     print(f"Error {response.status_code}: {response.text}")
-````
+```
 
 ```js JavaScript theme={null}
 import fs from "fs";

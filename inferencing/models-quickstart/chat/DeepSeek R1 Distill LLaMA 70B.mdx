@@ -1,5 +1,5 @@
 ---
-title: 'DeepSeek R1 Distill LLaMA 70B (DeepSeek)'
+title: 'DeepSeek R1 Distill LLaMA 70B'
 description: '> A distilled large language model based on LLaMA 70B, optimized for efficient reasoning-focused inference.'
 ---
 
@@ -32,26 +32,23 @@ from pprint import pprint
 
 url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
 headers = {
-  "Authorization": "Bearer <QUBRID_API_KEY>",
-  "Content-Type": "application/json"
+    "Authorization": "Bearer <QUBRID_API_KEY>",
+    "Content-Type": "application/json",
 }
 data = {
-  "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
-  "messages": [
-    {
-      "role": "user",
-      "content": "Explain quantum computing to a 5 year old."
-    }
-  ],
-  "temperature": 0.7,
-  "max_tokens": 4096,
-  "stream": False,
-  "top_p": 0.8
+    "model": "deepseek-ai/deepseek-r1-distill-llama-70b",
+    "messages": [
+        {"role": "user", "content": "Explain quantum computing to a 5 year old."}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 4096,
+    "stream": False,
+    "top_p": 0.8,
 }
 response = requests.post(
     url,
     headers=headers,
-    json=data, 
+    json=data,
 )
 content_type = response.headers.get("Content-Type", "")
 if "application/json" in content_type:
@@ -69,7 +66,8 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+
+```
 
 ```js JavaScript theme={null}
 (async () => {

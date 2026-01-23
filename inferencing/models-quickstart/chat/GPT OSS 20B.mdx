@@ -1,5 +1,5 @@
 ---
-title: 'GPT OSS 20B (OpenAI)'
+title: 'GPT OSS 20B'
 description: '> A low-latency reasoning model with adjustable reasoning depth, built for local deployment and agentic workflows'
 ---
 
@@ -28,31 +28,31 @@ from pprint import pprint
 
 url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
 headers = {
-  "Authorization": "Bearer <QUBRID_API_KEY>",
-  "Content-Type": "application/json"
+    "Authorization": "Bearer <QUBRID_API_KEY>",
+    "Content-Type": "application/json",
 }
 
 data = {
-  "model": "openai/gpt-oss-20b",
-  "messages": [
-    {
-      "role": "user",
-      "content": "Explain quantum computing to a 5 year old."
-    }
-  ],
-  "temperature": 0.7,
-  "max_tokens": 4096,
-  "stream": False,
-  "top_p": 0.8
+    "model": "openai/gpt-oss-20b",
+    "messages": [
+        {"role": "user", "content": "Explain quantum computing to a 5 year old."}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 4096,
+    "stream": False,
+    "top_p": 0.8,
 }
+
 response = requests.post(
     url,
     headers=headers,
-    json=data, 
+    json=data,
 )
 content_type = response.headers.get("Content-Type", "")
+
 if "application/json" in content_type:
     pprint(response.json())
+
 else:
     for line in response.iter_lines(decode_unicode=True):
         if not line:
@@ -69,7 +69,8 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+
+```
 
 ```js JavaScript theme={null}
 (async () => {

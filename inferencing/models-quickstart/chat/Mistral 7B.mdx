@@ -1,5 +1,5 @@
 ---
-title: 'Mistral (7B) Instruct v0.3 (Mistral AI)'
+title: 'Mistral 7B'
 description: '> A compact and efficient text model designed for fast inference, long-context handling, and easy fine-tuning.'
 ---
 
@@ -28,26 +28,23 @@ from pprint import pprint
 
 url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
 headers = {
-  "Authorization": "Bearer <Qubrid_API_KEY>",
-  "Content-Type": "application/json"
+    "Authorization": "Bearer <Qubrid_API_KEY>",
+    "Content-Type": "application/json",
 }
 data = {
-  "model": "mistralai/Mistral-7B-Instruct-v0.3",
-  "messages": [
-    {
-      "role": "user",
-      "content": "Explain quantum computing to a 5 year old."
-    }
-  ],
-  "temperature": 0.7,
-  "max_tokens": 4096,
-  "stream": False,
-  "top_p": 0.8
+    "model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "messages": [
+        {"role": "user", "content": "Explain quantum computing to a 5 year old."}
+    ],
+    "temperature": 0.7,
+    "max_tokens": 4096,
+    "stream": False,
+    "top_p": 0.8,
 }
 response = requests.post(
     url,
     headers=headers,
-    json=data, 
+    json=data,
 )
 content_type = response.headers.get("Content-Type", "")
 if "application/json" in content_type:
@@ -65,7 +62,8 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+
+```
 
 ```js JavaScript theme={null}
 (async () => {
