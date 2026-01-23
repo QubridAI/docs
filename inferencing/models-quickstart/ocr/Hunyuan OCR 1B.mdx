@@ -1,5 +1,5 @@
 ---
-title: "Hunyuan OCR (1B) (Tencent)"
+title: "Hunyuan OCR 1B"
 description: "> Hunyuan OCR (1B) is an end-to-end OCR vision-language model designed for multilingual text extraction and document parsing using a single-inference workflow."
 ---
 
@@ -76,7 +76,7 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+```
 
 ```js JavaScript theme={null}
 (async () => {
@@ -142,7 +142,7 @@ else:
     }
   }
 })();
-````
+```
 
 ```go Go theme={null}
 package main
@@ -257,7 +257,7 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
 ```
 </CodeGroup>
 
-## Code snippet to add multiple images using the OCR model
+## To add multiple images using the OCR model
 Hunyuan ocr multiple image support :
 
 <CodeGroup>
@@ -328,8 +328,7 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-
-````
+```
 
 ```js JavaScript theme={null}
 const fs = require("fs");
@@ -419,7 +418,7 @@ const payload = {
   console.log("\nFinal OCR Output:\n");
   console.log(finalText);
 })();
-````
+```
 
 ```go Go theme={null}
 package main
@@ -559,7 +558,7 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
 - With a lightweight 1B parameter size, the model supports multilingual document parsing and multiple OCR-related tasks while remaining efficient for deployment on inferencing platforms.
 - The model is focused purely on OCR workflows and is not intended for general visual question answering.
 
-### Model at a Glance
+## Model at a Glance
 
 | Feature        | Details                           |
 | -------------- | --------------------------------- |
@@ -569,7 +568,7 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
 | Context Length | 16k tokens                        |
 | Model Type     | OCR-focused Vision-Language Model |
 
-### When to use?
+## When to use?
 
 You should consider using **Hunyuan OCR (1B)** if:
 
@@ -581,7 +580,7 @@ You should consider using **Hunyuan OCR (1B)** if:
 
 `Do not use this model for general visual question answering tasks.`
 
-### Key Features
+## Key Features
 
 - **Efficient Lightweight Architecture :**
   Built on Hunyuan’s native multimodal architecture, achieving strong OCR performance with only 1B parameters and reduced deployment cost.
@@ -595,7 +594,7 @@ You should consider using **Hunyuan OCR (1B)** if:
 - **Multilingual Document Support :**
   Provides robust support for over 100 languages, including mixed-language documents and varied document types.
 
-### Inference Parameters
+## Inference Parameters
 | Parameter Name       | Type    | Default | Description                                                                 |
 |----------------------|---------|---------|-----------------------------------------------------------------------------|
 | Streaming            | boolean | true    | Enable streaming responses for real-time output.                            |
@@ -605,9 +604,9 @@ You should consider using **Hunyuan OCR (1B)** if:
 | Temperature          | number  | 0       | Controls randomness. Keep at 0 for accurate text extraction.                |
 
 
-### Performance Characteristics
+## Performance Characteristics
 
-#### Strengths
+## Strengths
 
 - Lightweight 1B parameter model with strong OCR accuracy
 - Native handling of high-resolution images and extreme aspect ratios
@@ -615,13 +614,13 @@ You should consider using **Hunyuan OCR (1B)** if:
 - Effective recognition of rotated and vertical text
 - Strong multilingual and mixed-script support
 
-#### Considerations
+## Considerations
 
 - Designed specifically for OCR, not general visual reasoning
 - May hallucinate on extremely blurred or low-resolution text
 - Throughput depends on visual token density
 
-### Summary
+## Summary
 
 **Hunyuan OCR (1B)** is a lightweight, OCR-focused vision-language model developed by Tencent Hunyuan.
 - It performs end-to-end OCR tasks using a single instruction and single inference step.

@@ -1,21 +1,20 @@
 ---
-title: "GPT OSS 20B"
-description: '> A low-latency reasoning model with adjustable reasoning depth, built for local deployment and agentic workflows'
+title: "Meta Llama 3.3 70B Instruct"
+description: "> An instruction-tuned 70B-parameter language model optimized for high-quality reasoning and task-oriented inference."
 ---
 
-## About the Provider 
-**OpenAI** is the organization behind GPT OSS 20B. They are a major AI research lab and platform provider known for creating influential generative AI models (like the GPT series). With GPT-OSS, OpenAI is extending its technology into the open-source ecosystem, empowering developers and enterprises to run powerful language models without proprietary restrictions.
+## About the Provider
+Meta is a leading global technology company focusing on social media, connectivity, and artificial intelligence research. Meta develops advanced AI models, such as the LLaMA family, to empower developers and enterprises with scalable language understanding and generation capabilities. Its open-weight AI initiatives aim to foster innovation and broader community access to powerful AI tools.
 
 ## Model Quickstart
-
-This section helps you quickly get started with the `openai/gpt-oss-20b` model on the Qubrid AI inferencing platform.
+This section helps you quickly get started with the `meta-llama/Llama-3.3-70B-Instruct` model on the Qubrid AI inferencing platform.
 
 To use this model, you need:
 - A valid **Qubrid API key**
 - Access to the Qubrid inference API
 - Basic knowledge of making API requests in your preferred language
 
-Once authenticated with your API key, you can send inference requests to the `openai/gpt-oss-20b` model and receive responses based on your input prompts.
+Once authenticated with your API key, you can send inference requests to the `meta-llama/Llama-3.3-70B-Instruct` model and receive responses based on your input prompts.
 
 Below are example placeholders showing how the model can be accessed using different programming environments.  
 You can choose the one that best fits your workflow.
@@ -34,7 +33,7 @@ headers = {
 }
 
 data = {
-    "model": "openai/gpt-oss-20b",
+    "model": "meta-llama/Llama-3.3-70B-Instruct",
     "messages": [
         {
             "role": "user",
@@ -50,7 +49,7 @@ data = {
 response = requests.post(
     url,
     headers=headers,
-    json=data
+    json=data,
 )
 
 content_type = response.headers.get("Content-Type", "")
@@ -73,13 +72,12 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-
 ```
 
 ```js JavaScript theme={null}
 (async () => {
   const body = {
-    model: "openai/gpt-oss-20b",
+    model: "meta-llama/Llama-3.3-70B-Instruct",
     messages: [
       {
         role: "user",
@@ -91,7 +89,6 @@ else:
     stream: false,
     top_p: 0.8,
   };
-
   const res = await fetch(
     "https://platform.qubrid.com/api/v1/qubridai/chat/completions",
     {
@@ -99,7 +96,7 @@ else:
       headers: {
         Authorization:
           "Bearer <QUBRID_API_KEY>",
-        "Content-Type": "application/json",
+          "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
     }
@@ -149,12 +146,12 @@ import (
 func main() {
   url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
 
-  data := map[string]interface{} {
-  "model": "openai/gpt-oss-20b",
-  "messages": []map[string]string{
-    {
-      "role": "user",
-      "content": "Explain quantum computing in simple terms",
+  data := map[string]interface{}{
+    "model": "meta-llama/Llama-3.3-70B-Instruct",
+    "messages":  []map[string]string{
+      {
+        "role": "user",
+        "content": "Explain quantum computing in simple terms",
     },
 },
   "temperature": 0.7,
@@ -162,16 +159,14 @@ func main() {
   "stream": true,
   "top_p": 1,
 }
- jsonData, err := json.Marshal(data)
+  jsonData, err := json.Marshal(data)
     if err != nil {
 		panic(err)
 	}
-
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 	if err != nil {
 		panic(err)
 	}
-
 	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
 	req.Header.Set("Content-Type", "application/json")
 
@@ -218,7 +213,7 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
   -H "Authorization: Bearer Qubrid_API_KEY" \
   -H "Content-Type: application/json" \
   --data '{
-  "model": "openai/gpt-oss-20b",
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
   "messages": [
     {
       "role": "user",
@@ -232,82 +227,57 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
 }'
 ```
 </CodeGroup>
-
 ## Model Overview
-
-**GPT OSS 20B** is a large language model optimized for low-latency inference, local deployments, and specialized use cases.
-It provides strong reasoning capabilities with adjustable reasoning depth, making it suitable for applications that require transparency, control, and efficient execution without large GPU infrastructure.
+**Llama 3.3 70B Instruct** is a 70B-parameter open-weight large language model from Meta, optimized for instruction following, complex reasoning, and multi-turn conversations.It is well suited for enterprise use cases such as advanced chat assistants, code reasoning, and long-document analysis with large context windows.
 
 ## Model at a Glance
 
-| Feature | Details |
-|---------|---------|
-| Model ID | `openai/gpt-oss-20b` |
-| Provider | OpenAI |
-| Architecture | Compact Mixture-of-Experts (MoE) with SwiGLU activations, Token-choice MoE, Alternating attention mechanism |
-| Model Size | 20.9B Params |
-| Parameters | 4 |
-| Context Length | 131.1k Tokens |
-| Training Data | Comprehensive safety evaluation and testing protocols, Global community feedback integration |
+| Feature        | Details                                       |
+| -------------- | --------------------------------------------- |
+| Model ID       | Llama-3.3-70B-Instruct                        |
+| Architecture   | Transformer with Grouped-Query Attention(GQA) |
+| Model Size     | 70B parameters                                |
+| Parameters     | 4                                             |
+| Training Data  | Publicly available web data (multilingual)    |
+| Context Length | 128K Token                                    |
+
+## Supported languages
+- English   
+- German     
+- French     
+- Italian    
+- Portuguese 
+- Hindi      
+- Spanish   
+- Thai      
 
 ## When to use?
-
-You should consider using **GPT OSS 20B** if:
-
-- You need fast, low-latency inference
-- You want control over reasoning depth
-- Your application benefits from transparent reasoning
-- You are building tool-based or agentic workflows
-- You want to fine-tune on consumer-grade hardware
-This model is not intended as a lightweight chat model, but as a reasoning-focused inference model.
-
-## Reasoning Control
-GPT OSS 20B allows you to control how deeply the model reasons before responding.
-
-| Level | What it means |
-|-------|--------------|
-| Low | Fast responses for simple conversations |
-| Medium | Balanced speed and reasoning depth |
-| High | Deep, multi-step analysis for complex tasks |
-
-You can set the reasoning level directly in the system prompt:
-
-```plain theme={null}
-Reasoning: high
-```
-
+Use **Llama 3.3 70B Instruct** if you need:
+- Enterprise chat assistants
+- Advanced code generation and review
+- Long-document question answering
+- Summarization at scale
+- Retrieval-Augmented Generation (RAG)
+- AI agents and workflow automation
+---
 ## Inference Parameters
-| Parameter Name | Type    | Default | Description                                                           |
-|----------------|---------|---------|-----------------------------------------------------------------------|
-| Streaming      | boolean | true    | Enable streaming responses for real-time output.                     |
+| Parameter Name | Type    | Default | Description                                                                        |
+| -------------- | ------- | ------- | ---------------------------------------------------------------------------------- |
+| Streaming      | boolean | true    | Enable streaming responses for real-time output.                                   |
 | Temperature    | number  | 0.7     | Controls randomness. Higher values mean more creative but less predictable output. |
-| Max Tokens     | number  | 4096    | Maximum number of tokens to generate in the response.                |
-| Top P          | number  | 1       | Nucleus sampling: considers tokens with top_p probability mass.       |
+| Max Tokens     | number  | 4096    | Defines the maximum number of tokens the model is allowed to generate.             |
+| Top P          | number  | 0.9     | Nucleus sampling that limits token selection to a subset of top probability mass.  |
 
 ## Key Features
-1. **Low-latency reasoning** – Optimized for fast inference while providing strong reasoning capabilities with adjustable reasoning depth.  
-2. **Adjustable reasoning depth** – Allows control over how deeply the model analyzes a problem (low, medium, high) for speed or detailed multi-step reasoning.  
-3. **Transparency and debugging** – Provides full chain-of-thought access, making outputs easier to understand and debug.  
-4. **Agentic and tool capabilities** – Supports function calling, web browsing, structured outputs, and tool-based workflows for advanced applications.
+1. High-quality reasoning and instruction adherence
+2. Strong performance on code and analytical tasks
+3. Large context window for long-document processing
+4. Open-weight model suitable for private and on-prem deployments
+5. Production-ready for enterprise workloads
 
-
-## Chain-of-Thought Access
-The model provides full chain-of-thought visibility, enabling :
-- Easier debugging
-- Better understanding of how responses are generated
-- Increased trust in outputs
-
-## Tool and Agent Capabilities
-**GPT OSS 20B** supports agentic workflows and tool usage including:
-- Function calling with defined schemas
-- Web browsing using built-in browsing tools
-- Agentic operations such as browser-based tasks
-- Structured outputs
-
+## Limitations
+1. Smaller context window compared to largest models
+2. Can struggle with highly complex, multi-step reasoning
 
 ## Summary
-**GPT OSS 20B** is a low-latency reasoning model designed for efficient inference and local deployments.
-- It provides adjustable reasoning depth to balance speed and analysis.
-- The model exposes internal reasoning for transparency and debugging.
-- It supports agentic workflows, tool usage, and structured outputs.
-- GPT-OSS 20B can be fine-tuned and run on consumer-grade hardware.
+**Meta Llama 3.3 70B Instruct** is a 70B-parameter, instruction-tuned large language model designed for high-quality reasoning and multi-turn conversational tasks. It is well suited for enterprise workloads such as advanced chat assistants, code generation, summarization, and long-document question answering. The model supports a large context window, enabling effective processing of lengthy inputs and retrieval-augmented generation workflows.

@@ -48,7 +48,8 @@
                       "inferencing/models-quickstart/chat/DeepSeek R1 Distill Llama 70B",
                       "inferencing/models-quickstart/chat/Mistral (7B) Instruct v0.3",
                       "inferencing/models-quickstart/chat/Nemotron Orchestrator 8B",
-                      "inferencing/models-quickstart/chat/Fara 7B"
+                      "inferencing/models-quickstart/chat/Fara 7B",
+                      "inferencing/models-quickstart/chat/Meta Llama 3.3 70B Instruct"
                     ]
                   },
                   {

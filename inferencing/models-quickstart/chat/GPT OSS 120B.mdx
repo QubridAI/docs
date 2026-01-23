@@ -1,5 +1,5 @@
 ---
-title: 'GPT OSS 120B (OpenAI)'
+title: "GPT OSS 120B"
 description: "> A high-capacity reasoning model optimized for complex analysis, advanced agent workflows, and large-scale inference."
 ---
 
@@ -32,35 +32,36 @@ import json
 from pprint import pprint
 
 url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
 headers = {
-"Authorization": "Bearer <QUBRID_API_KEY>",
-"Content-Type": "application/json"
+    "Authorization": "Bearer <QUBRID_API_KEY>",
+    "Content-Type": "application/json"
 }
 
 data = {
-"model": "openai/gpt-oss-120b",
-"messages": [
-  {
-    "role": "user",
-    "content": "Explain quantum computing to a 5 year old."
-  }
-],
-"temperature": 0.7,
-"max_tokens": 4096,
-"stream": False,
-"top_p": 0.8
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Explain quantum computing to a 5 year old."
+        }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 4096,
+    "stream": False,
+    "top_p": 0.8
 }
 
 response = requests.post(
     url,
     headers=headers,
-    json=data, 
+    json=data
 )
+
 content_type = response.headers.get("Content-Type", "")
 
 if "application/json" in content_type:
     pprint(response.json())
-
 else:
     for line in response.iter_lines(decode_unicode=True):
         if not line:
@@ -77,7 +78,7 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+```
 
 ```js JavaScript theme={null}
 (async () => {
@@ -136,7 +137,7 @@ else:
     }
   }
 })();
-````
+```
 
 ```go Go theme={null}
 package main
@@ -292,7 +293,7 @@ Use **GPT OSS 120B** if you need:
 - Agentic capabilities such as function calling, web browsing, and Python execution
 - The ability to fine-tune the model for domain-specific use cases
 
-### Inference Parameters
+## Inference Parameters
 
 | Parameter Name     | Type    | Default  | Description                                                                 |
 |--------------------|---------|----------|-----------------------------------------------------------------------------|

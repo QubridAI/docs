@@ -1,5 +1,5 @@
 ---
-title: "Qwen3 VL 30B A3B Instruct (Qwen)"
+title: "Qwen3 VL 30B A3B Instruct"
 description: "> Qwen3 VL 30B A3B Instruct is a vision-language model designed for long-context multimodal reasoning, OCR, video understanding, and tool-based agent workflows."
 ---
 
@@ -32,7 +32,7 @@ headers = {
 "Content-Type": "application/json"
 }
 data = {
-"model": "Qwen/Qwen3-VL-30B-A3B-Instruct,
+"model": "Qwen/Qwen3-VL-30B-A3B-Instruct",
 "messages": [
   {
     "role": "user",
@@ -76,7 +76,7 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+```
 
 ```js JavaScript theme={null}
 (async () => {
@@ -145,7 +145,7 @@ else:
     }
   }
 })();
-````
+```
 
 ```go Go theme={null}
 package main
@@ -270,7 +270,7 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat" \
 ## Model Overview
 **Qwen3 VL 30B A3B Instruct** is a large-scale vision-language model designed to process and reason over both text and visual inputs. It combines strong text understanding with advanced visual perception, spatial reasoning, OCR, and video comprehension. The model supports long-context workloads and agent-style interactions, enabling it to operate GUIs, invoke tools, and complete multimodal tasks. It is provided in a Mixture-of-Experts (MoE) architecture and optimized for inference across edge-to-cloud environments. This Instruct variant is intended for instruction-following and multimodal interaction.
 
-### Model at a Glance
+## Model at a Glance
 
 | Feature            | Details                     |
 | ------------------ | --------------------------- |
@@ -282,7 +282,7 @@ curl -X POST "https://platform.qubrid.com/api/v1/qubridai/multimodal/chat" \
 | Max Tokens         | 32K tokens                  |
 | Image Input        | Supported                   |
 
-### When to use?
+## When to use?
 
 You should consider using **Qwen3 VL 30B A3B Instruct** if:
 
@@ -294,7 +294,7 @@ You should consider using **Qwen3 VL 30B A3B Instruct** if:
 
 `This model is suitable for inference scenarios where multimodal comprehension and extended context handling are required.`
 
-### Inference parameters
+## Inference parameters
 
 | Parameter Name     | Type    | Default | Description                                   |
 |--------------------|---------|---------|-----------------------------------------------|
@@ -305,7 +305,7 @@ You should consider using **Qwen3 VL 30B A3B Instruct** if:
 | Top K              | number  | 50      | Limits sampling to the top-k tokens.          |
 | Presence Penalty   | number  | 0       | Discourages repeated tokens in the output.    |
 
-### Key Features
+## Key Features
 
 - **Visual Agent Operations :**
 Can operate PC and mobile GUIs by recognizing interface elements, understanding their functions, invoking tools, and completing tasks.
@@ -322,7 +322,7 @@ Combines visual and textual reasoning for causal analysis, logical problem-solvi
 - **Expanded OCR and Visual Recognition :**
 Supports OCR across 32 languages and improves recognition under low light, blur, tilt, rare characters, and long-document structures.
 
-### Summary
+## Summary
 **Qwen3 VL 30B A3B Instruct** is a Mixture-of-Experts vision-language model designed for multimodal inference. 
 - It processes text, images, and long-context inputs in a unified manner. The model supports visual reasoning, OCR, video understanding, and tool usage.
 - It enables agent-style interactions such as GUI operation and task completion. Serverless inference is supported, while fine-tuning is not. 

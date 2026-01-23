@@ -1,5 +1,5 @@
 ---
-title: 'DeepSeek R1 Distill LLaMA 70B (DeepSeek)'
+title: "DeepSeek R1 Distill LlaMA 70B"
 description: '> A distilled large language model based on LLaMA 70B, optimized for efficient reasoning-focused inference.'
 ---
 
@@ -11,7 +11,6 @@ description: '> A distilled large language model based on LLaMA 70B, optimized f
 DeepSeek is a Chinese artificial intelligence company based in Hangzhou, Zhejiang that focuses on research and development of large language models and advanced AI technologies. The firm emphasizes open innovation in AI, publishing models and research under permissive licenses to make powerful language models widely accessible and support collaborative development in the global AI community.
 
 ## Model Quickstart
-
 This section helps you quickly get started with the `deepseek-ai/deepseek-r1-distill-llama-70b` model on the Qubrid AI inferencing platform.
 
 To use this model, you need:
@@ -69,7 +68,7 @@ else:
                 pprint(chunk)
             except json.JSONDecodeError:
                 print("Raw chunk:", payload)
-````
+```
 
 ```js JavaScript theme={null}
 (async () => {
@@ -126,7 +125,7 @@ else:
     }
   }
 })();
-````
+```
 
 ```go Go theme={null}
 package main
@@ -251,7 +250,7 @@ Use **DeepSeek R1 Distill LLaMA 70B** if you need:
 - Reliable performance across math, logic, coding, and research workflows
 ---
 
-### Inference Parameters
+## Inference Parameters
 | Parameter Name     | Type    | Default | Description                                                                 |
 |--------------------|---------|---------|-----------------------------------------------------------------------------|
 | Streaming          | boolean | true    | Enable streaming responses for real-time output.                            |
@@ -262,13 +261,12 @@ Use **DeepSeek R1 Distill LLaMA 70B** if you need:
 | Reasoning Summary  | select  | auto    | Controls verbosity of reasoning explanations: auto, concise, or detailed   |
 ---
 
-### Key Features
+## Key Features
 1. **High-Quality Reasoning:** Optimized for strong reasoning and chain-of-thought capabilities, suitable for complex tasks.  
 2. **Long-Context Support:** Can handle up to 64K tokens, enabling processing of very large inputs.  
 3. **Efficient Deployment:** Distilled model runs efficiently compared to full 70B models, reducing hardware requirements.  
 4. **Configurable Inference:** Supports adjustable parameters like temperature, streaming, reasoning effort, and verbosity for flexible and precise outputs.  
 
 ## Summary
-
 **DeepSeek R1 Distill LLaMA 70B** brings high-quality reasoning capabilities into a more accessible 70B-parameter distilled model. It supports long-context reasoning, configurable inference settings, and open deployment under an MIT license. The model is well suited for advanced reasoning, technical assistance, and research use cases where efficiency and accessibility are priorities.
 

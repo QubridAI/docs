@@ -1,5 +1,5 @@
 ---
-title: "Z Image Turbo (Qwen Tongyi MAI)"
+title: "Z Image Turbo"
 description: "> A high-speed, production-optimized image generation model delivering photorealistic results with low latency."
 ---
 
@@ -27,10 +27,7 @@ import requests
 
 url = "https://platform.qubrid.com/api/v1/qubridai/image/generation"
 
-headers = {
-    "Authorization": "Bearer <QUBRID_API_KEY>",
-    "Content-Type": "application/json"
-}
+headers = {"Authorization": "Bearer <QUBRID_API_KEY>", "Content-Type": "application/json"}
 
 data = {
     "model": "Tongyi-MAI/Z-Image-Turbo",
@@ -44,7 +41,7 @@ data = {
     "height": 1024,
     "steps": 9,
     "cfg": 0,
-    "seed": 42
+    "seed": 42,
 }
 
 response = requests.post(url, headers=headers, json=data)
@@ -55,7 +52,7 @@ if response.status_code == 200:
     print("Image saved to generated_image.png")
 else:
     print(f"Error {response.status_code}: {response.text}")
-````
+```
 
 ```js JavaScript theme={null}
 import fs from "fs";
@@ -89,7 +86,7 @@ if (!res.ok) {
 const buffer = Buffer.from(await res.arrayBuffer());
 fs.writeFileSync("generated_image.png", buffer);
 console.log("Image saved to generated_image.png");
-````
+```
 
 ```go Go theme={null}
 package main
@@ -177,13 +174,13 @@ func main() {
 
 </CodeGroup>
 
-### API Generated Response
+## API Generated Response
 
 <Frame>
   <img src="/images/z-image-turbo-demo.png" />
 </Frame>
 
-### Example Generated Image
+## Example Generated Image
 
 > Prompt: A professional product photography shot of a matte black coffee bag sitting on a wooden table. The bag clearly features the text 'QUBRID ROAST' in gold foil stamping. Beside the bag is a white ceramic cup with latte art. Morning sunlight, sharp focus, 8k resolution, commercial advertisement style.
 
@@ -222,7 +219,7 @@ You should use **Z Image Turbo** if you need:
 
 Z Image Turbo is suitable for production inference scenarios where efficiency, consistency, and predictable output behavior are required.
 
-### Inference Parameters
+## Inference Parameters
 | Parameter Name     | Type   | Default | Description                                                     |
 |--------------------|--------|---------|-----------------------------------------------------------------|
 | Width              | number | 1024    | Generated image width.                                          |
@@ -233,7 +230,7 @@ Z Image Turbo is suitable for production inference scenarios where efficiency, c
 | Negative Prompt    | string | —       | Optional negative prompt.                                       |
 
 
-### Key Features
+## Key Features
 
 - **High-speed image generation** using a distilled 6B-parameter model optimized for low latency
 - **Photorealistic and stylized outputs** with strong prompt adherence
@@ -242,7 +239,7 @@ Z Image Turbo is suitable for production inference scenarios where efficiency, c
 - **Deterministic outputs** with seed control and fixed single-image generation
 - **Production-ready inference** with predictable cost and performance
 
-### Summary
+## Summary
 
 **Z Image Turbo** is a fast, efficient image generation model built for production use. It is distilled from a larger foundation model to reduce inference cost while maintaining visual quality. The model excels at photorealistic images, stylized artwork, and text rendering. It supports flexible resolutions and deterministic outputs via seed control. Z Image Turbo is ideal for real-time and large-scale image generation workloads.
 
