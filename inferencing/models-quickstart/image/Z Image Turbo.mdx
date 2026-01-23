@@ -55,7 +55,7 @@ if response.status_code == 200:
     print("Image saved to generated_image.png")
 else:
     print(f"Error {response.status_code}: {response.text}")
-````
+```
 
 ```js JavaScript theme={null}
 import fs from "fs";
@@ -89,7 +89,7 @@ if (!res.ok) {
 const buffer = Buffer.from(await res.arrayBuffer());
 fs.writeFileSync("generated_image.png", buffer);
 console.log("Image saved to generated_image.png");
-````
+```
 
 ```go Go theme={null}
 package main

@@ -63,7 +63,7 @@ image_bytes = base64.b64decode(image_base64)
 with open("edited_image.png", "wb") as f:
     f.write(image_bytes)
 print("Image saved to edited_image.png")
-````
+```
 
 ```js JavaScript theme={null}
 import fs from "fs";
@@ -99,7 +99,7 @@ base64Image = base64Image.split(",").pop();
 const imageBuffer = Buffer.from(base64Image, "base64");
 fs.writeFileSync("edited_image.png", imageBuffer);
 console.log("Image saved to edited_image.png");
-````
+```
 
 ```go Go theme={null}
 package main
@@ -188,7 +188,7 @@ curl --location 'https://platform.qubrid.com/api/v1/qubridai/image/edit' \
 --form 'seed="50"' \
 --form 'use_inpainting="false"' \
 --form 'image=@"<YOUR-IMAGE-COMPLETE-PATH>"'
-````
+```
 </CodeGroup>
 
 ### API Generated Response
