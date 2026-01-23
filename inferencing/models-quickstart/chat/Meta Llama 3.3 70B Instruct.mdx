@@ -1,0 +1,283 @@
+---
+title: "Meta Llama 3.3 70B Instruct"
+description: "> An instruction-tuned 70B-parameter language model optimized for high-quality reasoning and task-oriented inference."
+---
+
+## About the Provider
+Meta is a leading global technology company focusing on social media, connectivity, and artificial intelligence research. Meta develops advanced AI models, such as the LLaMA family, to empower developers and enterprises with scalable language understanding and generation capabilities. Its open-weight AI initiatives aim to foster innovation and broader community access to powerful AI tools.
+
+## Model Quickstart
+This section helps you quickly get started with the `meta-llama/Llama-3.3-70B-Instruct` model on the Qubrid AI inferencing platform.
+
+To use this model, you need:
+- A valid **Qubrid API key**
+- Access to the Qubrid inference API
+- Basic knowledge of making API requests in your preferred language
+
+Once authenticated with your API key, you can send inference requests to the `meta-llama/Llama-3.3-70B-Instruct` model and receive responses based on your input prompts.
+
+Below are example placeholders showing how the model can be accessed using different programming environments.  
+You can choose the one that best fits your workflow.
+
+<CodeGroup>
+  ```python Python theme={null}
+import requests
+import json
+from pprint import pprint
+
+url = "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+headers = {
+    "Authorization": "Bearer <QUBRID_API_KEY>",
+    "Content-Type": "application/json"
+}
+
+data = {
+    "model": "meta-llama/Llama-3.3-70B-Instruct",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Explain quantum computing to a 5 year old."
+        }
+    ],
+    "temperature": 0.7,
+    "max_tokens": 4096,
+    "stream": False,
+    "top_p": 0.8
+}
+
+response = requests.post(
+    url,
+    headers=headers,
+    json=data,
+)
+
+content_type = response.headers.get("Content-Type", "")
+
+if "application/json" in content_type:
+    pprint(response.json())
+else:
+    for line in response.iter_lines(decode_unicode=True):
+        if not line:
+            continue
+
+        if line.startswith("data:"):
+            payload = line.replace("data:", "").strip()
+
+            if payload == "[DONE]":
+                break
+
+            try:
+                chunk = json.loads(payload)
+                pprint(chunk)
+            except json.JSONDecodeError:
+                print("Raw chunk:", payload)
+```
+
+```js JavaScript theme={null}
+(async () => {
+  const body = {
+    model: "meta-llama/Llama-3.3-70B-Instruct",
+    messages: [
+      {
+        role: "user",
+        content: "Explain quantum computing to a 5 year old.",
+      },
+    ],
+    temperature: 0.8,
+    max_tokens: 4096,
+    stream: false,
+    top_p: 0.8,
+  };
+  const res = await fetch(
+    "https://platform.qubrid.com/api/v1/qubridai/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer <QUBRID_API_KEY>",
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }
+  );
+  const contentType = res.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    const result = await res.json();
+    console.log(result);
+  } else {
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let buffer = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.replace("data:", "").trim();
+        if (payload === "[DONE]") return;
+        try {
+          const chunk = JSON.parse(payload);
+          console.log(chunk);
+        } catch {
+          console.log("Raw chunk:", payload);
+        }
+      }
+    }
+  }
+})();
+```
+
+```go Go theme={null}
+package main
+
+import (
+	"bytes"
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"strings"
+)
+
+func main() {
+  url := "https://platform.qubrid.com/api/v1/qubridai/chat/completions"
+
+  data := map[string]interface{}{
+    "model": "meta-llama/Llama-3.3-70B-Instruct",
+    "messages":  []map[string]string{
+      {
+        "role": "user",
+        "content": "Explain quantum computing in simple terms",
+    },
+},
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 1,
+}
+  jsonData, err := json.Marshal(data)
+    if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Authorization", "Bearer <QUBRID_API_KEY>")
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer res.Body.Close()
+	contentType := res.Header.Get("Content-Type")
+	if strings.Contains(contentType, "application/json") {
+		var result map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+			panic(err)
+		}
+		fmt.Printf("%+v\n", result)
+		return
+	}
+	scanner := bufio.NewScanner(res.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if !strings.HasPrefix(line, "data:") {
+			continue
+		}
+		payload := strings.TrimSpace(strings.TrimPrefix(line, "data:"))
+		if payload == "[DONE]" {
+			break
+		}
+		var chunk map[string]interface{}
+		if err := json.Unmarshal([]byte(payload), &chunk); err != nil {
+			fmt.Println("Raw chunk:", payload)
+			continue
+		}
+		fmt.Printf("%+v\n", chunk)
+	}
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+}
+```
+
+```curl cURL theme={null}
+curl -X POST "https://platform.qubrid.com/api/v1/qubridai/chat/completions" \
+  -H "Authorization: Bearer Qubrid_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+  "model": "meta-llama/Llama-3.3-70B-Instruct",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain quantum computing to a 5 year old."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 4096,
+  "stream": true,
+  "top_p": 0.8
+}'
+```
+</CodeGroup>
+## Model Overview
+**Llama 3.3 70B Instruct** is a 70B-parameter open-weight large language model from Meta, optimized for instruction following, complex reasoning, and multi-turn conversations.It is well suited for enterprise use cases such as advanced chat assistants, code reasoning, and long-document analysis with large context windows.
+
+## Model at a Glance
+
+| Feature        | Details                                       |
+| -------------- | --------------------------------------------- |
+| Model ID       | Llama-3.3-70B-Instruct                        |
+| Architecture   | Transformer with Grouped-Query Attention(GQA) |
+| Model Size     | 70B parameters                                |
+| Parameters     | 4                                             |
+| Training Data  | Publicly available web data (multilingual)    |
+| Context Length | 128K Token                                    |
+
+## Supported languages
+- English   
+- German     
+- French     
+- Italian    
+- Portuguese 
+- Hindi      
+- Spanish   
+- Thai      
+
+## When to use?
+Use **Llama 3.3 70B Instruct** if you need:
+- Enterprise chat assistants
+- Advanced code generation and review
+- Long-document question answering
+- Summarization at scale
+- Retrieval-Augmented Generation (RAG)
+- AI agents and workflow automation
+---
+## Inference Parameters
+| Parameter Name | Type    | Default | Description                                                                        |
+| -------------- | ------- | ------- | ---------------------------------------------------------------------------------- |
+| Streaming      | boolean | true    | Enable streaming responses for real-time output.                                   |
+| Temperature    | number  | 0.7     | Controls randomness. Higher values mean more creative but less predictable output. |
+| Max Tokens     | number  | 4096    | Defines the maximum number of tokens the model is allowed to generate.             |
+| Top P          | number  | 0.9     | Nucleus sampling that limits token selection to a subset of top probability mass.  |
+
+## Key Features
+1. High-quality reasoning and instruction adherence
+2. Strong performance on code and analytical tasks
+3. Large context window for long-document processing
+4. Open-weight model suitable for private and on-prem deployments
+5. Production-ready for enterprise workloads
+
+## Limitations
+1. Smaller context window compared to largest models
+2. Can struggle with highly complex, multi-step reasoning
+
+## Summary
+**Meta Llama 3.3 70B Instruct** is a 70B-parameter, instruction-tuned large language model designed for high-quality reasoning and multi-turn conversational tasks. It is well suited for enterprise workloads such as advanced chat assistants, code generation, summarization, and long-document question answering. The model supports a large context window, enabling effective processing of lengthy inputs and retrieval-augmented generation workflows.
